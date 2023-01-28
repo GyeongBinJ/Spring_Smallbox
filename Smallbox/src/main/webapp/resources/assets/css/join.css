@@ -1,0 +1,137 @@
+@charset "EUC-KR";
+ *, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*{
+	font-family: 'ONE-Mobile-Regular';
+}
+.formDiv {
+	padding-left: 250px;	
+	font-family: 'ONE-Mobile-Regular';
+}
+
+body {
+  font-family: 'ONE-Mobile-Regular';
+  color: #384047;
+  
+}
+
+.joinForm {
+	padding-top: 20px;	
+	font-family: 'ONE-Mobile-Regular';
+	margin: 0 auto;
+}
+
+form {
+  max-width: 1000px;
+  padding: 10px 20px;
+  background: #f4f7f8;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+h1 {
+  margin: 0 0 10px 0;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+.inputBox,
+select {
+  background: #000000;
+  font-size: 12px;
+  height: auto;
+  margin: 0;
+  outline: 0;
+  padding: 5px;
+  width: 30%;
+  background-color: #ffffff;
+  color: #000000;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+  margin-bottom: 30px;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin: 0 4px 8px 0;
+}
+
+select {
+  padding: 6px;
+  height: 32px;
+  border-radius: 2px;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+button {
+  background-color: #3B0B5F;
+  border: none;
+  color: white;
+  padding: 20px 150px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-left: 150px;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+fieldset {
+  margin-bottom: 10px;
+  border: none;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+legend {
+  font-size: 0.5em;
+  margin-bottom: 100px;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+label.light {
+  font-weight: 100;
+  display: inline;
+  font-family: 'ONE-Mobile-Regular';
+}
+.joinBtn{
+	background-color: #3B0B5F;
+	border-radius: 5px;
+	color: white;
+	font-family: 'ONE-Mobile-Regular';
+}
+
+.number {
+  background-color: #5fcf80;
+  color: #fff;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  font-size: 0.8em;
+  margin-right: 4px;
+  line-height: 30px;
+  text-align: center;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+  border-radius: 100%;
+  font-family: 'ONE-Mobile-Regular';
+}
+
+@media screen and (min-width: 480px) {
+
+  form {
+    max-width: 800px;
+    font-family: 'ONE-Mobile-Regular';
+  }
+
+}
