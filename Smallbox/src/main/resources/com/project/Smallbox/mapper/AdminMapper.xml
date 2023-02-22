@@ -80,7 +80,9 @@
 				, movie_runtime = #{movie_runtime}
 				, movie_intro = #{movie_intro}
 				, movie_actors = #{movie_actors}
+<!-- 			<if test='movie_picture != null and movie_picture != ""'> -->
 				, movie_picture = #{movie_picture}
+<!-- 			</if> -->
 				, movie_real_picture = #{movie_real_picture}
 				, movie_teaser = #{movie_teaser}
 				, movie_viewer = #{movie_viewer}

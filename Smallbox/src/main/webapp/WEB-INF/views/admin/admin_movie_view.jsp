@@ -38,6 +38,17 @@ function confirm_delete() {
 	  <!-- ======= header ======= -->
 	  
 	<main id="main">
+	
+	<!-- pageNum 변수 선언 및 기본값 1로 설정 -->
+		<c:choose>
+			<c:when test="${empty param.pageNum }">
+				<c:set var="pageNum" value="1" />
+			</c:when>
+			<c:otherwise>
+				<c:set var="pageNum" value="${param.pageNum }" />
+			</c:otherwise>
+		</c:choose>
+	
 	<!-- ======= Breadcrumbs ======= -->
 	<div id="layoutSidenav_content">
 		    <section class="breadcrumbs_admin">
@@ -103,12 +114,13 @@ function confirm_delete() {
 				<tr>
 					<td>누적 관람객 수</td>
 					<td>${movie.movie_viewer }명</td>
+					<td>${pageNum }</td>
 				</tr>
 				<tr>
 					<td colspan="2">
 					 <div style="text-align: center;">
-						<input type="button" class="pagebtn2" value="목록" onclick="location.href='AdminMovieList.ad?pageNum=${param.pageNum}'">
-						<input type="button" class="pagebtn2" value="수정" onclick="location.href='MovieModifyForm.ad?movie_idx=${movie.movie_idx}&pageNum=${param.pageNum}'">
+						<input type="button" class="pagebtn2" value="목록" onclick="location.href='AdminMovieList.ad?pageNum=${pageNum }'">
+						<input type="button" class="pagebtn2" value="수정" onclick="location.href='MovieModifyForm.ad?movie_idx=${movie.movie_idx}&pageNum=${pageNum }'">
 						<input type="button" class="pagebtn2"value="삭제" onclick="javascript:confirm_delete()">
 					</div>
 					</td>

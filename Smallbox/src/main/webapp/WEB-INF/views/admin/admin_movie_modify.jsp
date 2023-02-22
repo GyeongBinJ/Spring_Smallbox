@@ -16,6 +16,19 @@
 <!-- jquery -->
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.6.3.js"></script>
 <script type="text/javascript">
+	<!-- 포스터 첨부 필수! -->
+	function file_chk() {
+		var file_chk = document.getElementById("file");
+		if(!file_chk.value) {
+			alert("사진을 업로드해주세요");
+			return validate(event);
+		}
+	}
+	
+	function validate(event) {
+	   event.preventDefault();
+	}
+	
 	<!-- 장르선택 체크박스 체크 -->
 	 $(document).ready(function() {
 		var genre = "${movie.movie_genre}"
@@ -39,7 +52,7 @@
 				if(data == "true") {
 					// 삭제 성공 시 파일명 표시 위치의 기존 항목을 제거하고
 					// 파일 업로드를 위한 "파일 선택" 버튼 항목 표시
-					$("#fileArea").html('<input type="file" name="file">');
+					$("#fileArea").html('<input type="file" name="file" id="file">');
 				} else if(data == "false") {
 					alert("일시적인 오류로 파일 삭제에 실패했습니다!");
 				}
@@ -87,7 +100,7 @@
                      - 관리자로 등록된 회원만 조회할 수 있는 페이지입니다.
                  </div>
            	</div>
-			<form action="MovieModifyPro.ad" name="fr" method="post" enctype="multipart/form-data">
+			<form action="MovieModifyPro.ad" name="fr" method="post" enctype="multipart/form-data" onsubmit="file_chk()">
 			<input type="hidden" name="movie_idx" value="${movie.movie_idx }" >
 			<input type="hidden" name="pageNum" value="${param.pageNum }" >
 		
@@ -132,11 +145,11 @@
 				</tr>
 				<tr>
 					<td>줄거리</td>
-					<td><textarea name="movie_intro" cols="50" rows="10">${movie.movie_intro }</textarea></td>
+					<td><textarea name="movie_intro" cols="50" rows="10" required="required">${movie.movie_intro }</textarea></td>
 				</tr>
 				<tr>
 					<td>등장인물</td>
-					<td><textarea name="movie_actors" cols="50" rows="3">${movie.movie_actors }</textarea></td>
+					<td><textarea name="movie_actors" cols="50" rows="3" required="required">${movie.movie_actors }</textarea></td>
 				</tr>
 				<tr>
 					<td>영화 포스터</td>
@@ -147,9 +160,10 @@
 <!-- 										<label><input type="file" name="file"></label> -->
 								<img src="${pageContext.request.contextPath }/resources/upload/${movie.movie_picture}" width="300" height="350">
 								<input type="button" value="삭제" onclick="deletePoster('${movie.movie_picture }')">
+								<input type="hidden" name="movie_picture" value="${movie.movie_picture }">
 							</c:when>
 							<c:otherwise>
-								<input type="file" name="file">
+								<input type="file" name="file" id="file">
 							</c:otherwise>									
 						</c:choose>
 						</div>
@@ -160,13 +174,13 @@
 					<td>
 						<label>
 							<span>https://www.youtube.com/embed/</span>
-							<input type="text" name="movie_teaser" value="${movie.movie_teaser }" style="width:150px"/>
+							<input type="text" name="movie_teaser" value="${movie.movie_teaser }" required="required" style="width:150px"/>
 						</label>
 					</td>
 				</tr>
 				<tr>
 					<td>누적 관람객 수</td>
-					<td><label><input type="number" name="movie_viewer" value="${movie.movie_viewer }"></label></td>
+					<td><label><input type="number" name="movie_viewer" value="${movie.movie_viewer }" required="required"></label></td>
 				</tr>
 				<tr>
 					<td colspan="2">
