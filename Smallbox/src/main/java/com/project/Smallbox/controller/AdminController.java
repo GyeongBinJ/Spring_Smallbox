@@ -61,11 +61,11 @@ public class AdminController {
 		
 		String originalFileName = mFile.getOriginalFilename(); // 원본 파일명
 		String realFileName = "";
+		System.out.println("originalFileName : " + originalFileName);
 		
 		// 중복 방지를 위해 랜덤값을 파일명에 결합
 		String uuid = UUID.randomUUID().toString();
 		realFileName += uuid + "_" + originalFileName;
-		
 		movie.setMovie_picture(realFileName); // UUID를 결합한 파일명을 객체에 저장
 		movie.setMovie_real_picture(""); // 삭제할 컬럼이므로 임시로 널스트링값 저장
 		
@@ -76,7 +76,7 @@ public class AdminController {
 			// 해당 파일을 실제 위치로 이동
 			try {
 				mFile.transferTo(new File(saveDir, realFileName));
-//				System.out.println("saveDir : " + saveDir + ", realFileName : " + realFileName);
+//					System.out.println("saveDir : " + saveDir + ", realFileName : " + realFileName);
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -121,16 +121,14 @@ public class AdminController {
 	
 	// 관리자 페이지 - 영화 상세정보 조회 비즈니스 로직
 	@GetMapping(value = "/AdminMovieDetailPro.ad")
-	public String adminMovieDetail(@RequestParam int movie_idx, Model model, 
-				@RequestParam(defaultValue = "1") int pageNum) {
+	public String adminMovieDetail(@RequestParam int movie_idx, Model model) {
 		
 		// 각 영화의 상세정보 조회
 		MovieVO movie = service.getAdminMovieDetail(movie_idx);
 		
 		model.addAttribute("movie", movie);
 		
-//		return "admin/admin_movie_view";
-		return "admin/admin_movie_view.jsp?pageNum=" + pageNum;
+		return "admin/admin_movie_view";
 	}
 	
 	// 관리자 페이지 - 영화 수정폼 비즈니스 로직
@@ -148,54 +146,67 @@ public class AdminController {
 	@PostMapping(value = "/MovieModifyPro.ad")
 	public String movieModifyPro(@ModelAttribute MovieVO movie, 
 			@RequestParam(defaultValue = "1") int pageNum,
-			Model model, HttpSession session) {
-		
-		String uploadDir = "/resources/upload"; // 가상의 업로드 경로(루트(webapp) 기준)
-		String saveDir = session.getServletContext().getRealPath(uploadDir);
-		
-		// --------------- java.nio 패키지(Files, Path, Paths) 객체 활용 -----------------
-		// 1. Paths.get() 메서드를 호출하여 대상 파일 또는 경로에 대한 Path 객체 얻어오기
-		Path path = Paths.get(saveDir);
-		// 2. Files 클래스의 createDirectories() 메서드를 호출하여
-		//    지정된 경로 또는 파일 생성하기
-		try {
-			Files.createDirectories(path);
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		// -------------------------------------------------------------------------------
-		// MultipartFile 객체 꺼내기
-		MultipartFile mFile = movie.getFile();
-		
-		String originalFileName = mFile.getOriginalFilename(); // 원본 파일명
-		String realFileName = "";
-		
-		// 중복 방지를 위해 랜덤값을 파일명에 결합
-		String uuid = UUID.randomUUID().toString();
-		realFileName += uuid + "_" + originalFileName;
-		
-		movie.setMovie_picture(realFileName);
-		movie.setMovie_real_picture(""); // 삭제할 컬럼이므로 임시로 널스트링값 저장
-		
-		// 영화 등록
-		int updateCount = service.modifyMovie(movie);
-		
-		if(updateCount > 0) { // 등록 성공시
-			// 해당 파일을 실제 위치로 이동
+			Model model, HttpSession session,
+			@RequestParam(value="movie_picture",required = false) String movie_picture) {
+	
+		if(movie.getMovie_picture() == null) {
+			String uploadDir = "/resources/upload"; // 가상의 업로드 경로(루트(webapp) 기준)
+			String saveDir = session.getServletContext().getRealPath(uploadDir);
+			
+			// --------------- java.nio 패키지(Files, Path, Paths) 객체 활용 -----------------
+			// 1. Paths.get() 메서드를 호출하여 대상 파일 또는 경로에 대한 Path 객체 얻어오기
+			Path path = Paths.get(saveDir);
+			// 2. Files 클래스의 createDirectories() 메서드를 호출하여
+			//    지정된 경로 또는 파일 생성하기
 			try {
-				mFile.transferTo(new File(saveDir, realFileName));
-				System.out.println("saveDir : " + saveDir + ", realFileName : " + realFileName);
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+				Files.createDirectories(path);
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-			// 관리자 영화 목록으로 이동
-//			return "redirect:/AdminMovieList.ad";
-			return "redirect:/AdminMovieList.ad?pageNum=" + pageNum;
-		} else { // 등록 실패시
-			model.addAttribute("msg", "영화 수정 실패!");
-			return "fail_back";
+			// -------------------------------------------------------------------------------
+			// MultipartFile 객체 꺼내기
+			MultipartFile mFile = movie.getFile();
+			
+			String originalFileName = mFile.getOriginalFilename(); // 원본 파일명
+			String realFileName = "";
+			
+			// 중복 방지를 위해 랜덤값을 파일명에 결합
+			String uuid = UUID.randomUUID().toString();
+			realFileName += uuid + "_" + originalFileName;
+			
+			movie.setMovie_picture(realFileName);
+			movie.setMovie_real_picture(""); // 삭제할 컬럼이므로 임시로 널스트링값 저장
+			
+			// 영화 등록
+			int updateCount = service.modifyMovie(movie);
+			
+			if(updateCount > 0) { // 등록 성공시
+				// 해당 파일을 실제 위치로 이동
+				try {
+					mFile.transferTo(new File(saveDir, realFileName));
+					System.out.println("saveDir : " + saveDir + ", realFileName : " + realFileName);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				// 관리자 영화 목록으로 이동
+				return "redirect:/AdminMovieList.ad?pageNum=" + pageNum;
+			} else { // 등록 실패시
+				model.addAttribute("msg", "영화 수정 실패!");
+				return "fail_back";
+			}
+		} else { // 파일 수정 없이 영화 수정
+			// 영화 등록
+			int updateCount = service.modifyMovie(movie);
+			
+			if(updateCount > 0) { // 등록 성공시
+				// 관리자 영화 목록으로 이동
+				return "redirect:/AdminMovieList.ad?pageNum=" + pageNum;
+			} else { // 등록 실패시
+				model.addAttribute("msg", "영화 수정 실패!");
+				return "fail_back";
+			}
 		}
 	}
 	

@@ -12,6 +12,22 @@
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- Main CSS File -->
 <link href="${pageContext.request.contextPath }/resources/assets/css/style_admin.css" rel="stylesheet">
+
+<script src="${pageContext.request.contextPath }/resources/js/jquery-3.6.3.js"></script>
+<script type="text/javascript">
+	<!-- 포스터 첨부 필수! -->
+	function file_chk() {
+		var file_chk = document.getElementById("file");
+		if(!file_chk.value) {
+			alert("사진을 업로드해주세요");
+			return validate(event);
+		}
+	}
+	
+	function validate(event) {
+	   event.preventDefault();
+	}
+</script>
 </head>
 <body>
 	<!-- 관리자 아니면 접근 불가 -->
@@ -51,7 +67,7 @@
                      - 관리자로 등록된 회원만 조회할 수 있는 페이지입니다.
                  </div>
            	 </div>  
-			<form action="MovieInsertPro.ad" name="fr" method="post" enctype="multipart/form-data">
+			<form action="MovieInsertPro.ad" name="fr" method="post" enctype="multipart/form-data" onsubmit="file_chk()">
 				<table style="border: 1;border-radius: 4px;">
 					<th style="text-align: center;height: 40">영화 정보</th>
 					<th style="text-align: center;height: 40">영화 정보</th>
@@ -94,16 +110,16 @@
 					</tr>
 					<tr>
 						<td>줄거리</td>
-						<td><textarea name="movie_intro" cols="50" rows="10"></textarea></td>
+						<td><textarea name="movie_intro" cols="50" rows="10" required="required"></textarea></td>
 					</tr>
 					<tr>
 						<td>등장인물</td>
-						<td><textarea name="movie_actors" cols="50" rows="10"></textarea></td>
+						<td><textarea name="movie_actors" cols="50" rows="10" required="required"></textarea></td>
 					</tr>
 					<tr>
 						<td>영화 포스터</td>
 						<td>
-							<label><input type="file" name="file"></label>
+							<label><input type="file" name="file" id="file"></label>
 						</td>
 					</tr>
 					<tr>
@@ -111,13 +127,13 @@
 						<td>
 							<label>
 								<span>https://www.youtube.com/embed/</span>
-								<input type="text" name="movie_teaser" style="width:150px"/>
+								<input type="text" name="movie_teaser" required="required" style="width:150px"/>
 							</label>
 						</td>
 					</tr>
 					<tr>
 						<td>누적 관람객 수</td>
-						<td><label><input type="number" name="movie_viewer" min="0" ></label></td>
+						<td><label><input type="number" name="movie_viewer" min="0" required="required"></label></td>
 					</tr>
 					<tr>
 						<td colspan="2">
