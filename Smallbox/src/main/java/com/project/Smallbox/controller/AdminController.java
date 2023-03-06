@@ -25,6 +25,7 @@ import com.project.Smallbox.service.AdminService;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.PageInfo;
 import com.project.Smallbox.vo.StarMovieVO;
+import com.project.Smallbox.vo.TheaterVO;
 
 @Controller
 public class AdminController {
@@ -272,4 +273,111 @@ public class AdminController {
 	}
 	
 	// ---------------------------------- 관리자 페이지 - 영화 관리 끝!
+	
+	// ---------------------------------- 관리자 페이지 - 극장관리
+	// 관리자 페이지 - 상영일정 등록 폼
+	@GetMapping(value = "/AdminTheaterInsertForm.ad")
+	public String theaterInsert(Model model) {
+		
+		// 상영일정 등록 폼에서 등록된 영화 조회
+		List<MovieVO> movieList = service.getMovieList();
+		
+		model.addAttribute("movieList", movieList);
+		return "admin/admin_theater_insert";
+	}
+	
+	// 관리자 페이지 - 상영일정 등록 비지니스 로직
+	@PostMapping(value = "/AdminTheaterInsertPro.ad")
+	public String theaterInsertPro(@ModelAttribute TheaterVO theater, Model model, HttpSession session) {
+		
+		int insertCount = service.insertTheater(theater);
+		
+		if(insertCount > 0) {
+			return "redirect:/AdminTheaterList.ad";
+		} else {
+			model.addAttribute("msg", "상영일정 등록 실패!");
+			return "fail_back";
+		}
+	}
+	
+	// 관리자 페이지 - 상영일정 목록 조회
+	@GetMapping(value = "/AdminTheaterList.ad")
+	public String adminTheaterList(HttpSession session, Model model, 
+			@RequestParam(defaultValue = "") String keyword, @RequestParam(defaultValue = "1") int pageNum) {
+		
+		int listLimit = 10;
+		int startRow = (pageNum - 1) * listLimit;
+		
+		List<TheaterVO> theaterList = service.getTheaterList(keyword, startRow, listLimit);
+		
+		int listCount = service.getTheaterListCount(keyword);
+		
+		int pageListLimit = 10; // 한 페이지에 표시할 페이지 목록 수
+		int maxPage = listCount / listLimit + (listCount % listLimit != 0 ? 1 : 0);
+		int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+		int endPage = startPage * pageListLimit - 1;
+		if(endPage > maxPage) {
+			endPage = maxPage;
+		}
+			
+		// PageInfo 객체 생성 후 페이징 처리 정보 저장
+		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
+		
+		model.addAttribute("theaterList", theaterList);
+		model.addAttribute("pageInfo", pageInfo);
+		
+		return "admin/admin_theater_list";
+	}
+				
+	// 관리자 페이지 - 상영일정 상세정보 조회
+	@GetMapping(value = "/AdminTheaterDetail.ad")
+	public String adminTheaterDetail(@RequestParam int theater_idx, Model model) {
+		
+		TheaterVO theater = service.getTheaterDetail(theater_idx);
+		model.addAttribute("theater", theater);
+		
+		return "admin/admin_theater_detail";
+	}
+		
+	// 관리자 페이지 - 상영일정 수정폼 
+	@GetMapping(value = "/AdminTheaterModifyForm.ad")
+	public String adminTheaterModify(@RequestParam int theater_idx, Model model) {
+		
+		TheaterVO theater = service.getTheaterDetail(theater_idx);
+		List<MovieVO> movieList = service.getMovieList();
+		
+		model.addAttribute("movieList", movieList);
+		model.addAttribute("theater", theater);
+		
+		return "admin/admin_theater_modify";
+	}
+		
+	// 관리자 페이지 - 상영일정 수정 비지니스 로직
+	@PostMapping(value = "/AdminTheaterModifyPro.ad")
+	public String adminTheaterModifyPro(@ModelAttribute TheaterVO theater, int theater_idx, Model model) {
+		
+		int updateCount = service.modifyTheater(theater);
+		
+		if(updateCount > 0) {
+			return "redirect:/AdminTheaterDetail.ad?theater_idx=" + theater_idx;
+		} else {
+			model.addAttribute("msg", "상영일정 수정 실패!");
+			return "fail_back";
+		}
+	}
+	
+	// 관리자 페이지 - 상영일정 삭제 비지니스 로직
+	@GetMapping(value = "/AdminTheaterDeletePro.ad")
+	public String adminTheaterDeletePro(@RequestParam int theater_idx, Model model) {
+		
+		int deleteCount = service.deleteTheater(theater_idx);
+		
+		if(deleteCount > 0) {
+			return "redirect:/AdminTheaterList.ad";
+		} else {
+			model.addAttribute("msg", "상영일정 삭제 실패!");
+			return "fail_back";
+		}
+	}
+	
 }
