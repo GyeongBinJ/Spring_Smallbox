@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.Smallbox.mapper.NoticeMapper">
+	<insert id="insertNotice">
+		<selectKey keyProperty="notice_idx" resultType="int" order="BEFORE">
+			<!-- 가장 큰 영화번호(movie_idx) 조회 -->
+			SELECT MAX(notice_idx) FROM notice
+		</selectKey>
+		INSERT 
+			INTO notice 
+			VALUES (
+				#{notice_idx} + 1
+				,#{notice_subject}
+				,#{notice_content}
+				,#{notice_file}
+				,#{notice_real_file}
+				,0
+				,now()
+			)
+	</insert>
+	
+	<select id="selectNoticeList" resultType="com.project.Smallbox.vo.NoticeVO">
+		SELECT * 
+			FROM notice 
+		<if test='!keyword.equals("")'>
+               WHERE notice_subject LIKE '%${keyword}%'
+<!--                		OR notice_content LIKE '%${keyword}%' -->
+        </if>
+			ORDER BY 
+				notice_idx DESC
+			LIMIT #{startRow}, #{listLimit}
+	</select>
+	
+	<select id="selectNoticeListCount" resultType="int">
+		SELECT COUNT(*) 
+			FROM notice 
+		<if test='!keyword.equals("")'>
+               WHERE notice_subject LIKE '%${keyword}%'
+        </if>
+	</select>
+	
+	<select id="selectNotice" resultType="com.project.Smallbox.vo.NoticeVO">
+		SELECT * 
+			FROM notice 
+			WHERE notice_idx = #{notice_idx}
+	</select>
+	
+	<update id="updateReadcount">
+		UPDATE notice
+			SET notice_readcount=notice_readcount+1
+			WHERE notice_idx = #{notice_idx}
+	</update>
+	
+	<select id="selectFile" resultType="string">
+		SELECT notice_file
+			FROM notice
+			WHERE 
+				notice_idx = #{notice_idx}
+	</select>
+	
+	<delete id="deleteNotice">
+		DELETE 
+			FROM notice 
+			WHERE notice_idx = #{notice_idx}
+	</delete>
+	
+	<update id="updateNotice">
+		UPDATE notice
+			SET
+				notice_subject = #{notice_subject}
+				, notice_content = #{notice_content}
+				, notice_file = #{notice_file}
+				, notice_real_file = #{notice_real_file}
+			WHERE
+				notice_idx = #{notice_idx}
+	</update>
+	
+	<update id="deleteFile">
+		UPDATE notice
+			SET notice_file = null
+			WHERE notice_idx = #{notice_idx}
+	</update>
+</mapper>

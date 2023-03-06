@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.Smallbox.mapper.MovieMapper">
+
+	<!-- 영화 전체 목록 조회 (박스오피스) --> 
+	<select id="selectStarMovieList" resultType="com.project.Smallbox.vo.StarMovieVO">
+		SELECT * 
+			FROM star_movie 
+<!-- 			WHERE movie_title Like #{keyword} -->
+			<if test='!keyword.equals("")'>
+                WHERE movie_title LIKE '%${keyword}%'
+            </if>
+			ORDER BY movie_viewer DESC
+			LIMIT #{startRow}, #{listLimit}
+	</select>
+	
+	<!-- 박스오피스 영화 총 개수 -->
+	<select id="StarMovieListCount" resultType="int">
+		SELECT COUNT(*) 
+			FROM movie
+		<if test='!keyword.equals("")'>
+            WHERE movie_title LIKE '%${keyword}%'
+        </if> 
+	</select>
+	
+	<!-- 1. WHERE절로 각 회원별 찜 목록을 조회
+    	 2. movie 테이블의 movie_idx와 movie_like 테이블의 movie_idx을 
+       	 조인해 movie 테이블에서 필요한 컬럼 조회
+       	 => 찜 여부 확인을 위한 비교용 정보(mobie_idx) 출력 -->
+<!-- 	<select id="selectLikeList2" resultType="com.project.Smallbox.vo.MovieVO"> -->
+	<select id="selectLikeList2" resultType="int">
+		SELECT movie.movie_idx
+			FROM movie 
+			JOIN movie_like ON movie.movie_idx = movie_like.movie_idx 
+			WHERE member_id = #{member_id}
+	</select>
+
+	<!-- 개봉 예정작 조회 - 오늘 날짜보다 큰 영화들만 조회 --> 
+	<select id="selectComingMovieList" resultType="com.project.Smallbox.vo.MovieVO">
+		SELECT m.movie_idx, movie_picture, movie_title, movie_open_date
+			FROM movie m 
+			WHERE 
+				exists (SELECT * 
+							FROM movie v 
+							WHERE movie_open_date > curdate() AND m.movie_idx = v.movie_idx)
+			<if test='!keyword.equals("")'>
+				AND movie_title LIKE '%${keyword}%'
+			</if>
+			ORDER BY movie_idx
+			LIMIT #{startRow}, #{listLimit}
+	</select>
+	
+	<!-- 개봉 예정작 총 개수 -->
+	<select id="ComingMovieListCount" resultType="int">
+		SELECT count(movie_idx)
+			FROM movie m 
+			WHERE 
+				exists (SELECT * 
+							FROM movie v 
+							WHERE movie_open_date > curdate() AND m.movie_idx = v.movie_idx)
+			<if test='!keyword.equals("")'>
+				AND movie_title LIKE '%${keyword}%'
+			</if>
+	</select>
+	
+	<!-- 찜 여부 판별 -->
+	<select id="selectLike" resultType="int">
+		SELECT COUNT(*) 
+			FROM movie_like 
+			WHERE 
+				movie_idx = #{movie_idx} AND member_id = #{member_id}
+	</select>
+	
+	<!-- 찜 삭제 -->
+	<delete id="deleteMovieLike">
+		DELETE 
+			FROM movie_like 
+			WHERE movie_idx = #{movie_idx} AND member_id = #{member_id}
+	</delete>
+	
+	<!-- 찜 수행 -->
+	<insert id="insertMovieLike">
+		INSERT 
+		INTO movie_like 
+		VALUES(
+			#{movie_idx}, 
+			#{member_id})
+	</insert>
+	
+</mapper>

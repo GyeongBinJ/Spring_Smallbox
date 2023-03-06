@@ -8,6 +8,8 @@ import com.project.Smallbox.vo.CouponVO;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.MypageVO;
 import com.project.Smallbox.vo.PosterVO;
+import com.project.Smallbox.vo.QnaVO;
+import com.project.Smallbox.vo.ReserveVO;
 
 public interface MyPageMapper {
 
@@ -50,4 +52,42 @@ public interface MyPageMapper {
 	// 마이페이지 - 메인 정보 조회
 	public MypageVO selectMypageInfo(String member_id);
 
+	// 마이페이지 - 예매 내역 조회
+		public List<ReserveVO> selectReserveList(
+				@Param("member_id") String member_id,
+				@Param("startRow") int startRow, 
+				@Param("reserveLimit") int reserveLimit);
+		
+	// 마이페이지 - 회원아이디로 예매 내역 개수 조회
+	public int selectReserveListCount(String member_id);
+
+	// 마이페이지 - 예매 내역 삭제
+	public int deleteReserve(int res_idx);
+
+	// 마이페이지 - 1:1문의 작성 작업
+	public int insertQna(QnaVO qna);
+
+	// 마이페이지 - 1:1문의 내역
+	public List<QnaVO> selectQnaList(
+			@Param("member_id") String member_id,
+			@Param("startRow") int startRow, 
+			@Param("qnaLimit") int qnaLimit);
+
+	// 마이페이지 - 회원아이디로 문의 내역 개수 조회
+	public int selectQnaListCount(String member_id);
+
+	// 마이페이지 - 1:1문의 상세보기
+	public QnaVO selectQna(int qna_idx);
+
+	// 마이페이지 - 1:1문의 관리자 답변 작업
+	public int insertReply(QnaVO qna);
+
+	// 마이페이지 - 1:1문의 삭제 작업
+	public int deleteQna(int qna_idx);
+
+	// 마이페이지 - 영화상세메뉴의 리뷰창으로의 이동을 위해 예약번호로 영화번호 찾는 작업
+	public int selectMovie_idx(int res_idx);
+
+	// 마이페이지 - 예매취소 가능시간 판별 작업
+	public int selectTimeOk(int res_idx);
 }

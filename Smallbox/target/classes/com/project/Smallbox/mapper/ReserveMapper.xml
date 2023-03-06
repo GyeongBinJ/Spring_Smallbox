@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.Smallbox.mapper.ReserveMapper">
+	<select id="selectMovieList" resultType="com.project.Smallbox.vo.MovieVO">
+		SELECT * FROM movie
+	</select>
+	
+	<select id="selectTheaterList" resultType="com.project.Smallbox.vo.TheaterVO">
+		SELECT * 
+		FROM theater
+		WHERE theater_title = #{movie_title}
+			AND theater_date = #{reserve_date}
+	</select>
+
+<!-- ===========================================혜연 추가한곳=========================================== -->
+	<select id="selectTheaterIdx" resultType="integer">
+		SELECT theater_idx
+			FROM theater
+			WHERE theater_title = #{theater_title}
+				AND theater_date = #{theater_date}
+				AND theater_time= #{theater_time}
+	</select>
+
+	<select id="selectReservedSeatList" resultType="String">
+		SELECT res_seat FROM reserve WHERE theater_idx=#{theater_idx}
+	</select>
+
+	<select id="selectCouponList" resultType="com.project.Smallbox.vo.CouponVO">
+		SELECT * 
+			FROM coupon 
+			WHERE member_id = #{sId}
+			ORDER BY coupon_date DESC
+	</select>
+
+	<insert id="insertReserve">
+		<selectKey keyProperty="res_idx" resultType="int" order="BEFORE">
+			SELECT MAX(res_idx) FROM reserve
+		</selectKey>
+		INSERT INTO reserve
+			VALUES(
+				#{res_idx} + 1
+				,#{res_num}
+				,#{theater_idx}
+				,#{theater_title}
+				,#{member_id}
+				,#{res_date}
+				,#{res_time}
+				,#{res_seat}
+				,#{res_pay_type}
+				,#{res_price}
+			)
+	</insert>
+	
+	<update id="updateSeatCnt">
+		<selectKey keyProperty="theater_seat_cnt" resultType="int" order="BEFORE">
+			SELECT theater_seat_cnt FROM theater WHERE theater_idx = #{theater_idx}
+		</selectKey>
+		
+		UPDATE theater 
+			SET theater_seat_cnt = #{theater_seat_cnt} - #{people}
+			WHERE theater_idx= #{theater_idx}
+	</update>
+	
+	<delete id="deleteCoupon">
+		DELETE FROM coupon 
+			WHERE coupon_idx=#{couponIdx}
+	</delete>
+<!-- ==========================================혜연 추가한곳 끝========================================== -->
+
+
+</mapper>

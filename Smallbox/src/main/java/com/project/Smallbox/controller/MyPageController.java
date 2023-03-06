@@ -20,6 +20,8 @@ import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.MypageVO;
 import com.project.Smallbox.vo.PageInfo;
 import com.project.Smallbox.vo.PosterVO;
+import com.project.Smallbox.vo.QnaVO;
+import com.project.Smallbox.vo.ReserveVO;
 
 @Controller
 public class MyPageController {
@@ -155,5 +157,196 @@ public class MyPageController {
 			return "fail_back";
 		}
 	}
+	// 마이페이지 - 예매 내역 조회
+		@GetMapping(value = "Reserved.my")
+		public String reservedList(HttpSession session, Model model, 
+				@RequestParam(defaultValue = "1") int pageNum) {
+			String member_id = (String)session.getAttribute("sId");
+			if(member_id != null) {//로그인 O
+				int reserveLimit = 5;
+				int startRow = (pageNum-1) * reserveLimit;
+				
+				//예약 리스트 구하기
+				List<ReserveVO> reserveList = service.getReserveList(member_id, startRow, reserveLimit);
+				
+				//회원아이디로 listCount 구하기
+				int listCount = service.getReserveListCount(member_id);
+				System.out.println("listCount : "+listCount);
+				int pageListLimit = 10;
+				int maxPage = listCount/reserveLimit + (listCount%reserveLimit!=0? 1 : 0);
+				int startPage = (pageNum-1) / pageListLimit * pageListLimit + 1;
+				int endPage = startPage * pageListLimit - 1;
+				
+				if(endPage>maxPage) {
+					endPage = maxPage;
+				}
+				
+				// PageInfo 객체 생성 후 페이징 처리 정보 저장
+				PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
+				model.addAttribute("pageInfo", pageInfo);
+				model.addAttribute("reserveList", reserveList);
+				
+				return "mypage/mypage_reserved_list";
+			} else { // 로그인X
+				model.addAttribute("msg", "로그인중인 회원만 이용가능 합니다.");
+				return "fail_back";
+			}
+			
+		}
+		// 마이페이지 - 예매 취소
+		@GetMapping(value = "ReserveCancel.my")
+		public String reserveCancel(HttpSession session, Model model, 
+				@RequestParam int res_idx) {
+			
+			int timeOk = service.isTimeOk(res_idx);
+			
+			if(timeOk > 0) {
+				
+				int deleteCount = service.reserveCancel(res_idx);
+				
+				if(deleteCount > 0 ) {
+					return "redirect:/Reserved.my";
+				} else {
+					model.addAttribute("msg", "예매 취소작업을 실패하였습니다.");
+					return "fail_back";
+				}
+			} else {
+				model.addAttribute("msg", "영화 상영일 전날까지만 예매취소할 수 있습니다.");
+				return "fail_back";
+				
+			}
+		}
+		// 마이페이지 - 1:1문의하기 폼
+		@GetMapping(value = "QnaWriteForm.my")
+		public String qnaWriteForm(HttpSession session, Model model) {
+			String member_id = (String)session.getAttribute("sId");
+			if(member_id != null) {
+				return "mypage/qna_write";
+			} else {
+				model.addAttribute("msg","로그인중인 회원만 이용가능합니다.");
+				return "fail_back";
+			}
+		}
+		
+		// 마이페이지 - 1:1문의 작성 작업
+		@PostMapping(value = "QnaWritePro.my")
+		public String qnaWritePro(HttpSession session, Model model, 
+				@ModelAttribute QnaVO qna) {
+			
+			int insertCount = service.registQna(qna);
+			
+			if(insertCount > 0) {
+				return "redirect:/QnaList.my";
+			} else {
+				model.addAttribute("msg", "1:1문의 등록을 실패하였습니다.");
+				return "fail_back";
+			}
+		}
+		// 마이페이지 - 1:1문의 내역
+		@GetMapping(value = "QnaList.my")
+		public String qnaList(HttpSession session, Model model, 
+				@RequestParam(defaultValue = "1") int pageNum) {
+			String member_id = (String)session.getAttribute("sId");
+			
+			if(member_id != null) {//로그인 O
+				int qnaLimit = 10;
+				int startRow = (pageNum-1) * qnaLimit;
+				
+				List<QnaVO> qnaList = service.getQnaList(member_id, startRow, qnaLimit);
+				
+				int listCount = service.getQnaListCount(member_id);
+				int pageListLimit = 10;
+				int maxPage = listCount/qnaLimit + (listCount%qnaLimit!=0? 1 : 0);
+				int startPage = (pageNum-1) / pageListLimit * pageListLimit + 1;
+				int endPage = startPage * pageListLimit - 1;
+				if(endPage>maxPage) {
+					endPage = maxPage;
+				}
+				
+				// PageInfo 객체 생성 후 페이징 처리 정보 저장
+				PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
+				
+				model.addAttribute("qnaList", qnaList);
+				model.addAttribute("pageInfo", pageInfo);
+				
+				return "mypage/qna_list";
+			} else { // 로그인X
+				model.addAttribute("msg", "로그인 후 이용가능 합니다!");
+				return "fail_back";
+			}
+		}
+		// 마이페이지 - 1:1문의 상세보기
+		@GetMapping(value = "QnaDetail.my")
+		public String qnaDetail(HttpSession session, Model model,
+				@RequestParam int qna_idx) {
+			QnaVO qna = service.getQnaDetail(qna_idx);
+			
+			model.addAttribute("qna", qna);
+			
+			return "mypage/qna_view";
+		}
+		// 마이페이지 - 1:1문의 삭제하기 폼
+		@GetMapping(value = "QnaDeleteForm.my")
+		public String qnaDeleteForm(HttpSession session, Model model) {
+			
+			String member_id = (String)session.getAttribute("sId");
+			if(member_id != "null") {
+				return "mypage/qna_delete";
+			} else {
+				model.addAttribute("msg","로그인중인 관리자만 이용가능합니다.");
+				return "fail_back";
+			}
+		}
+		// 마이페이지 - 1:1문의 삭제 작업
+		@PostMapping(value = "QnaDeletePro.my")
+		public String qnaDeletePro(HttpSession session, Model model, 
+				@RequestParam int qna_idx) {
+			
+			int deleteCount = service.deleteQna(qna_idx);
+			
+			if(deleteCount > 0 ) {
+				model.addAttribute("msg", "답변이 정상적으로 삭제되었습니다.");
+				return "redirect:/QnaList.ad";
+			} else {
+				model.addAttribute("msg", "문의글 삭제작업을 실패하였습니다.");
+				return "fail_back";
+			}
+		}
+		
+		// 마이페이지 - 1:1문의 관리자 답변 폼
+			@GetMapping(value = "QnaReplyForm.my")
+			public String qnaReplyForm(HttpSession session, Model model) {
+				String member_id = (String)session.getAttribute("sId");
+				if(member_id != null) {
+					return "mypage/qna_reply";
+				} else {
+					model.addAttribute("msg","로그인중인 관리자만 이용가능합니다.");
+					return "fail_back";
+				}
+			}
+		
+		// 마이페이지 - 1:1문의 관리자 답변 작업
+		@PostMapping(value = "QnaReplyForm.my")
+		public String qnaReplyPro(HttpSession session, Model model, 
+				@ModelAttribute QnaVO qna) {
+			
+			int insertCount = service.replyQna(qna);
+			
+			if(insertCount > 0) {
+				return "redirect:/QnaList.my";
+			} else {
+				model.addAttribute("msg", "1:1문의 답변을 실패하였습니다.");
+				return "fail_back";
+			}
+		}
+		// 마이페이지 - 예약내역목록->영화상세창의 리뷰메뉴로 이동
+		@GetMapping(value = "ReserveToReview.my")
+		public String toReview(HttpSession session, Model model, 
+				@RequestParam int res_idx) {
+			
+			int movie_idx = service.findMovie_idx(res_idx);
+			
+			return "redirect:/MovieDetail.mv?movie_idx=" + movie_idx +"#review";
+		}
 	
 }

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import com.project.Smallbox.vo.CouponVO;
 import com.project.Smallbox.vo.MemberVO;
 import com.project.Smallbox.vo.MovieVO;
+import com.project.Smallbox.vo.QnaVO;
 import com.project.Smallbox.vo.StarMovieVO;
 import com.project.Smallbox.vo.TheaterVO;
 
@@ -87,6 +88,17 @@ public interface AdminMapper {
 
 	// 관리자 페이지 - 상영일정 삭제 비지니스 로직
 	public int deleteTheater(int theater_idx);
+
+	// 관리자페이지 - (관리자용) 1:1문의 내역
+	public List<QnaVO> selectAdminQnaList(
+			@Param("startRow") int startRow, 
+			@Param("qnaLimit") int qnaLimit);
+
+	// 관리자 페이지 - (관리자용) 1:1문의내역 개수 조회
+	public int selectAdminQnaListCount();
+
+	// 관리자 페이지 - (관리자용) 1:1문의 상세 조회
+	public QnaVO selectAdminQna(int qna_idx);
 
 
 }

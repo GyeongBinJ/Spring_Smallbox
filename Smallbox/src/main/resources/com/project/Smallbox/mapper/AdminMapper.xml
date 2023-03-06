@@ -256,4 +256,25 @@
 			FROM theater
 			WHERE theater_idx = #{theater_idx}
 	</delete>
+	
+<!-- 	관리자페이지 - (관리자용) 1:1문의 내역 -->
+	<select id="selectAdminQnaList" resultType="com.project.Smallbox.vo.QnaVO">
+		SELECT *
+			FROM qna
+			ORDER BY qna_re_ref DESC, qna_re_seq ASC
+			LIMIT #{startRow}, #{qnaLimit}
+	</select>
+	
+<!-- 	관리자 페이지 - (관리자용) 1:1문의내역 개수 조회 -->
+	<select id="selectAdminQnaListCount" resultType="int">
+		SELECT COUNT(*)
+			FROM qna
+	</select>
+	
+<!-- 	관리자 페이지 - (관리자용) 1:1문의 상세 조회 -->
+	<select id="selectAdminQna" resultType="com.project.Smallbox.vo.QnaVO">
+		SELECT *
+			FROM qna
+			WHERE qna_idx = #{qna_idx}
+	</select>
 </mapper>
