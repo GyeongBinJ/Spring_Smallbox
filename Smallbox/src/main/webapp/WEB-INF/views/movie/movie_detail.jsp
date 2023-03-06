@@ -300,7 +300,8 @@
 		<span class="movieWrapper_title"> <!-- 영화 제목 영역 -->
 			${movie.movie_title }
 		</span> 
-		<img src="<%=request.getContextPath() %>/upload/${movie.movie_real_picture}" class="card-img-top" alt="..." >
+<%-- 		<img src="<%=request.getContextPath() %>/upload/${movie.movie_real_picture}" class="card-img-top" alt="..." > --%>
+		<img src="${pageContext.request.contextPath }/resources/upload/${movie.movie_picture}" class="card-img-top" alt="...">
 	
 		<span class="movieWrapper_viewer">누적 관객 수 | ${movie.movie_viewer }</span>
 		<hr>
