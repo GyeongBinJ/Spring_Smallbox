@@ -31,11 +31,13 @@ public class NoticeController {
 	@Autowired
 	private NoticeService service;
 	
+	// 공지 작성 글 쓰기 폼 불러오기
 	@GetMapping(value = "/Admin_notice_write.ad")
 	public String write() {
 		
 		return "admin/admin_notice_insert";
 	}
+	// 공지 작성 글 쓰기 작업 비즈니스 로직 요청
 	@PostMapping(value = "/Admin_notice_writePro.ad")
 	public String writePro(@ModelAttribute NoticeVO notice, HttpSession session, Model model) {
 		
@@ -66,11 +68,11 @@ public class NoticeController {
 		notice.setNotice_file(realFileName); // UUID를 결합한 파일명을 객체에 저장
 		notice.setNotice_real_file(""); // 삭제할 컬럼이므로 임시로 널스트링값 저장
 		
-		// 영화 등록
+		
 		int insertCount = service.registNotice(notice);
 		
-		if(insertCount > 0) { // 등록 성공시
-			// 해당 파일을 실제 위치로 이동
+		if(insertCount > 0) { 
+			
 			try {
 				mFile.transferTo(new File(saveDir, realFileName));
 				System.out.println("saveDir : " + saveDir + ", realFileName : " + realFileName);
@@ -79,9 +81,9 @@ public class NoticeController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			// 관리자 영화 목록으로 이동
+			// 글쓰기 성공 시 공지 목록으로 이동
 			return "redirect:/Notice_list.ad";
-		} else { // 등록 실패시
+		} else { 
 			model.addAttribute("msg", "공지 등록 실패!");
 			return "fail_back";
 		}
@@ -115,6 +117,7 @@ public class NoticeController {
 		
 		return "admin/notice_list";
 	}
+	// 공지 상세 보기
 	@GetMapping(value = "/NoticeDetail.ad")
 	public String detail(@RequestParam int notice_idx, Model model) {
 		
@@ -124,11 +127,13 @@ public class NoticeController {
 		
 		return "notice_view";
 	}
+	// 공지 삭제 폼 요청
 	@GetMapping(value = "/NoticeDeleteForm.ad")
 	public String delete() {
 		
 		return "admin/notice_delete";
 	}
+	// 공지 삭제 비즈니스 로직 요청
 	@PostMapping(value = "/NoticeDeletePro.ad")
 	public String deletePro(@RequestParam int notice_idx, Model model, HttpSession session) {
 		
@@ -154,6 +159,7 @@ public class NoticeController {
 			return "fail_back";
 		}
 	}
+	// 공지 수정 폼 요청
 	@GetMapping(value = "/NoticeModifyForm.ad")
 	public String modify(@RequestParam int notice_idx, Model model) {
 		
@@ -163,6 +169,7 @@ public class NoticeController {
 		
 		return "admin/admin_notice_modify";
 	}
+	// 공지 수정 비즈니스 로직 요청
 	@PostMapping(value = "/Admin_notice_modifyPro.ad")
 	public String modifyPro(@ModelAttribute NoticeVO notice, @RequestParam(defaultValue = "1") int pageNum,
 							Model model, HttpSession session,
@@ -210,20 +217,20 @@ public class NoticeController {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				// 관리자 영화 목록으로 이동
+				
 				return "redirect:/Notice_list.ad?pageNum=" + pageNum;
-			} else { // 등록 실패시
+			} else {
 				model.addAttribute("msg", "글 수정 실패!");
 				return "fail_back";
 			}
-		} else { // 파일 수정 없이 영화 수정
-			// 영화 등록
+		} else { 
+			
 			int updateCount = service.modifyNotice(notice);
 			
-			if(updateCount > 0) { // 등록 성공시
-				// 관리자 영화 목록으로 이동
+			if(updateCount > 0) { 
+				
 				return "redirect:/Notice_list.ad?pageNum=" + pageNum;
-			} else { // 등록 실패시
+			} else { 
 				model.addAttribute("msg", "공지 글 수정 실패!");
 				return "fail_back";
 			}
@@ -231,6 +238,7 @@ public class NoticeController {
 		
 	}
 	
+	// Ajax를 활용하여 공지 수정시 파일을 삭제할 수 있도록 함
 	@ResponseBody
 	@PostMapping("/DeleteFile")
 	public void deleteFile(
@@ -241,30 +249,25 @@ public class NoticeController {
 		response.setCharacterEncoding("UTF-8");
 		
 		try {
-			// 영화 번호가 일치할 경우 파일 삭제
+			
 			int deleteCount = service.removeFile(notice_idx, notice_file);
 			
-			// DB 파일 삭제 성공 시 실제 파일 삭제
-			if(deleteCount > 0) { // 삭제 성공
-				String uploadDir = "/resources/upload"; // 가상의 업로드 경로(루트(webapp) 기준)
+			
+			if(deleteCount > 0) { 
+				String uploadDir = "/resources/upload"; 
 				String saveDir = session.getServletContext().getRealPath(uploadDir);
 				
 				Path path = Paths.get(saveDir + "/" + notice_file);
 				Files.deleteIfExists(path);
 				
 				response.getWriter().print("true");
-			} else { // 삭제 실패
+			} else { 
 				response.getWriter().print("false");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
-	
 	
 	
 }
