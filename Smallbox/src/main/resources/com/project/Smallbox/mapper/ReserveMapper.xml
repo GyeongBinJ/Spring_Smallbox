@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.Smallbox.mapper.ReserveMapper">
+	<select id="selectMovieList" resultType="com.project.Smallbox.vo.MovieVO">
+		SELECT * FROM movie
+	</select>
+	
+	<select id="selectTheaterList" resultType="com.project.Smallbox.vo.TheaterVO">
+		SELECT * 
+		FROM theater
+		WHERE theater_title = #{movie_title}
+			AND theater_date = #{reserve_date}
+	</select>
+
+</mapper>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <head>
  <title>SMALLBOX</title>
@@ -40,24 +41,28 @@
 	 });
 		 
 	 <!-- 첨부파일 삭제 -->
-	 function deletePoster(movie_pictue) {
-		$.ajax({
-			type: "POST",
-			url: "PosterDelete",
-			data: {
-				"movie_idx" : ${movie.movie_idx},
-				"movie_pictue" : movie_pictue
-			},
-			success: function(data) {
-				if(data == "true") {
-					// 삭제 성공 시 파일명 표시 위치의 기존 항목을 제거하고
-					// 파일 업로드를 위한 "파일 선택" 버튼 항목 표시
-					$("#fileArea").html('<input type="file" name="file" id="file">');
-				} else if(data == "false") {
-					alert("일시적인 오류로 파일 삭제에 실패했습니다!");
+	 function deletePoster(movie_picture) {
+		if(confirm("첨부된 파일을 삭제 하시겠습니까?")) { // 확인 누르면 true, 취소 누르면 false
+			$.ajax({
+				type: "POST",
+				url: "PosterDelete",
+				data: {
+					"movie_idx" : ${movie.movie_idx},
+					"movie_pictue" : movie_picture
+				},
+				success: function(data) {
+					if(data == "true") {
+						// 삭제 성공 시 파일명 표시 위치의 기존 항목을 제거하고
+						// 파일 업로드를 위한 "파일 선택" 버튼 항목 표시
+						$("#fileArea").html('<input type="file" name="file" id="file">');
+					} else if(data == "false") {
+						alert("일시적인 오류로 파일 삭제에 실패했습니다!");
+					}
 				}
-			}
-		});
+			});
+		} else {
+	        return false;
+	    }
 	}
 </script>
 </head>
@@ -157,8 +162,11 @@
 						<div id="fileArea">
 						<c:choose>
 							<c:when test="${not empty movie.movie_picture }">
-<!-- 										<label><input type="file" name="file"></label> -->
-								<img src="${pageContext.request.contextPath }/resources/upload/${movie.movie_picture}" width="300" height="350">
+								<c:set var="nameLength" value="${fn:length(movie.movie_picture)}" />
+								<c:set var="indexOf_" value="${fn:indexOf(movie.movie_picture, '_') }" />
+								<c:set var="fileName" value="${fn:substring(movie.movie_picture, indexOf_ + 1, nameLength) }" />
+								<img src="${pageContext.request.contextPath }/resources/upload/${movie.movie_picture}" width="50" height="50">
+								<span id="posterName">${fileName}</span>
 								<input type="button" value="삭제" onclick="deletePoster('${movie.movie_picture }')">
 								<input type="hidden" name="movie_picture" value="${movie.movie_picture }">
 							</c:when>

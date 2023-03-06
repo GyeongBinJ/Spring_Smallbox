@@ -12,6 +12,7 @@ import com.project.Smallbox.vo.CouponVO;
 import com.project.Smallbox.vo.MemberVO;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.StarMovieVO;
+import com.project.Smallbox.vo.TheaterVO;
 
 @Service
 public class AdminService {
@@ -90,7 +91,41 @@ public class AdminService {
 	public int removeCoupon(String member_id, Date coupon_end_date) {
 		return mapper.deleteCoupon(member_id, coupon_end_date);
 	}
-	
-	
+
+	// 관리자 페이지 - 상영일정 목록 조회
+	public List<TheaterVO> getTheaterList(String keyword, int startRow, int listLimit) {
+		return mapper.selectTheaterList(keyword, startRow, listLimit);
+	}
+
+	// 관리자 페이지 - 등록된 상영일정 갯수 조회
+	public int getTheaterListCount(String keyword) {
+		return mapper.selectTheaterListCount(keyword);
+	}
+
+	// 관리자 페이지 - 상영일정 등록
+	public int insertTheater(TheaterVO theater) {
+		return mapper.insertAdminTheater(theater);
+	}
+
+	// 관리자 페이지 - 상영일정 등록을 위한 영화 목록 조회
+	public List<MovieVO> getMovieList() {
+		return mapper.selectMovie2();
+	}
+
+	// 관리자 페이지 - 상영일정 상세정보 조회
+	public TheaterVO getTheaterDetail(int theater_idx) {
+		return mapper.selectTheater(theater_idx);
+	}
+
+	// 관리자 페이지 - 상영일정 수정 비지니스 로직
+	public int modifyTheater(TheaterVO theater) {
+		return mapper.updateTheater(theater);
+	}
+
+	// 관리자 페이지 - 상영일정 삭제 비지니스 로직
+	public int deleteTheater(int theater_idx) {
+		return mapper.deleteTheater(theater_idx);
+	}
+
 }
 

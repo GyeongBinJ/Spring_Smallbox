@@ -9,6 +9,7 @@ import com.project.Smallbox.vo.CouponVO;
 import com.project.Smallbox.vo.MemberVO;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.StarMovieVO;
+import com.project.Smallbox.vo.TheaterVO;
 
 public interface AdminMapper {
 
@@ -65,6 +66,27 @@ public interface AdminMapper {
 	public int deleteCoupon(
 			@Param("member_id") String member_id, 
 			@Param("coupon_end_date") Date coupon_end_date);
+
+	// 관리자 페이지 - 상영일정 목록 조회
+	public List<TheaterVO> selectTheaterList(@Param("keyword") String keyword, @Param("startRow") int startRow, @Param("listLimit") int listLimit);
+
+	// 관리자 페이지 - 등록된 상영일정 갯수 조회
+	public int selectTheaterListCount(String keyword);
+
+	// 관리자 페이지 - 상영일정 등록
+	public int insertAdminTheater(TheaterVO theater);
+
+	// 관리자 페이지 - 상영일정 등록을 위한 영화 목록 조회
+	public List<MovieVO> selectMovie2();
+
+	// 관리자 페이지 - 상영일정 상세정보 조회
+	public TheaterVO selectTheater(int theater_idx);
+
+	// 관리자 페이지 - 상영일정 수정 비지니스 로직
+	public int updateTheater(TheaterVO theater);
+
+	// 관리자 페이지 - 상영일정 삭제 비지니스 로직
+	public int deleteTheater(int theater_idx);
 
 
 }
