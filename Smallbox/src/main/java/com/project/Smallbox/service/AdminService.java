@@ -1,5 +1,6 @@
 package com.project.Smallbox.service;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -7,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.Smallbox.mapper.AdminMapper;
+import com.project.Smallbox.vo.CouponVO;
+import com.project.Smallbox.vo.MemberVO;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.StarMovieVO;
 
@@ -56,5 +59,38 @@ public class AdminService {
 		return mapper.deletePoster(movie_idx, movie_pictue);
 	}
 
+	public List<MemberVO> getMemberList(String keyword, int startRow, int listLimit) {
+		return mapper.selectMemberList(keyword, startRow, listLimit);
+	}
+
+	public int getMemberListCount(String keyword) {
+		return mapper.selectMemberListCount(keyword);
+	}
+
+	public List<CouponVO> getTotalCouponList(String keyword, int startRow, int listLimit) {
+		return mapper.selectCouponListTotal(keyword, startRow, listLimit);
+	}
+
+	public int getCouponListCount(String keyword) {
+		return mapper.selectCouponListCount(keyword);
+	}
+
+	public int modifyCoupon(CouponVO coupon) {
+		return mapper.updateCoupon(coupon);
+	}
+
+	public List<CouponVO> getCouponList(String member_id) {
+		return mapper.selectCouponList(member_id);
+	}
+
+	public int registCoupon(CouponVO coupon) {
+		return mapper.insertCoupon(coupon);
+	}
+
+	public int removeCoupon(String member_id, Date coupon_end_date) {
+		return mapper.deleteCoupon(member_id, coupon_end_date);
+	}
+	
+	
 }
 

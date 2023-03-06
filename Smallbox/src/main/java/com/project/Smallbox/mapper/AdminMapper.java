@@ -1,9 +1,12 @@
 package com.project.Smallbox.mapper;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.project.Smallbox.vo.CouponVO;
+import com.project.Smallbox.vo.MemberVO;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.StarMovieVO;
 
@@ -38,6 +41,30 @@ public interface AdminMapper {
 			@Param("movie_idx") int movie_idx, 
 			@Param("movie_pictue") String movie_pictue);
 
+	public List<MemberVO> selectMemberList(
+			@Param("keyword") String keyword, 
+			@Param("startRow") int startRow, 
+			@Param("listLimit") int listLimit);
+
+	public int selectMemberListCount(String keyword);
+
+	public List<CouponVO> selectCouponListTotal(
+			@Param("keyword") String keyword, 
+			@Param("startRow") int startRow, 
+			@Param("listLimit") int listLimit);
+
+	public int selectCouponListCount(String keyword);
+
+	public int updateCoupon(CouponVO coupon);
+
+	public List<CouponVO> selectCouponList(
+			@Param("member_id") String member_id);
+
+	public int insertCoupon(CouponVO coupon);
+
+	public int deleteCoupon(
+			@Param("member_id") String member_id, 
+			@Param("coupon_end_date") Date coupon_end_date);
 
 
 }

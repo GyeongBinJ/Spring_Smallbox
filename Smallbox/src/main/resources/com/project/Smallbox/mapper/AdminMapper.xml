@@ -97,4 +97,97 @@
 			WHERE movie_idx = #{movie_idx}
 	</update>
 	
+	
+	<!-- 관리자페이지 - 회원 목록 조회 -->
+	<select id="selectMemberList" resultType="com.project.Smallbox.vo.MemberVO">
+		SELECT * 
+			FROM member 
+		<if test = "!keyword.equals('')">
+               WHERE member_id LIKE '%${keyword}%'
+        </if>
+			ORDER BY 
+				member_idx ASC
+			LIMIT
+				#{startRow}
+				, #{listLimit}
+	</select>
+		
+	<!-- 관리자 페이지 - 회원 수 조회 -->
+	<select id ="selectMemberListCount" resultType="int">
+		SELECT COUNT(*)
+			FROM member
+			<if test="!keyword.equals('')">
+				WHERE
+					member_id LIKE '%${keyword}%'
+			</if>
+	</select>
+	
+	<!-- 관리자페이지 - 전체 쿠폰 목록 조회 -->
+	<select id="selectCouponListTotal" resultType="com.project.Smallbox.vo.CouponVO">
+		SELECT * 
+			FROM coupon 
+		<if test = "!keyword.equals('')">
+               WHERE coupon_type LIKE '%${keyword}%'
+        </if>
+			ORDER BY 
+				coupon_idx ASC
+			LIMIT
+				#{startRow}
+				, #{listLimit}
+	</select>
+		
+	<!-- 관리자 페이지 - 쿠폰 개수 조회 -->
+	<select id ="selectCouponListCount" resultType="int">
+		SELECT COUNT(*)
+			FROM coupon
+			<if test="!keyword.equals('')">
+				WHERE
+					coupon_type LIKE '%${keyword}%'
+			</if>
+	</select>
+	
+<!-- 	관리자 페이지 - 쿠폰 수정 -->
+	<update id="updateCoupon">
+		UPDATE coupon
+			SET
+				coupon_type = #{coupon_type}
+				, coupon_rate = #{coupon_rate}
+				, coupon_end_date = #{coupon_end_date}
+			WHERE
+				coupon_idx = #{coupon_idx}
+	</update>
+	
+<!-- 	관리자 페이지 - 회원이 가지고 있는 쿠폰 목록 조회 -->
+	<select id="selectCouponList" resultType="com.project.Smallbox.vo.CouponVO">
+		SELECT *
+			FROM coupon
+               WHERE member_id = #{member_id}
+			ORDER BY 
+				coupon_idx ASC
+	</select>
+	
+	<!-- 관리자 페이지 - 쿠폰 등록 -->
+	<insert id="insertCoupon">
+		<selectKey keyProperty="coupon_idx" resultType="int" order="BEFORE">
+			SELECT MAX(coupon_idx) FROM coupon
+		</selectKey>
+		INSERT 
+			INTO coupon 
+			VALUES (
+				#{member_id}
+				,#{coupon_idx} + 1
+				,#{coupon_type}
+				,#{coupon_rate}
+				,now()
+				,#{coupon_end_date}
+			)
+	</insert>
+	
+	<!-- 관리자 페이지 - 쿠폰 삭제 -->
+	<delete id="deleteCoupon">
+		DELETE 
+			FROM coupon
+			WHERE member_id = #{member_id}
+			AND coupon_end_date = #{coupon_end_date}
+	</delete>
 </mapper>
