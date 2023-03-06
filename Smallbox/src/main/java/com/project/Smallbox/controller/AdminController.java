@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.project.Smallbox.service.AdminService;
+import com.project.Smallbox.vo.CouponVO;
+import com.project.Smallbox.vo.MemberVO;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.PageInfo;
 import com.project.Smallbox.vo.StarMovieVO;
@@ -274,6 +277,155 @@ public class AdminController {
 	
 	// ---------------------------------- 관리자 페이지 - 영화 관리 끝!
 	
+	// 관리자 페이지 - 회원 목록
+	@GetMapping("/MemberList.ad") // 회원목록
+	public String memberListTotal(Model model,
+				HttpSession session, 
+				@RequestParam(defaultValue = "") String keyword,
+				@RequestParam(defaultValue = "1") int pageNum) {
+		String id = (String)session.getAttribute("sId");
+		if(id == null || id.equals("") || !id.equals("admin")) {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "fail_back";
+		} else {
+//			 ---------------------------------------------------------------------------
+			int listLimit = 10; 
+			int startRow = (pageNum - 1) * listLimit; // 조회 시작 행번호 계산
+
+			// ---------------------------------------------------------------------------
+			List<MemberVO> memberList = service.getMemberList(keyword, startRow, listLimit);
+			// ---------------------------------------------------------------------------
+			// 페이징 처리
+			// 한 페이지에서 표시할 페이지 목록(번호) 갯수 계산
+			int listCount = service.getMemberListCount(keyword);
+			System.out.println("총 회원 수 : " + listCount);
+			
+			// 2. 한 페이지에서 표시할 페이지 목록 갯수 설정
+			int pageListLimit = 10; 
+			
+			// 3. 전체 페이지 목록 수 계산
+			int maxPage = listCount / listLimit 
+							+ (listCount % listLimit == 0 ? 0 : 1); 
+			
+			// 4. 시작 페이지 번호 계산
+			int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+			
+			// 5. 끝 페이지 번호 계산
+			int endPage = startPage + pageListLimit - 1;
+			
+			// 6. 만약, 끝 페이지 번호(endPage)가 전체(최대) 페이지 번호(maxPage) 보다
+			//    클 경우, 끝 페이지 번호를 최대 페이지 번호로 교체
+			if(endPage > maxPage) {
+				endPage = maxPage;
+			}
+			
+			// PageInfo 객체 생성 후 페이징 처리 정보 저장
+			PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
+			model.addAttribute("memberList", memberList);
+			model.addAttribute("pageInfo", pageInfo);
+			
+		return "admin/admin_member";
+		}
+	}
+	
+	// 관리자 페이지 - 쿠폰 목록
+		@GetMapping("/CouponListTotal.ad") // 회원목록
+		public String couponListTotal(Model model,
+					HttpSession session, 
+					@RequestParam(defaultValue = "") String keyword,
+					@RequestParam(defaultValue = "1") int pageNum) {
+			String id = (String)session.getAttribute("sId");
+			if(id == null || id.equals("") || !id.equals("admin")) {
+				model.addAttribute("msg", "잘못된 접근입니다!");
+				return "fail_back";
+			} else {
+//				 ---------------------------------------------------------------------------
+				int listLimit = 10; 
+				int startRow = (pageNum - 1) * listLimit; // 조회 시작 행번호 계산
+
+				// ---------------------------------------------------------------------------
+				List<CouponVO> couponList = service.getTotalCouponList(keyword, startRow, listLimit);
+				// ---------------------------------------------------------------------------
+				// 페이징 처리
+				// 한 페이지에서 표시할 페이지 목록(번호) 갯수 계산
+				int listCount = service.getCouponListCount(keyword);
+				System.out.println("총 쿠폰 개수 : " + listCount);
+				
+				// 2. 한 페이지에서 표시할 페이지 목록 갯수 설정
+				int pageListLimit = 10; 
+				
+				// 3. 전체 페이지 목록 수 계산
+				int maxPage = listCount / listLimit 
+								+ (listCount % listLimit == 0 ? 0 : 1); 
+				
+				// 4. 시작 페이지 번호 계산
+				int startPage = (pageNum - 1) / pageListLimit * pageListLimit + 1;
+				
+				// 5. 끝 페이지 번호 계산
+				int endPage = startPage + pageListLimit - 1;
+				
+				// 6. 만약, 끝 페이지 번호(endPage)가 전체(최대) 페이지 번호(maxPage) 보다
+				//    클 경우, 끝 페이지 번호를 최대 페이지 번호로 교체
+				if(endPage > maxPage) {
+					endPage = maxPage;
+				}
+				
+				// PageInfo 객체 생성 후 페이징 처리 정보 저장
+				PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
+				model.addAttribute("couponList", couponList);
+				model.addAttribute("pageInfo", pageInfo);
+				
+			return "admin/admin_couponList_total";
+			}
+		}
+	
+	// 관리자 페이지 - 쿠폰 수정 폼 이동
+		@GetMapping("/CouponModify.ad")
+		public String couponModify() {
+			return "admin/admin_coupon_modify";
+		}
+		
+	// 관리자 페이지 - 쿠폰 수정 작업
+	@PostMapping(value = "/CouponModifyPro.ad")
+	public String couponModifyPro(
+			@ModelAttribute CouponVO coupon, 
+			@RequestParam(defaultValue = "") String member_id,
+			Model model, HttpSession session) {
+		String id = (String)session.getAttribute("sId");
+		if(id == null || id.equals("") || !id.equals("admin")) {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "fail_back";
+		} else {
+			int updateCount = service.modifyCoupon(coupon);
+			
+			if(updateCount > 0) { 
+				// 해당 회원에 해당하는 쿠폰 목록으로 이동
+				return "redirect:/CouponList.ad?member_id=" + member_id;
+			} else { 
+				model.addAttribute("msg", "쿠폰 수정 실패!");
+				return "fail_back";
+			}
+		}
+	}
+	
+	// 각 회원이 가지고 있는 쿠폰목록
+	@GetMapping("/CouponList.ad")
+	public String couponList(Model model,
+		HttpSession session, 
+		@RequestParam(defaultValue = "") String member_id
+		) {
+			String id = (String)session.getAttribute("sId");
+			if(id == null || id.equals("") || !id.equals("admin")) {
+				model.addAttribute("msg", "잘못된 접근입니다!");
+				return "fail_back";
+			} else {
+				// ---------------------------------------------------------------------------
+				List<CouponVO> couponList = service.getCouponList(member_id);
+				model.addAttribute("couponList", couponList);
+				
+			return "admin/admin_coupon";
+			}
+    } 
 	// ---------------------------------- 관리자 페이지 - 극장관리
 	// 관리자 페이지 - 상영일정 등록 폼
 	@GetMapping(value = "/AdminTheaterInsertForm.ad")
@@ -379,5 +531,64 @@ public class AdminController {
 			return "fail_back";
 		}
 	}
+
 	
+	// 관리자페이지 - 쿠폰 등록
+	@GetMapping("/CouponInsert.ad")
+	public String couponInsert(HttpSession session, Model model) {
+		String id = (String)session.getAttribute("sId");
+		if(id == null || id.equals("") || !id.equals("admin")) {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "fail_back";
+		}
+		return "admin/admin_coupon_insert";
+	}
+	
+	// 관리자페이지 - 쿠폰 등록 비즈니스 로직
+	@PostMapping("/CouponInsertPro.ad")
+	public String couponInsertPro(
+		Model model,
+		HttpSession session,
+		@RequestParam(defaultValue = "") String member_id,
+		@ModelAttribute CouponVO coupon
+		) {
+			String id = (String)session.getAttribute("sId");
+			if(id == null || id.equals("") || !id.equals("admin")) {
+				model.addAttribute("msg", "잘못된 접근입니다!");
+				return "fail_back";
+			} else {
+				int insertCount = service.registCoupon(coupon);
+				if(insertCount > 0) {
+					return "redirect:/CouponList.ad?member_id=" + member_id;
+				} else { // 등록 실패시
+					model.addAttribute("msg", "쿠폰 등록 실패!");
+					return "fail_back";
+				}
+			
+			}
+		}
+	
+	// 관리자페이지 - 쿠폰 삭제
+	@GetMapping("/CouponDelete.ad")
+	public String couponDelete(
+			Model model,
+			HttpSession session,
+			@RequestParam(defaultValue = "") String member_id,
+			@RequestParam(defaultValue = "") Date coupon_end_date
+			) {
+		String id = (String)session.getAttribute("sId");
+		if(id == null || id.equals("") || !id.equals("admin")) {
+			model.addAttribute("msg", "잘못된 접근입니다!");
+			return "fail_back";
+		} else {
+			int deleteCount = service.removeCoupon(member_id, coupon_end_date);
+			if(deleteCount > 0) {
+				return "redirect:/CouponList.ad?member_id=" + member_id;
+			} else {
+				model.addAttribute("msg", "쿠폰 삭제 실패!");
+				return "fail_back";
+			}
+		}
+	}
+	// ---------------------------------- 관리자 페이지 - 쿠폰 끝!			
 }
