@@ -27,6 +27,7 @@ import com.project.Smallbox.vo.CouponVO;
 import com.project.Smallbox.vo.MemberVO;
 import com.project.Smallbox.vo.MovieVO;
 import com.project.Smallbox.vo.PageInfo;
+import com.project.Smallbox.vo.QnaVO;
 import com.project.Smallbox.vo.StarMovieVO;
 import com.project.Smallbox.vo.TheaterVO;
 
@@ -590,5 +591,43 @@ public class AdminController {
 			}
 		}
 	}
-	// ---------------------------------- 관리자 페이지 - 쿠폰 끝!			
+	// ---------------------------------- 관리자 페이지 - 쿠폰 끝!
+	
+	// 관리자페이지 - (관리자용) 1:1문의 내역
+	@GetMapping(value = "QnaList.ad")
+	public String qnaList(HttpSession session, Model model, 
+			@RequestParam(defaultValue = "1") int pageNum) {
+		
+			int qnaLimit = 10;
+			int startRow = (pageNum-1) * qnaLimit;
+			
+			List<QnaVO> qnaList = service.getAdminQnaList(startRow, qnaLimit);
+			
+			int listCount = service.getAdminQnaListCount();
+			int pageListLimit = 10;
+			int maxPage = listCount/qnaLimit + (listCount%qnaLimit!=0? 1 : 0);
+			int startPage = (pageNum-1) / pageListLimit * pageListLimit + 1;
+			int endPage = startPage * pageListLimit - 1;
+			if(endPage>maxPage) {
+				endPage = maxPage;
+			}
+			
+			// PageInfo 객체 생성 후 페이징 처리 정보 저장
+			PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
+			
+			model.addAttribute("qnaList", qnaList);
+			model.addAttribute("pageInfo", pageInfo);
+			
+			return "admin/admin_qna_list";
+	}
+	// 관리자페이지 - (관리자용) 1:1문의 상세보기
+	@GetMapping(value = "QnaDetail.ad")
+	public String qnaDetail(HttpSession session, Model model,
+			@RequestParam int qna_idx) {
+		QnaVO qna = service.getAdminQnaDetail(qna_idx);
+		
+		model.addAttribute("qna", qna);
+		
+		return "admin/admin_qna_view";
+	}
 }

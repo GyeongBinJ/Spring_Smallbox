@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.Smallbox.mapper.CommentMapper">
+
+	<select id="selectCommentList" resultType="com.project.Smallbox.vo.CommentVO">
+		SELECT * 
+			FROM comment 
+			WHERE movie_idx = #{movieIdx}
+	</select>
+	
+	<select id="selectStarAvg" resultType="double">
+		SELECT ROUND(AVG(c.comment_star), 1) 
+			FROM comment c 
+			JOIN movie m 
+			ON c.movie_idx = m.movie_idx 
+			WHERE c.movie_idx = #{movieIdx}
+			GROUP BY c.movie_idx
+	</select>
+	
+	<select id="selectUser" resultType="integer">
+			SELECT COUNT(member_id)
+				FROM comment 
+				WHERE movie_idx = #{movieIdx}  AND member_id = #{member_id} 
+	</select>
+	
+	<insert id="insertComment">
+		<selectKey keyProperty="comment_idx" resultType="int" order="BEFORE">
+			SELECT MAX(comment_idx) FROM comment
+		</selectKey>
+		INSERT INTO comment VALUES(
+				#{comment_idx} + 1
+				,#{movie_idx}
+				,#{member_id}
+				,#{comment_star}
+				,#{comment_content}
+				, now()
+				)
+	</insert>
+	
+	<delete id="deleteComment">
+		DELETE FROM comment WHERE comment_idx=#{commentIdx}
+	</delete>
+	
+	
+</mapper>
