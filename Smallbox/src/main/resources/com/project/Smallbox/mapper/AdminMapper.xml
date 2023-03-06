@@ -97,4 +97,71 @@
 			WHERE movie_idx = #{movie_idx}
 	</update>
 	
+	
+	<!-- 관리자 페이지 - 상영일정 목록 조회 -->
+	<select id="selectTheaterList" resultType="com.project.Smallbox.vo.TheaterVO">
+		SELECT * 
+				FROM theater 
+			<if test='!keyword.equals("")'>
+	               WHERE theater_title LIKE '%${keyword}%'
+	        </if>
+	        	ORDER BY theater_date DESC
+				LIMIT #{startRow}, #{listLimit}
+	</select>
+	
+	<!-- 관리자 페이지 - 등록된 상영일정 갯수 조회 -->
+	<select id="selectTheaterListCount" resultType="int">
+		SELECT COUNT(*) 
+			FROM theater
+		<if test='!keyword.equals("")'>
+               WHERE theater_title LIKE '%${keyword}%'
+        </if>
+	</select>
+	
+	<!-- 관리자 페이지 - 상영일정 등록 -->
+	<insert id="insertAdminTheater">
+		<selectKey keyProperty="theater_idx" resultType="int" order="BEFORE">
+				SELECT MAX(theater_idx) FROM theater
+			</selectKey>
+			INSERT 
+				INTO theater 
+				VALUES (
+					#{theater_idx} + 1
+					,#{theater_title}
+					,#{theater_date}
+					,#{theater_time}
+					,#{theater_seat_cnt}
+				)
+	</insert>
+	
+	<!-- 관리자 페이지 - 상영일정 등록을 위한 영화 목록 조회 -->
+	<select id="selectMovie2" resultType="com.project.Smallbox.vo.MovieVO">
+		SELECT * 
+			FROM movie
+	</select>
+	
+	<!-- 관리자 페이지 - 상영일정 상세정보 조회 -->
+	<select id="selectTheater" resultType="com.project.Smallbox.vo.TheaterVO">
+		SELECT * 
+			FROM theater 
+			WHERE theater_idx = #{theater_idx}
+	</select>
+	
+	<update id="updateTheater">
+		UPDATE theater
+			SET
+				theater_title = #{theater_title}
+				, theater_date = #{theater_date}
+				, theater_time = #{theater_time}
+				, theater_seat_cnt = #{theater_seat_cnt}
+			WHERE
+				theater_idx = #{theater_idx}	
+	</update>
+	
+	<!-- 관리자 페이지 - 상영일정 삭제 비지니스 로직 -->
+	<delete id="deleteTheater">
+		DELETE
+			FROM theater
+			WHERE theater_idx = #{theater_idx}
+	</delete>
 </mapper>
