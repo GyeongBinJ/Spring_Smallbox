@@ -153,34 +153,36 @@
 			WHERE qna_idx = #{qna_idx}
 	</select>
 	
+<!-- 	마이페이지 1:1문의 관리자 답변 작업 전, 원본글의 qna_re_ref, qna_re_seq 조정하는 작업 -->
+	<update id="updateOriginal">
+		UPDATE qna
+			SET
+				qna_re_seq = qna_re_seq + 1
+			WHERE
+				qna_re_ref = #{qna_re_ref}
+			AND
+				qna_re_seq > #{qna_re_seq}
+	</update>
+	
 <!-- 	마이페이지 1:1문의 관리자 답변 작업 -->
-<!-- 	<insert id="insertReply"> -->
-<!-- 		<selectKey keyProperty="qna_idx" resultType="int" order="BEFORE"> -->
+	<insert id="insertReply">
+		<selectKey keyProperty="qna_idx" resultType="int" order="BEFORE">
 <!-- 			가장 큰 문의글 번호(qna_idx) 조회 -->
-<!-- 			SELECT MAX(qna_idx) FROM qna -->
-<!-- 		</selectKey> -->
-<!-- 		<selectKey keyProperty="qna_re_ref, qna_re_seq" resultType="int" order="BEFORE"> -->
-<!-- 			UPDATE qna -->
-<!-- 				SET -->
-<!-- 					qna_re_seq = qna_re_seq + 1 -->
-<!-- 				WHERE -->
-<!-- 					qna_re_ref = #{qna_re_ref} -->
-<!-- 				AND -->
-<!-- 					qna_re_seq > #{qna_re_seq} -->
-<!-- 		</selectKey> -->
-<!-- 		INSERT  -->
-<!-- 			INTO qna  -->
-<!-- 			VALUES ( -->
-<!-- 				#{qna_idx} + 1 -->
-<!-- 				,#{qna_subject} -->
-<!-- 				,#{qna_content} -->
-<!-- 				,now() -->
-<!-- 				,#{qna_re_ref} -->
-<!-- 				,#{qna_re_lev} + 1 -->
-<!-- 				,#{qna_re_seq} + 1 -->
-<!-- 				,#{member_id} -->
-<!-- 			) -->
-<!-- 	</insert> -->
+			SELECT MAX(qna_idx) FROM qna
+		</selectKey>
+		INSERT 
+			INTO qna 
+			VALUES (
+				#{qna_idx} + 1
+				,#{qna_subject}
+				,#{qna_content}
+				,now()
+				,#{qna_re_ref}
+				,#{qna_re_lev} + 1
+				,#{qna_re_seq} + 1
+				,#{member_id}
+			)
+	</insert>
 	
 <!-- 	마이페이지 1:1문의글 삭제 작업 -->
 	<delete id="deleteQna">
@@ -197,4 +199,5 @@
 			ON m.movie_title=r.theater_title
 			WHERE res_idx= #{res_idx}
 	</select>
+	
 </mapper>

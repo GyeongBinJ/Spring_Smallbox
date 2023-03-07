@@ -79,6 +79,11 @@ public interface MyPageMapper {
 	// 마이페이지 - 1:1문의 상세보기
 	public QnaVO selectQna(int qna_idx);
 
+	// 마이페이지 1:1문의 관리자 답변 작업 전, 원본글의 qna_re_ref, qna_re_seq 조정하는 작업
+	public int updateOriginal(
+			@Param("qna_re_ref") int qna_re_ref,
+			@Param("qna_re_seq") int qna_re_seq);
+
 	// 마이페이지 - 1:1문의 관리자 답변 작업
 	public int insertReply(QnaVO qna);
 
@@ -90,4 +95,7 @@ public interface MyPageMapper {
 
 	// 마이페이지 - 예매취소 가능시간 판별 작업
 	public int selectTimeOk(int res_idx);
+
+
+
 }

@@ -149,7 +149,7 @@
 					${i }
 				</c:when>
 				<c:otherwise>
-					<a href="QnaList.ad?pageNum=${i }">${i }</a>
+					<a href="QnaList.my?pageNum=${i }">${i }</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>

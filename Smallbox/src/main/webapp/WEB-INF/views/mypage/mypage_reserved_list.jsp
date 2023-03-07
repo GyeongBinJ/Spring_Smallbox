@@ -27,8 +27,48 @@
 <link href="${pageContext.request.contextPath }/resources/assets/css/couponlist.css" rel="stylesheet">
   <!--   아이콘 -->
   <script src="https://code.iconify.design/iconify-icon/1.0.2/iconify-icon.min.js"></script>
-<!-- 	예매취소 전 확인confirm하는 Javascript -->
+  <!-- jquery -->
+  <script src="${pageContext.request.contextPath }/resources/js/jquery-3.6.3.js"></script>
+  <!-- jquery -->
   <script type="text/javascript">
+   //숫자를 행열 문자열로 변환하는 함수
+   function whereIsMySeat(seat, id) {
+	    var row = seat.charAt(0);
+	    var column = seat.substring(1);
+	    if(column == "10") {
+	    } else {
+	        if(column.startsWith("0")) {
+	            column = column.substring(1);
+	        }
+	    }
+	    console.log("row : " + row);
+	    console.log("column : " + column);
+	    switch(row){
+	        case "1":
+	            row="A";
+	            break;
+	        case "2":
+	            row="B";
+	            break;
+	        case "3":
+	            row="C";
+	            break;
+	        case "4":
+	            row="D";
+	            break;
+	        case "5":
+	            row="E";
+	            break;
+	        case "6":
+	            row="F";
+	            break;
+	        default:
+	            row="G";
+	    }
+		    rowColumn = row + "행 " + column + "열";
+		    document.getElementById(id).innerHTML = rowColumn;
+	}
+   //예매 취소 전 confirm
    function cancelReserve(idx,title) {
 	   if(confirm(title+"의 예매취소를 진행하시겠습니까? \n예약번호 : "+idx)) {
 		   alert("예매취소를 진행합니다.");
@@ -36,47 +76,6 @@
 	   } else {
 	   }
    }
-   function whereIsMySeat(res_seat) {
-	   let row = res_seat.charAt(0);
-	   let column = res_seat.substring(1);
-
-	   if (column === "10") {
-	   // Do nothing
-	   } else {
-	   if (column.startsWith("0")) {
-	   column = column.substring(1);
-	   }
-	   }
-
-	   console.log("row: " + row);
-	   console.log("column: " + column);
-
-	   switch (row) {
-	   case "1":
-	   row = "A";
-	   break;
-	   case "2":
-	   row = "B";
-	   break;
-	   case "3":
-	   row = "B";
-	   break;
-	   case "4":
-	   row = "C";
-	   break;
-	   case "5":
-	   row = "E";
-	   break;
-	   case "6":
-	   row = "F";
-	   break;
-	   default:
-	   row = "G";
-	   }
-
-	   res_seat = row + "행 " + column + "열";
-	   return res_seat;
-	   }
   </script>
 </head>
 <body>
@@ -159,8 +158,8 @@
 							<fmt:formatDate value="${reserve.res_date }" pattern="yy-MM-dd"/>
 						</td>
 						<td>${reserve.res_time }</td>
-						<td>
-							${reserve.res_seat }
+						<td id='${reserve.res_idx }'>
+							<script>whereIsMySeat('${reserve.res_seat }','${reserve.res_idx }')</script>
 						</td>
 						<td>
 							<button class="pagebtn" onclick="cancelReserve('${reserve.res_idx }','${reserve.theater_title }')"><iconify-icon icon="mdi:movie-off" style="color: #3b0b5f;"></iconify-icon></button>
