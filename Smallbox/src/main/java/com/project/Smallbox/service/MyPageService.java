@@ -106,6 +106,11 @@ public class MyPageService {
 		return mapper.selectQna(qna_idx);
 	}
 
+	// 마이페이지 - 1:1문의 관리자 답변 작업 전, 원본글의 qna_re_ref, qna_re_seq 조정하는 작업
+	public int updateOriginal(int qna_re_ref, int qna_re_seq) {
+		return mapper.updateOriginal(qna_re_ref, qna_re_seq);
+	}
+
 	// 마이페이지 - 1:1문의 관리자 답변 작업
 	public int replyQna(QnaVO qna) {
 		return mapper.insertReply(qna);
@@ -120,6 +125,8 @@ public class MyPageService {
 	public int findMovie_idx(int res_idx) {
 		return mapper.selectMovie_idx(res_idx);
 	}
+
+
 
 
 }

@@ -314,26 +314,35 @@ public class MyPageController {
 		}
 		
 		// 마이페이지 - 1:1문의 관리자 답변 폼
-			@GetMapping(value = "QnaReplyForm.my")
-			public String qnaReplyForm(HttpSession session, Model model) {
-				String member_id = (String)session.getAttribute("sId");
-				if(member_id != null) {
-					return "mypage/qna_reply";
-				} else {
-					model.addAttribute("msg","로그인중인 관리자만 이용가능합니다.");
-					return "fail_back";
-				}
+		@GetMapping(value = "QnaReplyForm.my")
+		public String qnaReplyForm(HttpSession session, Model model,
+				@RequestParam int qna_idx) {
+			String member_id = (String)session.getAttribute("sId");
+			if(member_id != null) {
+				QnaVO qna = service.getQnaDetail(qna_idx);//getQnaDetail메서드 그대로 이용
+				model.addAttribute("qna", qna);
+				return "mypage/qna_reply";
+			} else {
+				model.addAttribute("msg","로그인중인 관리자만 이용가능합니다.");
+				return "fail_back";
 			}
+		}
 		
 		// 마이페이지 - 1:1문의 관리자 답변 작업
-		@PostMapping(value = "QnaReplyForm.my")
-		public String qnaReplyPro(HttpSession session, Model model, 
-				@ModelAttribute QnaVO qna) {
+		@PostMapping(value = "QnaReplyPro.my")
+		public String qnaReplyPro(HttpSession session, Model model,
+				@ModelAttribute QnaVO qna,
+				@RequestParam int qna_re_ref,
+				@RequestParam int qna_re_seq) {
+			System.out.println(qna);
+			
+			service.updateOriginal(qna_re_ref, qna_re_seq);//update문으로 원본글 ref,seq조정 작업
 			
 			int insertCount = service.replyQna(qna);
 			
 			if(insertCount > 0) {
-				return "redirect:/QnaList.my";
+				return "redirect:/QnaList.ad";
+				
 			} else {
 				model.addAttribute("msg", "1:1문의 답변을 실패하였습니다.");
 				return "fail_back";

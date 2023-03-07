@@ -70,6 +70,7 @@
 	<form action="QnaReplyPro.my" name="qnaForm" method="post" style="margin-left:200px">
 		<!-- 입력받지 않은 글번호, 페이지번호 hidden 속성으로 전달 -->
 			<input type="hidden" name="qna_idx" value="${param.qna_idx }" >
+			<input type="hidden" name="member_id" value="${sessionScope.sId }" >
 			<input type="hidden" name="pageNum" value="${param.pageNum }" >
 			<!-- 답글 작성에 필요한 정보도 hidden 속성으로 전달 -->
 			<input type="hidden" name="qna_re_ref" value="${qna.qna_re_ref }" >
