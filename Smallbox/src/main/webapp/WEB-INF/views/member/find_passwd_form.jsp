@@ -22,7 +22,7 @@
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-<!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- -->  
+<!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- --> 
 <style type="text/css">
 .btn_area {
    margin-top: 30px;
@@ -59,10 +59,28 @@ input {
    width: 200px;
    height: 30px;
 }
-</style>  
-
-</style>  
-<title>스몰박스 - 로그인</title>
+</style>
+<title>스몰박스 - 비밀번호 찾기</title>
+<script src="http://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+window.onload = function() {
+	document.getElementById('submit').onclick = function() {
+		if ( document.pfrm.member_id.value.trim() == '' ) {
+			alert( 'ID를 입력해주세요' );
+			return false;
+		} else if (document.pfrm.member_mail.value.trim() == '') {
+			
+		}
+		if ( document.pfrm.member_mail.value.trim() == '' ) {
+			alert( '메일을 입력해주세요' );
+			return false;
+		}
+		alert("이메일 전송이 완료되었습니다.")
+		
+		document.pfrm.submit();
+	}
+}
+</script>
 </head>
 <body>
 <!-- TOP -->
@@ -71,56 +89,51 @@ input {
 </header>
 <!-- TOP -->
 <!-- ======= Breadcrumbs ======= -->
-	<section class="breadcrumbs">
-	  <div class="container">
-	
-	    <div class="d-flex justify-content-between align-items-center">
-	      <h2>로그인</h2>
-	      <ol>
-	        <li><a href="./">Home</a></li>
-	        <li>Login</li> 
-	      </ol>
-	    </div>
-	
-	  </div>
-	</section>
+   <section class="breadcrumbs">
+     <div class="container">
+   		
+       <div class="d-flex justify-content-between align-items-center">
+         <h2>비밀번호 찾기</h2>
+         <ol>
+           <li><a href="./">Home</a></li>
+           <li>비밀번호 찾기</li> 
+         </ol>
+       </div>
+   
+     </div>
+   </section>
 <!-- ======= Breadcrumbs ======= -->
-
-<!--=========== Login 본문 =================-->
-
-<form action="MemberLoginPro.sm" method="post" style="margin-top: 100px;">   
-   <div align="center">
-      <div class="welcome">
-         <img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
-      </div>
-      <table border="2"  class="table">
+<form action="FindPasswdPro.sm" method="post" style="margin-top: 100px;" name="pfrm">
+	<div align="center">
+		<div class="welcome">
+			<img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
+		</div>
+		<table border="2" class="table">
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="member_id" required="required" value="${sessionScope.sId }"></td>
-			</tr>	
-			<tr>
-				<th>패스워드</th>
-				<td><input type="password" name="member_passwd" required="required"></td>
-			</tr>	
-		</table>
-			<tr class="submit"	style="text-align: center">
-				<td class="btn_login">
-					<input type="submit" value="로그인"  class="btn-log" style="border-radius: 10px;">
+				<td>
+					<input type="text" name="member_id" id="member_id" placeholder="아이디를 입력하세요." required="required">
 				</td>
 			</tr>
-		<div class="btn_area">
-       		<a href="FindIdForm.sm">아이디 찾기</a> | 
-       		<a href="FindPasswdForm.sm">비밀번호 찾기</a> | 
-       		<a href="MemberTermsForm.sm">회원가입</a>
-       	</div>
+			<tr>
+				<th>이메일</th>
+				<td>
+					<input type="text" name="member_email" id="member_email" placeholder="메일을 입력하세요." required="required">
+				</td>
+			</tr>
+		</table>
+		<tr class="submit" style="text-align: center; ">
+			<td class="btn_login">
+				<button type="submit" id="submit" class="btn-log">비밀번호 찾기</button>
+				<br>
+			</td>
+		</tr>
 	</div>
 </form>
-<!--=========== Login 본문 끝=================-->
-
-<!-- ---------------footer------------- -->
-<footer id="footer" style="margin-top: 120px;">
+<!-- BOTTOM -->
+<header>
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
-</footer>
-<!-- ---------------footer------------- -->
+</header>
+<!-- BOTTOM -->
 </body>
 </html>

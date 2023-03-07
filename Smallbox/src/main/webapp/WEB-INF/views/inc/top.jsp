@@ -160,8 +160,8 @@ function confirm_logout() {
 		   	 <ul>
 					<li class="dropdown"><a href="#" style="text-decoration: none;"><span>회원정보</span> <i class="bi bi-chevron-right"></i></a>
 						<ul>
-							<li><a href="MemberModifyForm.sm" style="text-decoration: none;">회원정보수정</a></li>
-							<li><a href="MemberDeleteForm" style="text-decoration: none;">회원탈퇴</a></li>
+							<li><a href="MemberModifyForm.sm?member_id=${sessionScope.sId }" style="text-decoration: none;">회원정보수정</a></li>
+							<li><a href="MemberDelete.sm?member_id=${sessionScope.sId }" style="text-decoration: none;">회원탈퇴</a></li>
 						</ul>
 					</li>
 					<c:if test='${sessionScope.sId eq "admin"}'> 

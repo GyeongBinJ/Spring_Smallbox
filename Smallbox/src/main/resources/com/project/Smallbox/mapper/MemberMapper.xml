@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.Smallbox.mapper.MemberMapper">
+
+	<!-- 이메일 중복체크 -->
+	<select id="checkIdList" resultType="int">
+		SELECT COUNT(*)
+			FROM member
+			WHERE member_id = #{id}
+	</select>
+
+	<!-- 회원가입 작업  -->
+	<insert id="insertMember">
+		INSERT INTO member (
+		    member_id,
+		    member_passwd,
+		    member_name,
+		    member_email,
+		    member_phone,
+		    member_join_date,
+		    member_birth_date,
+		    member_authStatus
+		) VALUES (
+		    #{member_id},
+		    #{member_passwd},
+		    #{member_name},
+		    CONCAT(#{member_email1}, '@', #{member_email2}),
+		    #{member_phone},
+		    NOW(),
+		    #{member_birth_date},
+		    'Y'
+		)
+	</insert>
+	
+	<!-- 로그인 작업 -->
+	<select id="selectPasswd" resultType="string">
+		SELECT member_passwd
+			FROM member
+			WHERE member_id = #{id}
+	</select>
+	
+	<select id="findId" parameterType="com.project.Smallbox.vo.MemberVO" resultType="com.project.Smallbox.vo.MemberVO">
+	    SELECT
+	        member_id
+	    FROM
+	        member
+	    WHERE
+	        member_name = #{member_name}
+	    AND
+	        member_phone = #{member_phone}
+	</select>
+	
+	<select id="findSerachId" parameterType="com.project.Smallbox.vo.MemberVO" resultType="com.project.Smallbox.vo.MemberVO">
+	    SELECT
+	        member_id
+	    FROM
+	        member
+	    WHERE
+	        member_id = #{member_id}
+	    AND
+	        member_email = #{member_email}
+	</select>
+	
+	<!-- 회원정보 상세조회 -->
+	<select id="selectMemberInfo" resultType="com.project.Smallbox.vo.MemberVO">
+  		SELECT 
+  			member_name, member_id, member_passwd, member_email, member_phone
+		FROM 
+			member
+		WHERE 
+			member_id = #{member_id}
+  	</select>
+  	
+  	<!-- 회원정보 수정 작업 -->
+  	<update id="updateMemberInfo">
+  		UPDATE member
+  		SET
+			<if test='newPasswd neq null and newPasswd neq ""'>
+				member_passwd = #{newPasswd}
+			</if>
+  		WHERE 
+			member_id = #{member_id}
+  	</update>
+  	
+  	<!-- 회원 정보 삭제 -->
+  	<delete id="deleteMember">
+  		DELETE
+	  	FROM 
+	  		member
+	  	WHERE 
+	  		member_passwd = #{member_passwd}
+	  	AND 
+	  		member_id = #{member_id}
+  	</delete>
+	
+	
+</mapper>

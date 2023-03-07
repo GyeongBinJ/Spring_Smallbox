@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-<!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- -->  
+<!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- --> 
 <style type="text/css">
 .btn_area {
    margin-top: 30px;
@@ -61,8 +62,11 @@ input {
 }
 </style>  
 
-</style>  
-<title>스몰박스 - 로그인</title>
+
+<title>스몰박스 - 아이디 찾기</title>
+<script src="http://code.jquery.com/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+</script>
 </head>
 <body>
 <!-- TOP -->
@@ -70,57 +74,57 @@ input {
 	<jsp:include page="../inc/top.jsp"></jsp:include>
 </header>
 <!-- TOP -->
+
 <!-- ======= Breadcrumbs ======= -->
-	<section class="breadcrumbs">
-	  <div class="container">
-	
-	    <div class="d-flex justify-content-between align-items-center">
-	      <h2>로그인</h2>
-	      <ol>
-	        <li><a href="./">Home</a></li>
-	        <li>Login</li> 
-	      </ol>
-	    </div>
-	
-	  </div>
-	</section>
+   <section class="breadcrumbs">
+     <div class="container">
+   
+       <div class="d-flex justify-content-between align-items-center">
+         <h2>아이디찾기결과</h2>
+         <ol>
+           <li><a href="./">Home</a></li>
+           <li>아이디찾기결과</li> 
+         </ol>
+       </div>
+   
+     </div>
+   </section>
 <!-- ======= Breadcrumbs ======= -->
 
 <!--=========== Login 본문 =================-->
 
-<form action="MemberLoginPro.sm" method="post" style="margin-top: 100px;">   
+<form action="" method="post" style="margin-top: 100px;">   
    <div align="center">
       <div class="welcome">
          <img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
       </div>
-      <table border="2"  class="table">
-			<tr>
-				<th>아이디</th>
-				<td><input type="text" name="member_id" required="required" value="${sessionScope.sId }"></td>
-			</tr>	
-			<tr>
-				<th>패스워드</th>
-				<td><input type="password" name="member_passwd" required="required"></td>
-			</tr>	
-		</table>
-			<tr class="submit"	style="text-align: center">
-				<td class="btn_login">
-					<input type="submit" value="로그인"  class="btn-log" style="border-radius: 10px;">
-				</td>
-			</tr>
-		<div class="btn_area">
-       		<a href="FindIdForm.sm">아이디 찾기</a> | 
-       		<a href="FindPasswdForm.sm">비밀번호 찾기</a> | 
-       		<a href="MemberTermsForm.sm">회원가입</a>
-       	</div>
-	</div>
+       <div>                                                               
+        <h1>고객님의 아이디는</h1><br><br>                 
+        <c:choose>                                                                          
+            <c:when test="${empty member}">  
+            	<table border="2">
+	                <p class="mb-4">조회결과가 없습니다.</p>                                        
+            	</table>                                               
+            </c:when>                                                                         
+            <c:otherwise> 
+        		<table border="2">
+                	<p>${member.member_id}</p> 
+        		</table>                                                           
+                입니다.                                              
+            </c:otherwise>                                                                    
+        </c:choose>                                                                         
+    </div>             
+         <td class="btn_login">
+			<input type="button" value="로그인하기" class="btn-log" style="margin-bottom: 10px" onclick="location.href='MemberLoginForm.sm'"> 
+			<input type="button" value="비밀번호 찾기" class="btn-log" style="margin-bottom: 10px" onclick="location.href='FindPasswdForm.sm'"> 
+			<br>
+         </td>
 </form>
 <!--=========== Login 본문 끝=================-->
-
-<!-- ---------------footer------------- -->
-<footer id="footer" style="margin-top: 120px;">
-	<jsp:include page="../inc/bottom.jsp"></jsp:include>
-</footer>
-<!-- ---------------footer------------- -->
+	<!-- ---------------footer------------- -->
+	<footer id="footer" style="margin-top: 120px;">
+		<jsp:include page="../inc/bottom.jsp"></jsp:include>
+	</footer>
+	<!-- ---------------footer------------- -->
 </body>
 </html>
