@@ -34,6 +34,29 @@
 	-->
 	<context:component-scan base-package="com.project.Smallbox" />
 	
+
+   <!-- 이메일 인증 관련 빈 등록 -->
+   <context:component-scan base-package="spring.service" />
+   <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <beans:property name="host" value="smtp.gmail.com" />
+      <beans:property name="port" value="587" />
+      <beans:property name="username" value="tmahfqkrtm@gmail.com" />
+      <beans:property name="password" value="idybthsobonidebm" />
+      <beans:property name="javaMailProperties">
+         <beans:props>
+                <beans:prop key="mail.transport.protocol">smtp</beans:prop>
+                <beans:prop key="mail.smtp.auth">true</beans:prop>
+                <!-- gmail의 경우 보안문제 업데이트로 인해 SSLSocketFactory를 추가해야 smtp 사용 가능. -->
+                <beans:prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</beans:prop>
+                <beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
+                <beans:prop key="mail.debug">true</beans:prop>
+                <beans:prop key="mail.smtp.ssl.trust">smtp.gmail.com</beans:prop>
+				<beans:prop key="mail.smtp.ssl.protocols">TLSv1.2</beans:prop>
+            </beans:props>
+      </beans:property>
+      
+   </beans:bean>
+	
 	
 	
 </beans:beans>
