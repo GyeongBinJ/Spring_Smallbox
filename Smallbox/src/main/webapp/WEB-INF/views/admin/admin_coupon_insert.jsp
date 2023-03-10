@@ -11,6 +11,7 @@
 <link href="${pageContext.request.contextPath }/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 <!-- Vendor CSS Files -->
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <!-- ain CSS File -->
 <link href="${pageContext.request.contextPath }/resources/assets/css/style_admin.css" rel="stylesheet">
