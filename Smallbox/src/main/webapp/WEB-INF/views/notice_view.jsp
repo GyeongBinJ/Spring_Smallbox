@@ -43,28 +43,47 @@ table, td, th {
 </style>
 </head>
 <body>
-	<header>
-		<jsp:include page="inc/top.jsp"></jsp:include>
-	</header>
-	  <!-- ======= header ======= -->
-	
-	<main id="main">
-	
-	<!-- ======= Breadcrumbs ======= -->
-    <section class="breadcrumbs">
-      <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>공지</h2>
-          <ol>
-            <li><a href="./">Home</a></li>
-            <li><a href="Notice_list.ad">공지</a></li>
-          </ol>
-        </div>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
-	
+<c:choose>
+		<c:when test="${sessionScope.sId eq 'admin' }">
+			<header id="header">
+    			<jsp:include page="inc/top_admin.jsp"></jsp:include>
+    		</header>
+		    <section class="breadcrumbs" style="background-color: black;">
+		      <div class="container">
+		
+		        <div class="d-flex justify-content-between align-items-center">
+		          <h2>관리자페이지</h2>
+		          <ol>
+		            <li><a href="Admin.ad">관리자페이지</a></li>
+		            <!-- 페이지 주소, 이름 넣는곳 -->
+		            <li><a href="Notice_list.ad">공지사항 목록</a></li>
+		          </ol>
+		        </div>
+		
+		      </div>
+		    </section><!-- End Breadcrumbs -->
+			</c:when>
+			<c:otherwise>
+				<header>
+					<jsp:include page="inc/top.jsp"></jsp:include>
+				</header>
+			    
+			    <section class="breadcrumbs">
+			      <div class="container">
+			
+			        <div class="d-flex justify-content-between align-items-center">
+			          <h2>공지</h2>
+			          <ol>
+			            <li><a href="./">Home</a></li>
+			            <!-- 페이지 주소, 이름 넣는곳 -->
+			            <li><a href="Notice_list.ad">공지사항 목록</a></li>
+			          </ol>
+			        </div>
+			
+			      </div>
+			    </section><!-- End Breadcrumbs -->
+			</c:otherwise>
+	</c:choose>
 	 <!-- ======= 찐 본문영역 ======= -->
 	<section class="inner-page" style="display: inline;">
 	

@@ -29,27 +29,47 @@
 <link href="${pageContext.request.contextPath }/resources/assets/css/style_admin.css" rel="stylesheet">
 </head>
 <body>
-	
-
-	<header id="header">
-    	<jsp:include page="../inc/top_admin.jsp"></jsp:include>
-    </header>
-<!-- ----------------------------------------<관리자 페이지>에 들고다니세요--------------------------------------------------------- -->    
-    <section class="breadcrumbs">
-      <div class="container">
-
-        <div class="d-flex justify-content-between align-items-center">
-          <h2>공지</h2>
-          <ol>
-            <li><a href="./">Home</a></li>
-            <li><a href="Notice_list.ad">공지</a></li>
-          </ol>
-        </div>
-
-      </div>
-    </section><!-- End Breadcrumbs -->
-	
-<!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- --> 
+<c:choose>
+		<c:when test="${sessionScope.sId eq 'admin' }">
+			<header id="header">
+    			<jsp:include page="../inc/top_admin.jsp"></jsp:include>
+    		</header>
+		    <section class="breadcrumbs" style="background-color: black;">
+		      <div class="container">
+		
+		        <div class="d-flex justify-content-between align-items-center">
+		          <h2>관리자페이지</h2>
+		          <ol>
+		            <li><a href="Admin.ad">관리자페이지</a></li>
+		            <!-- 페이지 주소, 이름 넣는곳 -->
+		            <li><a href="Notice_list.ad">공지사항 목록</a></li>
+		          </ol>
+		        </div>
+		
+		      </div>
+		    </section><!-- End Breadcrumbs -->
+			</c:when>
+			<c:otherwise>
+				<header>
+					<jsp:include page="../inc/top.jsp"></jsp:include>
+				</header>
+			    
+			    <section class="breadcrumbs">
+			      <div class="container">
+			
+			        <div class="d-flex justify-content-between align-items-center">
+			          <h2>공지</h2>
+			          <ol>
+			            <li><a href="./">Home</a></li>
+			            <!-- 페이지 주소, 이름 넣는곳 -->
+			            <li><a href="Notice_list.ad">공지사항 목록</a></li>
+			          </ol>
+			        </div>
+			
+			      </div>
+			    </section><!-- End Breadcrumbs -->
+			</c:otherwise>
+	</c:choose>
 	<!-- 본문 영역 시작 -->
     <div id="layoutSidenav_content">
 	    <main>
