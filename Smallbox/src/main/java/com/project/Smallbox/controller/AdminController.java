@@ -36,6 +36,11 @@ public class AdminController {
 
 	@Autowired
 	private AdminService service;
+	// 관리자 메인 페이지
+	@GetMapping(value = "/Admin.ad")
+	public String admin() {
+		return "admin/admin";
+	}
 	
 	// 관리자 페이지 - 영화 등록폼
 	@GetMapping(value = "/MovieInsertForm.ad")
