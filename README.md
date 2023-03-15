@@ -26,6 +26,8 @@
   :email: gyeongbin.project@gmail.com
   
   :computer: https://github.com/GyeongBinJ
+  
+  :pencil2: https://binj.tistory.com/2 (자세한 개발 일지)
 
 - 공지 게시판
 - 예매
