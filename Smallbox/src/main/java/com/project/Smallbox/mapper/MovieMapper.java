@@ -45,6 +45,9 @@ public interface MovieMapper {
 	public int insertMovieLike(
 			@Param("movie_idx") int movie_idx, 
 			@Param("member_id") String member_id);
+	
+	// 메인 박스오피스 출력
+	public List<StarMovieVO> selectMainMovieList(int listLimit);
 
 
 }

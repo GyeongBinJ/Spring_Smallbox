@@ -62,6 +62,14 @@
 	height: 30px;
 }
 
+.movieListForm {
+	width: 200%;
+ 	height: 600px;
+ 	display: flex;
+ 	justify-content: center;
+ 	text-align: center;
+}
+
 </style>
 <title>스몰박스</title>
 </head>
@@ -136,60 +144,37 @@
       <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
         <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
       </a>
-
     </div>
   </section><!-- End Hero -->
-
 	<!-- ====================== 박스오피스 ============================ -->
-	<section >
-		<div class="container">
-		
-			<div class="section-title">
-				<h2>개봉작 순위</h2>
-			</div>
-			
-			<div class="row" style="padding-left: 60px;">
-			
-				<div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4" >
-					<div class="icon-box iconbox-yellow">
-						<div class="icon" style="text-align: center;">
-							<a href="MovieDetail.mv?movie_idx=7"><img src="${pageContext.request.contextPath }/resources/assets/img/poster/avatar.jpg"  style="width: 363px;"></a>
-							<h4 style="font-family: 'ONE-Mobile-Regular';">아바타 : 물의 길</h4>
-								<div>
-									<a href="Reserve.mv" class="getstarted scrollto">예매하기</a>
-								</div>
-						</div>
-					</div>
-				</div>
-					
-				<div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4"> 
-					<div class="icon-box iconbox-yellow">
-						<div class="icon" style="text-align: center;">
-							<a href="MovieDetail.mv?movie_idx=14"><img src="${pageContext.request.contextPath }/resources/assets/img/poster/captain_marvel.jpg" style="width: 350px;"></a>
-							<h4 style="font-family: 'ONE-Mobile-Regular';">캡틴마블</h4>
-								<div>
-									<a href="Reserve.mv" class="getstarted scrollto">예매하기</a>
-								</div>
-						</div>
-					</div>
-				</div>
-					
-				<div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 " >
-					<div class="icon-box iconbox-yellow">
-						<div class="icon" style="text-align: center;">
-							<a href="MovieDetail.mv?movie_idx=12"><img src="${pageContext.request.contextPath }/resources/assets/img/poster/wakanda.jpg" style="width: 350px;"></a>
-							<h4 style="font-family: 'ONE-Mobile-Regular';">블랙팬서 : 와칸다 포에버</h4>
-								<div>
-									<a href="Reserve.mv" class="getstarted scrollto">예매하기</a>
-								</div>
-						</div>
-					</div>
-				</div>
-			
-			</div>
-		
-		</div>
-	</section>
+	<section style="background-color: #3B0B5F;">
+	<div class="section-title">
+		<h2 style="color: white;">개봉작 순위</h2>
+	</div>
+       	<div class="wrap">
+      		<div class="row row-cols-4 row-cols-md-4 g-4">
+	       	<form action="" class="movieListForm">
+			<c:forEach var="movie" items="${mainMovieList }">
+	       		<div>
+		           	<div class="card" style="object-fit:cover;">
+		              		 <a href="MovieDetail.mv?movie_idx=${movie.movie_idx}&pageNum=${pageNum }">
+		              		 <img src="${pageContext.request.contextPath }/resources/upload/${movie.movie_picture}
+		              		 	" width="600" height="450"
+                    		 class="card-img-top" alt="..." ></a>
+			              <div class="card-body">
+				              <h5 class="card-title" style="text-align: center;">${movie.movie_title }</h5>
+				              <h5 class="card-date" style="text-align: center;font-size: 16px">개봉일 ${movie.movie_open_date }</h5>
+				              <P class="card-star" style="text-align: center;">⭐⭐⭐</P>
+				              <div class="text-center"> 
+				              <a class="getstarted scrollto" href="Reserve.mv" style="text-align: center;">예매하기</a></div>
+			              </div>
+	          		 </div>
+      	        </div>
+      		</c:forEach>
+      		</form>
+  			</div>
+   		</div>
+   	</section>
 	<!-- ====================== 박스오피스 ============================ -->
 
 <main id="main">  

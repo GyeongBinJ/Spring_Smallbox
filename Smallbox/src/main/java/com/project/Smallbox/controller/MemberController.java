@@ -119,14 +119,7 @@ public class MemberController {
 				model.addAttribute("msg", "잘못된 접근입니다!");
 				return "fail_back";
 			}
-			
-			// 권한이 있을 경우 삭제 폼으로 이동
-			// 단, 관리자일 경우 바로 MemberDeletePro.me 서블릿 요청
-			if(sId.equals("admin")) {
-				return "redirect:/MemberDeletePro.me?id=" + member.getMember_id(); // GET 방식
-			} else {
 				return "member/member_delete";
-			}
 		}
 	}
 
