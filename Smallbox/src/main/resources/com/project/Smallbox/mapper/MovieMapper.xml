@@ -87,4 +87,12 @@
 			#{member_id})
 	</insert>
 	
+	<!-- 메인 개봉작순위 출력 --> 
+	<select id="selectMainMovieList" resultType="com.project.Smallbox.vo.StarMovieVO">
+		SELECT * 
+			FROM star_movie 
+			ORDER BY movie_viewer DESC
+			LIMIT #{listLimit}
+	</select>
+	
 </mapper>

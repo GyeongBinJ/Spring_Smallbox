@@ -55,6 +55,11 @@ public class MovieService {
 	public int MovieLike(int movie_idx, String member_id) {
 		return mapper.insertMovieLike(movie_idx, member_id);
 	}
+	
+	// 메인 박스오피스 순위 출력
+	public List<StarMovieVO> getMainMovieList(int listLimit) {
+		return mapper.selectMainMovieList(listLimit);
+	}
 
 
 
