@@ -192,7 +192,7 @@
 			// 날짜 버튼 클릭시 해당 일의 날짜와 선택된 영화 값을 선택하여 ajax로 보냄
 			$(".movie-date-wrapper").eq(i).on("click", function() {
 				// 클릭한 날짜를 yyyy-mm-dd의 형식으로 바꿈, toISOString() 지정시 한국 시간과 9시간이 차이나기 때문에
-				// 별도로 시간값을 +9 해주면 현재 시간이 된다. 코드 구구절절 레전드
+				// 별도로 시간값을 +9 해주면 현재 시간이 된다.
 				let clickDate = new Date(date.getFullYear(), date.getMonth(), $(".movie-day").eq(i).html(), date.getHours() + 9).toISOString().split("T")[0];
 // 				alert(clickDate);
 // 				alert($(".movie-select > option:selected").val());
