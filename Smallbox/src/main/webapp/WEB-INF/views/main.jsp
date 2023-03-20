@@ -70,6 +70,7 @@
  	text-align: center;
 }
 
+
 </style>
 <title>스몰박스</title>
 </head>
@@ -152,7 +153,7 @@
 		<h2 style="color: white;">개봉작 순위</h2>
 	</div>
        	<div class="wrap">
-      		<div class="row row-cols-4 row-cols-md-4 g-4">
+      		<div class="row row-cols-4 row-cols-md-4 g-4 boxOffice">
 	       	<form action="" class="movieListForm">
 			<c:forEach var="movie" items="${mainMovieList }">
 	       		<div>
@@ -161,15 +162,16 @@
 		              		 <img src="${pageContext.request.contextPath }/resources/upload/${movie.movie_picture}
 		              		 	" width="600" height="450"
                     		 class="card-img-top" alt="..." ></a>
-			              <div class="card-body">
+		              <div class="card-body">
 				              <h5 class="card-title" style="text-align: center;">${movie.movie_title }</h5>
 				              <h5 class="card-date" style="text-align: center;font-size: 16px">개봉일 ${movie.movie_open_date }</h5>
-				              <P class="card-star" style="text-align: center;">⭐⭐⭐</P>
-				              <div class="text-center"> 
-				              <a class="getstarted scrollto" href="Reserve.mv" style="text-align: center;">예매하기</a></div>
-			              </div>
-	          		 </div>
-      	        </div>
+<!-- 				              <P class="card-star" style="text-align: center;">⭐⭐⭐</P> -->
+					  <div style="padding-top: 20px;  transform: translateX(-10%);">
+			              <a class="getstarted scrollto" href="Reserve.mv" >예매하기</a>
+					  </div>
+		              </div>
+          		 </div>
+     	        </div>
       		</c:forEach>
       		</form>
   			</div>

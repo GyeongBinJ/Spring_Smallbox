@@ -49,8 +49,8 @@ label {
 	    <div class="d-flex justify-content-between align-items-center">
 	      <h2>회원가입</h2>
 	      <ol>
-	        <li><a href="./">Home</a></li>
-	        <li><a href="MyPageMain.my">MyPage</a></li>
+	        <li><a href="./" style="text-decoration: none;">Home</a></li>
+	        <li><a href="MyPageMain.my" style="text-decoration: none;">MyPage</a></li>
 	        <li>Join</li> 
 	      </ol>
 	    </div>
@@ -59,8 +59,7 @@ label {
 <!-- End Breadcrumbs -->
 <div class="formDiv" style="margin-right: 180px;">
   <form action="MemberJoinPro.sm" method="post" class="joinForm" onsubmit="return submitCheck();">
-  
-    <h1>회원정보 입력</h1>
+    <h2>회원정보 입력</h2>
     
     <fieldset>
       <label for="name" align="right">이름</label><br>
