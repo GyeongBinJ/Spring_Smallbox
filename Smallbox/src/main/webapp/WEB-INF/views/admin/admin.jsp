@@ -5,26 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8" />
-<!-- --------------------- 들고다니세요 ------------------------------------ -->
-<!-- css -->
-<link rel="stylesheet" href="./assets/css/reset.css">
-
-<!-- Favicons -->
-<link href="./assets/img/favicon.png" rel="icon">
-<link href="./assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-<!-- Vendor CSS Files -->
-<link href="./assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-<link href="./assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="./assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="./assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-<link href="./assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-<link href="./assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
-<link href="./assets/css/style_admin.css" rel="stylesheet">
-<!-- --------------------- 들고다니세요 ------------------------------------ -->
-
-<!-- 실험 중 -->
+<!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- -->
+<link href="${pageContext.request.contextPath }/resources/assets/img/favicon.png" rel="icon">
+<link href="${pageContext.request.contextPath }/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+<link href="${pageContext.request.contextPath }/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath }/resources/assets/css/style_admin.css" rel="stylesheet">
+<!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- -->
  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
  <meta name="description" content="" />
@@ -33,8 +21,6 @@
  <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
  <link href="../assets/css/styles.css" rel="stylesheet" />
  <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-
-<!-- 실험 끝 -->
 
 <title>SMALL BOX - 관리자</title>
 </head>
@@ -66,20 +52,12 @@
       </div>
     </section>
 <!-- --------------------- <관리자 페이지> 들고다니세요 ------------------------------------ -->
-            <!-- 본문 영역 시작 -->
-           
-<%--             <center> --%>
-<!--             <h1>관리자 메인페이지입니다요 ~</h1> -->
-<!--             <img src="./assets/img/roopy.jpeg"> -->
-<%--             </center> --%>
-
-
   <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4" style="margin-top: 80px;">
                         <ol class="breadcrumb mb-4">
                         </ol>
-                        <div class="row" style="width: 1000px; margin-left: 350px;">
+                        <div class="row" style="width: 1000px; margin: 0 auto; margin-bottom: 100px;">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
                                     <div class="card-body">영화관리</div>
@@ -117,43 +95,43 @@
                                 </div>
                             </div>
                         </div>
-                            <div class="col-xl-6" style="margin-bottom: 200px; width: 1000px; margin-left: 350px;">
-                                <div class="card mb-4">
-                                    <div class="card-header" style="color: black">
-                                        <i class="fas fa-chart-bar me-1"></i>
-                                        This Month's 예매 내역
-                                        <div class="card mb-4">
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                        	<th>예매날짜</th>
-                                            <th>영화명</th>
-                                            <th>상영시각</th>
-                                            <th>회원 아이디</th>
-                                            <th>좌석</th>
-                                            <th>최종가격</th>
-                                        </tr>
-                                    </thead>
+<!--                             <div class="col-xl-6" style="margin-bottom: 200px; width: 1000px; margin-left: 350px;"> -->
+<!--                                 <div class="card mb-4"> -->
+<!--                                     <div class="card-header" style="color: black"> -->
+<!--                                         <i class="fas fa-chart-bar me-1"></i> -->
+<!--                                         This Month's 예매 내역 -->
+<!--                                         <div class="card mb-4"> -->
+<!--                             <div class="card-body"> -->
+<!--                                 <table id="datatablesSimple"> -->
+<!--                                     <thead> -->
+<!--                                         <tr> -->
+<!--                                         	<th>예매날짜</th> -->
+<!--                                             <th>영화명</th> -->
+<!--                                             <th>상영시각</th> -->
+<!--                                             <th>회원 아이디</th> -->
+<!--                                             <th>좌석</th> -->
+<!--                                             <th>최종가격</th> -->
+<!--                                         </tr> -->
+<!--                                     </thead> -->
                                    
-                                    <tbody>
-                                   		<c:forEach var="reserve" items="${reserve }">
-                                        <tr>
-                                            <td>${reserve.res_date }</td>
-                                            <td>${reserve.theater_title }</td>
-                                            <td>${reserve.res_time }</td>
-                                            <td>${reserve.member_id }</td>
-                                            <td>${reserve.res_seat }</td>
-                                            <td>${reserve.res_price }</td>
-                                        </tr>
-                                    	</c:forEach>  
-                                    </tbody>
-                                </table>
+<!--                                     <tbody> -->
+<%--                                    		<c:forEach var="reserve" items="${reserve }"> --%>
+<!--                                         <tr> -->
+<%--                                             <td>${reserve.res_date }</td> --%>
+<%--                                             <td>${reserve.theater_title }</td> --%>
+<%--                                             <td>${reserve.res_time }</td> --%>
+<%--                                             <td>${reserve.member_id }</td> --%>
+<%--                                             <td>${reserve.res_seat }</td> --%>
+<%--                                             <td>${reserve.res_price }</td> --%>
+<!--                                         </tr> -->
+<%--                                     	</c:forEach>   --%>
+<!--                                     </tbody> -->
+<!--                                 </table> -->
                            
-                                    </div>
-                                    <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
-                                </div>
-                            </div>
+<!--                                     </div> -->
+<%--                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div> --%>
+<!--                                 </div> -->
+<!--                             </div> -->
                         </div>
                 </main>
             </div>

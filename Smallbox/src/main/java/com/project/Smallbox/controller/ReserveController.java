@@ -299,11 +299,29 @@ public class ReserveController {
 			} // 쿠폰 삭제.
 			
 			model.addAttribute("res_num", res_num);
+			model.addAttribute("theater_title", theater_title);
+			model.addAttribute("res_date", resDate);
+			model.addAttribute("res_time", resTime);
+			model.addAttribute("res_price", resPrice);
+			model.addAttribute("res_seat", res_seat);
+			model.addAttribute("member_id", member_id);
 			
-			return "ReservePaymentApi.mv";
+			return "redirect:/ReservePaymentApi.mv";
 		}
 		// =========================================해연 추가한곳 끝 =========================================
 	
+		// 결제 Api 연결
+		@GetMapping(value = "/ReservePaymentApi.mv")
+		public String paymentApi() {
+			return "reserve/reserve_payment_api";
+		}
+		
+		// 결제 완료 후 예매정보 페이지로 이동
+		@GetMapping(value = "/ReserveComplete.mv")
+		public String complete() {
+			return "reserve/reserve_complete";
+		}
+		
 	
 	
 }

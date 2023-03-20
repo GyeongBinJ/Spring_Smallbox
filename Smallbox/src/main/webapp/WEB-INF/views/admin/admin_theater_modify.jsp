@@ -9,7 +9,6 @@
 <link href="${pageContext.request.contextPath }/resources/assets/img/favicon.png" rel="icon">
 <link href="${pageContext.request.contextPath }/resources/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-<link href="${pageContext.request.contextPath }/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${pageContext.request.contextPath }/resources/assets/css/style_admin.css" rel="stylesheet">
 <!-- --------------------- 들고다니세요 ------------------------------------ -->
@@ -82,12 +81,12 @@
 						<td><input type="date" name="theater_date" value="${theater.theater_date }" required="required"></td>
 						<td>
 <%-- 							<input type="time" name="theater_time" value="${theater.theater_time }" readonly="readonly"><br><br> --%>
-							1회차 [09:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="${theater.theater_time }" <c:if test="${theater.theater_time eq '09:00:00'}">checked</c:if>><br>
-							2회차 [12:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="${theater.theater_time }" <c:if test="${theater.theater_time eq '12:00:00'}">checked</c:if>><br>
-							3회차 [15:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="${theater.theater_time }" <c:if test="${theater.theater_time eq '15:00:00'}">checked</c:if>><br>
-							4회차 [18:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="${theater.theater_time }" <c:if test="${theater.theater_time eq '18:00:00'}">checked</c:if>><br>
-							5회차 [21:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="${theater.theater_time }" <c:if test="${theater.theater_time eq '21:00:00'}">checked</c:if>><br>
-							6회차 [24:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="${theater.theater_time }" <c:if test="${theater.theater_time eq '24:00:00'}">checked</c:if>>
+							1회차 [09:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="09:00:00" <c:if test="${theater.theater_time eq '09:00:00'}">checked</c:if>><br>
+							2회차 [12:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="12:00:00" <c:if test="${theater.theater_time eq '12:00:00'}">checked</c:if>><br>
+							3회차 [15:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="15:00:00" <c:if test="${theater.theater_time eq '15:00:00'}">checked</c:if>><br>
+							4회차 [18:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="18:00:00" <c:if test="${theater.theater_time eq '18:00:00'}">checked</c:if>><br>
+							5회차 [21:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="21:00:00" <c:if test="${theater.theater_time eq '21:00:00'}">checked</c:if>><br>
+							6회차 [24:00]&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="theater_time" value="24:00:00" <c:if test="${theater.theater_time eq '24:00:00'}">checked</c:if>>
 						</td>
 						<td><input type="number" name="theater_seat_cnt" value="${theater.theater_seat_cnt }"></td>
 						<td></td>
