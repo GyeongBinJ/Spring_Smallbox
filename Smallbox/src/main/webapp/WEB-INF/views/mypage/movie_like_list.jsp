@@ -51,6 +51,60 @@
 		        return false;
 	      }
 	}
+	
+	// 찜목록에 사용될 페이지 번호값 설정
+	let pageNum = 1;
+	
+	$(function() {
+		// 찜목록 조회를 처음 수행하기 위해 load_list() 함수 호출
+		load_movielist();
+		
+		// 무한스크롤 기능
+		// window 객체에서 scroll 동작 시 기능 수행(이벤트 처리)을 위해 scroll() 함수 호출
+		$(window).scroll(function() {
+			// 스크롤바 현재 위치, 문서 표시되는 창의 높이, 문서 전체 높이
+			let scrollTop = $(window).scrollTop();
+			let windowHeight = $(window).height();
+			let documentHeight = $(document).height();
+			
+			if(scrollTop + windowHeight + 160 >= documentHeight) {
+				pageNum++; // 다음 페이지 목록 로딩
+				load_movielist();
+			}
+		});
+	});
+	
+	// 마이페이지 찜목록
+    function load_movielist() {
+    	
+   		// 찜목록 조회해서 가져오기
+		$.ajax({
+			type: "GET",
+			url: "MovieLikeListJson.my?pageNum=" + pageNum,
+			dataType: "json"
+		})
+		.done(function(likemovieList) { // 요청 성공 시
+	      var html = "";
+	    	  
+	      $.each(likemovieList, function(i, movie) { // starmovieList에서 하나씩 꺼내 movie에 저장
+	        html += '<div class="col" id="moviecard' + movie.movie_idx + '">';
+	        html += '  <div class="card">';
+	        html += '    <img src="${pageContext.request.contextPath }/resources/upload/' + movie.movie_picture + '" width="300" height="350" class="card-img-top" alt="..." >';
+	        html += '    <div class="card-body">';
+	        html += '      <h5 class="card-title" style="text-align: center;">' + movie.movie_title + '</h5>';
+	        html += '      <div class="text-center">';
+	        html += '      	<button class="btn btn-outline-dark mt-auto" id="btn_like" onclick="cancleLike(\'' + movie.movie_idx + '\')">찜해제</button>';
+	        html += '      </div>';
+	        html += '    </div>';
+	        html += '  </div>';
+	        html += '</div>';
+	      });
+	      $("#movieCard").append(html);
+	    }) // 영화리스트 조회
+		.fail(function() { // likemovieList 조회 실패 시
+    	    console.log("likemovieList 조회 실패");
+	    });
+	  }
 </script>
 <!-- jquery -->
 </head>
@@ -103,9 +157,8 @@
   	<!-- 사이드바 -->
    
     <div class="inner-page2">
-        <!-- MovieLikeListProAction으로 부터 전달받은 request 객체의 likeList(영화 정보)를 꺼내서 출력 -->
 		<c:choose>
-			<c:when test="${empty likeList }">
+			<c:when test="${empty likeMovieList }">
 				<div class="emptyLike">
 				<span><img src="${pageContext.request.contextPath }/resources/assets/img/icon/movie-ticket-icon.png" width="160" height="160" ></span>
 				<span>&nbsp;&nbsp;&nbsp; 관심있는 영화를 추가해주세요!</span>
@@ -115,21 +168,8 @@
       			<div class="container" style="margin-left: 35px;margin-top: 7px;">
         			<section class="py-5">
         				<div class="wrap">
-       						 <div class="row row-cols-1 row-cols-md-4 g-4">
-								<c:forEach var="movie" items="${likeList }">
-       								<div class="col" id="moviecard${movie.movie_idx}">
-            							<div class="card">
-	               			 				<img src="${pageContext.request.contextPath }/resources/upload/${movie.movie_picture}"  width="300" height="350"
-	                   		 				 class="card-img-top" alt="..." >
-               					    	<div class="card-body">
-                   							 <h5 class="card-title" style="text-align: center;">${movie.movie_title }</h5>
-							 			<div class="text-center"> 
-										 	 <button class="btn btn-outline-dark mt-auto" id="btn_like" onclick="cancleLike('${movie.movie_idx}')">찜해제</button>
-                						</div>
-                						</div>
-           								</div>
-        							</div>
-        						</c:forEach>
+       						 <div class="row row-cols-1 row-cols-md-4 g-4" id="movieCard">
+       						 	<!-- ajax로 조회한 데이터가 추가될 영역 -->
    	 						 </div>
     					</div>
     				</section>
@@ -137,57 +177,6 @@
 			</c:otherwise>
         </c:choose>
     </div>
-    
-<%--     <c:if test="${not empty likeList }"> --%>
-	<div id="mypageList"> <!-- 페이징 처리 영역 -->
-		
-	   	<!-- 만약, pageNum 파라미터가 비어있을 경우 pageNum 변수 선언 및 기본값 1로 설정 -->
-		<c:choose>
-			<c:when test="${empty param.pageNum }">
-				<c:set var="pageNum" value="1" />
-			</c:when>
-			<c:otherwise>
-				<c:set var="pageNum" value="${param.pageNum }" />
-			</c:otherwise>
-		</c:choose>
-		
-		<!-- 
-		현재 페이지 번호(pageNum)가 1보다 클 경우에만 [이전] 링크 동작
-		=> 클릭 시 BoardList.bo 서블릿 주소 요청하면서 
-		   현재 페이지 번호(pageNum) - 1 값을 page 파라미터로 전달
-		-->
-		<c:choose>
-			<c:when test="${pageNum > 1}">
-				<input type="button" class="pagebtn" value="이전" onclick="location.href='MovieLikeList.my?pageNum=${pageNum - 1}'">
-			</c:when>
-			<c:otherwise>
-				<input type="button" class="pagebtn" value="이전">
-			</c:otherwise>
-		</c:choose>
-			
-		<!-- 페이지 번호 목록은 시작 페이지(startPage)부터 끝 페이지(endPage) 까지 표시 -->
-		<c:forEach var="i" begin="${pageInfo.startPage }" end="${pageInfo.endPage }">
-			<!-- 단, 현재 페이지 번호는 링크 없이 표시 -->
-			<c:choose>
-				<c:when test="${pageNum eq i}">
-					${i }
-				</c:when>
-				<c:otherwise>
-					<a href="MovieLikeList.my?pageNum=${i }">${i }</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
-
-		<!-- 현재 페이지 번호(pageNum)가 총 페이지 수보다 작을 때만 [다음] 링크 동작 -->
-		<c:choose>
-			<c:when test="${pageNum < pageInfo.maxPage}">
-				<input type="button" class="pagebtn" value="다음" onclick="location.href='MovieLikeList.my?pageNum=${pageNum + 1}'">
-			</c:when>
-			<c:otherwise>
-				<input type="button" class="pagebtn" value="다음">
-			</c:otherwise>
-		</c:choose>
-	</div>
   <!-- 본문 -->
   </main><!-- End #main -->
   

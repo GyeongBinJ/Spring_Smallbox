@@ -2,9 +2,8 @@ package com.project.Smallbox.controller;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,79 +29,117 @@ public class MovieController {
 	@Autowired
 	private MovieService service;
 	
-	// 영화 전체 목록 조회 (박스오피스)
+	// 영화 전체 목록(박스오피스)으로 이동
 	@GetMapping(value = "/MovieList.mv")
-//	public String movieList(HttpSession session, Model model, @RequestParam(value = "keyword", required=false) String keyword) {
-	public String movieList(HttpSession session, Model model, @RequestParam(defaultValue = "") String keyword, 
-			@RequestParam(defaultValue = "1") int pageNum) {
-		
-		// 로그인 한 회원을 식별하기 위해 세션아이디 저장 (찜여부 판별을 위함)
-		String member_id = (String)session.getAttribute("sId");
-		
-		int listLimit = 8;
-		int startRow = (pageNum-1) * listLimit; // 조회 시작 행번호 계산
-		
-		// 영화 목록 조회 (StarMovieVO View 사용한 이유 : 평점 출력하기 위해서)
-		List<StarMovieVO> starmovieList = service.getStarMovieList(keyword, startRow, listLimit);
-		
-		// 영화 목록 페이지 접속시 각 회원별 찜 목록 가져오기
-		List<Integer> likeList = service.getLikeList(member_id);
-//		System.out.println("likeList : " + likeList);
-//		String like = Integer.toString(likeList.get(0));
-//		System.out.println("like : " + like);
-			
-	  	int listCount = service.getStarMovieListCount(keyword);
-		int pageListLimit = 10;
-		int maxPage = listCount/listLimit + (listCount%listLimit!=0? 1 : 0);
-		int startPage = (pageNum-1) / pageListLimit * pageListLimit + 1;
-		int endPage = startPage * pageListLimit - 1;
-		if(endPage>maxPage) {
-			endPage = maxPage;
-		}
-			
-		// PageInfo 객체 생성 후 페이징 처리 정보 저장
-		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
-		
-		model.addAttribute("starmovieList", starmovieList);
-		model.addAttribute("likeList", likeList);
-		model.addAttribute("pageInfo", pageInfo);
-		
+	public String movieList() {
 		return "movie/movie_list";
 	}
 	
-	// 개봉 예정작 조회 (페이징 처리)
+	// AJAX 요청을 통한 영화목록 조회
+	@ResponseBody
+	@GetMapping("/MovieListJson.mv")
+	public void movieListJson(
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum,
+			Model model,
+			HttpServletResponse response, HttpSession session) {
+		
+		int listLimit = 8; // 한 페이지에서 표시할 게시물 목록을 8개로 제한
+		int startRow = (pageNum - 1) * listLimit; // 조회 시작 행번호 계산
+		
+		// 영화 목록 조회 (StarMovieVO View 사용한 이유 : 평점 출력하기 위해서)
+		List<StarMovieVO> starmovieList = service.getStarMovieList(keyword, startRow, listLimit);
+		// ---------------------------------------------------------------------------
+		// 자바 데이터를 JSON 형식으로 변환
+		JSONArray starMovieArray = new JSONArray();
+		
+		for(StarMovieVO starmovie : starmovieList) {
+			JSONObject jsonStarMovie = new JSONObject(starmovie);
+			System.out.println("jsonstarmovie : " + jsonStarMovie);
+			
+			starMovieArray.put(jsonStarMovie); // JSONObject 객체 추가
+		}
+		
+//		System.out.println("starMovieArray : " + starMovieArray);
+		
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(starMovieArray); 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// AJAX 요청을 통해 영화 목록 페이지 접속시 각 회원별 찜 목록 가져오기
+	@ResponseBody
+	@GetMapping("/LikeListJson.mv")
+	public void LikelistJson(
+			@RequestParam(defaultValue = "") String member_id,
+			Model model,
+			HttpServletResponse response, HttpSession session) {
+		
+		// 각 회원의 찜목록 조회
+		List<Integer> likeList = service.getLikeList(member_id);
+		
+		// 자바 데이터를 JSON 형식으로 변환
+		JSONArray likeListArray = new JSONArray();
+		
+		for(Integer like : likeList) {
+			JSONObject jsonLike = new JSONObject(like);
+			
+			jsonLike.put("like", Integer.toString(like)); // 정수타입의 like를 문자열로 변환
+			likeListArray.put(jsonLike);
+		}
+		
+		System.out.println("likeListArray : " + likeListArray);
+		
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(likeListArray); // toString() 생략됨
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+		
+	// 개봉 예정작 목록으로 이동
 	@GetMapping(value = "/ComingMovieList.mv")
-	public String comingMovieList(HttpSession session, Model model, @RequestParam(defaultValue = "") String keyword, 
-			@RequestParam(defaultValue = "1") int pageNum) {
+	public String comingMovieList() {
+		return "movie/coming_movie_list";
+	}
+	
+	// AJAX 요청을 통한 영화목록 조회
+	@ResponseBody
+	@GetMapping("/ComingMovieListJson.mv")
+	public void comingMovieListJson(
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum,
+			Model model,
+			HttpServletResponse response, HttpSession session) {
 		
-		// 로그인 한 회원을 식별하기 위해 세션아이디 저장 (찜여부 판별을 위함)
-		String member_id = (String)session.getAttribute("sId");
-		
-		int listLimit = 8;
-		int startRow = (pageNum-1) * listLimit; // 조회 시작 행번호 계산
+		int listLimit = 8; // 한 페이지에서 표시할 게시물 목록을 8개로 제한
+		int startRow = (pageNum - 1) * listLimit; // 조회 시작 행번호 계산
 		
 		// 개봉 예정작 목록 조회
 		List<MovieVO> comingMovieList = service.getComingMovieList(keyword, startRow, listLimit);
+		// ---------------------------------------------------------------------------
+		// 자바 데이터를 JSON 형식으로 변환
+		JSONArray comingMovieArray = new JSONArray();
 		
-		// 영화 목록 페이지 접속시 각 회원별 찜 목록 가져오기
-		List<Integer> likeList = service.getLikeList(member_id);
-		
-		int listCount = service.getComingMovieListCount(keyword);
-		int pageListLimit = 10;
-		int maxPage = listCount/listLimit + (listCount%listLimit!=0? 1 : 0);
-		int startPage = (pageNum-1) / pageListLimit * pageListLimit + 1;
-		int endPage = startPage * pageListLimit - 1;
-		if(endPage>maxPage) {
-			endPage = maxPage;
+		for(MovieVO comingmovie : comingMovieList) {
+			JSONObject jsonComingMovie = new JSONObject(comingmovie);
+			System.out.println("jsonComingMovie : " + jsonComingMovie);
+			
+			comingMovieArray.put(jsonComingMovie); // JSONObject 객체 추가
 		}
 		
-		PageInfo pageInfo = new PageInfo(listCount, pageListLimit, maxPage, startPage, endPage);
+//		System.out.println("comingMovieArray : " + comingMovieArray);
 		
-		model.addAttribute("comingMovieList", comingMovieList);
-		model.addAttribute("likeList", likeList);
-		model.addAttribute("pageInfo", pageInfo);
-		
-		return "movie/coming_movie_list";
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(comingMovieArray); 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// 찜 작업
@@ -132,7 +169,6 @@ public class MovieController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	// 찜 해제 작업 
