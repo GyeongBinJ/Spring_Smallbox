@@ -721,3 +721,9 @@ section {
 	font-size: 15px;
 	background-color: white;
 }
+
+.cssinput {
+	border-radius: 4px;
+	border: 1px solid #808080;
+	font-size: 15px;
+}

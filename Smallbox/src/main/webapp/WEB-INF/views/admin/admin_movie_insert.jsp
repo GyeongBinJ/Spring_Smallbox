@@ -16,11 +16,19 @@
 
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.6.3.js"></script>
 <script type="text/javascript">
-	<!-- 포스터 첨부 필수! -->
-	function file_chk() {
+	<!-- 폼 유효성 검사 -->
+	function form_chk() {
+		<!-- 장르 선택 체크 -->
+		if($("input[type='checkbox']").is(":checked")==false) {
+			alert("장르 항목을 체크해주세요!");
+			return validate(event);
+		}
+		
+		<!-- 파일 첨부 체크 -->
 		var file_chk = document.getElementById("file");
+		
 		if(!file_chk.value) {
-			alert("사진을 업로드해주세요");
+			alert("사진을 업로드해주세요!");
 			return validate(event);
 		}
 	}
@@ -68,13 +76,13 @@
                      - 관리자로 등록된 회원만 조회할 수 있는 페이지입니다.
                  </div>
            	 </div>  
-			<form action="MovieInsertPro.ad" name="fr" method="post" enctype="multipart/form-data" onsubmit="file_chk()">
+			<form action="MovieInsertPro.ad" name="fr" method="post" enctype="multipart/form-data" onsubmit="form_chk()">
 				<table style="border: 1;border-radius: 4px;">
 					<th style="text-align: center;height: 40">영화 정보</th>
 					<th style="text-align: center;height: 40">영화 정보</th>
 					<tr>
 						<td>영화명</td>
-						<td><label><input type="text" name="movie_title" required="required"></label></td>
+						<td><label><input type="text" class="cssinput" name="movie_title" required="required"></label></td>
 					</tr>
 					<tr>
 						<td>등급</td>
@@ -100,22 +108,22 @@
 					<tr>
 						<td>개봉 날짜</td>
 						<td>
-							<label><input type="date" name="movie_open_date" required="required"></label>
+							<label><input type="date" class="cssinput" name="movie_open_date" required="required"></label>
 						</td>
 					</tr>
 					<tr>
 						<td>상영시간(runtime)</td>
 						<td>
-							<label><input type="number" name="movie_runtime" placeholder="분단위" min="0" required="required" ></label>
+							<label><input type="number" class="cssinput" name="movie_runtime" placeholder="분단위" min="0" required="required" ></label>
 						</td>
 					</tr>
 					<tr>
 						<td>줄거리</td>
-						<td><textarea name="movie_intro" cols="50" rows="10" required="required"></textarea></td>
+						<td><textarea name="movie_intro" class="cssinput" cols="100" rows="10" required="required"></textarea></td>
 					</tr>
 					<tr>
 						<td>등장인물</td>
-						<td><textarea name="movie_actors" cols="50" rows="10" required="required"></textarea></td>
+						<td><textarea name="movie_actors" class="cssinput" cols="100" rows="3" required="required"></textarea></td>
 					</tr>
 					<tr>
 						<td>영화 포스터</td>
@@ -128,13 +136,13 @@
 						<td>
 							<label>
 								<span>https://www.youtube.com/embed/</span>
-								<input type="text" name="movie_teaser" required="required" style="width:150px"/>
+								<input type="text" class="cssinput" name="movie_teaser" required="required" style="width:150px"/>
 							</label>
 						</td>
 					</tr>
 					<tr>
 						<td>누적 관람객 수</td>
-						<td><label><input type="number" name="movie_viewer" min="0" required="required"></label></td>
+						<td><label><input type="number" class="cssinput" name="movie_viewer" min="0" required="required"></label></td>
 					</tr>
 					<tr>
 						<td colspan="2">

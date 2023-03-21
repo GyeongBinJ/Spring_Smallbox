@@ -36,7 +36,7 @@
 		    	  $("#sd-in").load(location.href+' #sd-in'); // 특정페이지 새로고침
 // 		    	  console.log("새로고침O");
 		    	  
-		    	 } else { // 찜목록에 영화가 있다면 영화만 삭제
+		    	 } else { // 리뷰가 있다면 리뷰만 삭제
 		    	   $("#comment_tr"+comment_idx).remove();
 // 		    	   console.log("새로고침X");
 		    	 }
@@ -72,7 +72,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>리뷰내역</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Home</a></li>
             <li><a href="MyPageMain.my">MyPage</a></li>
             <li>리뷰내역</li>
           </ol>

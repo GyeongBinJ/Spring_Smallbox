@@ -45,7 +45,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>1:1 문의</h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Home</a></li>
             <li><a href="MyPageMain.my">MyPage</a></li>
             <li>1:1 문의</li>
           </ol>

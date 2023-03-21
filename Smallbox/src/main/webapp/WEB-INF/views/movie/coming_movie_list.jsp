@@ -36,6 +36,11 @@
 			    	  movie_idx : movie_idx 
 			      }, 
 			      success: function(result) {
+			    	  if(result === "찜") { // 찜해제 버튼을 누르면 삭제 쿼리 실행 -> 찜해제되었으므로 찜버튼 반환
+			    		   alert("찜목록에서 삭제되었습니다.");
+			    	  } else if(result === "찜해제") { // 찜 버튼을 누르면 삽입 쿼리 실행 -> 찜되었으므로 찜해제 버튼 반환
+			    		   alert("찜목록에 추가되었습니다.");
+			    	  }
 			    	  
 			    	  $("#btn_like"+movie_idx).html(result);
 // 			    	  console.log(movie_idx);
@@ -63,7 +68,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>전체 영화 </h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Home</a></li>
             <li>전체 영화</li>
           </ol>
         </div>
@@ -96,7 +101,7 @@
        	    <!-- 검색창 -->
        	 	<form action="ComingMovieList.mv">
        	  		<div style="margin-bottom: 10px;">
-					<input type="text" name="keyword" class="input_box">
+					<input type="text" class="cssinput" name="keyword">
 					<input type="submit" value="Search" class="btn">
 				</div>
 		 	</form>
@@ -132,7 +137,7 @@
 				    	     	      <button class="btn btn-outline-dark mt-auto" id="btn_like" onclick='javascript: login_need();'>찜</button>
 				    	     	  </c:otherwise>
 				    	     	</c:choose>
-		                	<a class="btn btn-outline-dark mt-auto" href="#">개봉예정</a></div>
+		                	<a class="btn btn-outline-dark mt-auto">개봉예정</a></div>
                 	   </div>
            			   </div>
        	        	   </div>

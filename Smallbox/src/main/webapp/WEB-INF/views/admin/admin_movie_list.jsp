@@ -68,12 +68,13 @@ function confirm_delete(movie_idx) {
       <div class="container">
         <p>
        	  <section class="py-5">
-		 <form action="AdminMovieList.ad">
-       	  	<div style="margin-bottom: 10px;">
-				<input type="text" name="keyword" class="input_box">
+       	 	<!-- 검색 -->
+		 	<form action="AdminMovieList.ad">
+       	  	 <div style="margin-bottom: 10px;">
+				<input type="text" class="cssinput" name="keyword">
 				<input type="submit" value="Search" class="btn">
-			</div>
-		</form>
+			 </div>
+		   </form>
         	<div class="wrap">
        		<div class="row row-cols-1 row-cols-md-4 g-4">
         	<!-- MovieLikeListProAction으로 부터 전달받은 request 객체의 likeList(영화 정보)를 꺼내서 출력 -->

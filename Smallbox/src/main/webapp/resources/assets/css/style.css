@@ -1201,6 +1201,12 @@ section {
 	background-color: white;
 }
 
+.cssinput {
+	border-radius: 4px;
+	border: 1px solid #808080;
+	font-size: 15px;
+}
+
 /* 버튼 */
 
 /* [ 마이페이지용 CSS] */
