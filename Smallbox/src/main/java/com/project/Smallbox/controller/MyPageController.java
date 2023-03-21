@@ -1,9 +1,13 @@
 package com.project.Smallbox.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.HttpServerErrorException;
 
 import com.project.Smallbox.service.MyPageService;
@@ -22,6 +27,7 @@ import com.project.Smallbox.vo.PageInfo;
 import com.project.Smallbox.vo.PosterVO;
 import com.project.Smallbox.vo.QnaVO;
 import com.project.Smallbox.vo.ReserveVO;
+import com.project.Smallbox.vo.StarMovieVO;
 
 @Controller
 public class MyPageController {
@@ -45,9 +51,30 @@ public class MyPageController {
 		return "mypage/mypage_main";
 	}
 	
-	// 마이페이지 - 찜 목록 조회
+	// 마이페이지 - 찜 목록 조회페이지로 이동
 	@GetMapping(value = "MovieLikeList.my")
 	public String myLikeList(HttpSession session, Model model, @RequestParam(defaultValue = "1") int pageNum) {
+		
+		String member_id = (String)session.getAttribute("sId");
+		
+		int movieLimit = 8; // 한 페이지에 출력될 영화의 수
+		int startRow = (pageNum-1) * movieLimit; // 현재 페이지의 첫 영화의 행번호(=시작 글번호)
+		
+		List<MovieVO> likeMovieList = service.getMovieLikeList(member_id, startRow, movieLimit);
+		
+		model.addAttribute("likeMovieList", likeMovieList);
+		
+		return "mypage/movie_like_list";
+	}
+	
+	// AJAX 요청을 통한 찜목록 조회
+	@ResponseBody
+	@GetMapping("/MovieLikeListJson.my")
+	public void myLikeListJson(
+			@RequestParam(defaultValue = "") String keyword,
+			@RequestParam(defaultValue = "1") int pageNum,
+			Model model,
+			HttpServletResponse response, HttpSession session) {
 		
 		// 로그인 한 회원을 식별하기 위해 세션아이디 저장
 		String member_id = (String)session.getAttribute("sId");
@@ -57,29 +84,29 @@ public class MyPageController {
 		
 		// 각 회원 아이디(member_id)가 찜한 영화의 정보 가져오기
 		// movie_like 테이블의 movie_idx와 movie 테이블의 movie_idx를 조인하는 작업 요청
-		List<MovieVO> likeList = service.getMovieLikeList(member_id, startRow, movieLimit);
-		
-		// 각 회원이 찜한 영화 수 조회 (DB 작업 필요)
-		int movieCount = service.getMovieListCount(member_id);
-		
-		int pageListLimit = 10; // 한 페이지에 표시할 페이지 목록 수
-		int maxPage = movieCount/movieLimit + (movieCount%movieLimit!=0? 1 : 0);
-		int startPage = (pageNum-1) / pageListLimit * pageListLimit + 1;
-		int endPage = startPage * pageListLimit - 1;
-		if(endPage>maxPage) {
-			endPage = maxPage;
-		}
-		
-		// PageInfo 객체 생성 후 페이징 처리 정보 저장
-		PageInfo pageInfo = new PageInfo(movieCount, pageListLimit, maxPage, startPage, endPage);
+		List<MovieVO> likeMovieList = service.getMovieLikeList(member_id, startRow, movieLimit);
 		
 		// MovieBean 객체에 저장된 movie 테이블의 정보를 request의 likeList 속성에 저장해서 view로 전달
-		// 찜 목록에 뿌릴거라서 이름을 likeList라고 했는데 헷갈리시면 바꿔도 돼요 
+		// 찜 목록에 뿌릴거라서 이름을 likeList라고 했는데 헷갈리시면 바꿔도돼요 
 		// 이름은 likeList지만 안에 든 정보는 MovieBean(영화정보) 입니다.
-		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("likeList", likeList);
 		
-		return "mypage/movie_like_list";
+		// 자바 데이터를 JSON 형식으로 변환
+		JSONArray likeMovieListArray = new JSONArray();
+		
+		for(MovieVO likemovie : likeMovieList) {
+			JSONObject jsonLike = new JSONObject(likemovie);
+			
+			likeMovieListArray.put(jsonLike);
+		}
+		
+		System.out.println("likeListArray : " + likeMovieListArray);
+		
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().print(likeMovieListArray); // toString() 생략됨
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// 마이페이지 - 쿠폰 목록 조회
