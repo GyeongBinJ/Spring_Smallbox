@@ -94,7 +94,7 @@ function confirm_delete() {
 				</tr>
 				<tr>
 					<td height="300">줄거리</td>
-					<td colspan="3">${movie.movie_intro }</td>
+					<td colspan="2">${movie.movie_intro }</td>
 				</tr>
 				<tr>
 					<td>등장인물</td>
@@ -115,7 +115,6 @@ function confirm_delete() {
 				<tr>
 					<td>누적 관람객 수</td>
 					<td>${movie.movie_viewer }명</td>
-					<td>${pageNum }</td>
 				</tr>
 				<tr>
 					<td colspan="2">

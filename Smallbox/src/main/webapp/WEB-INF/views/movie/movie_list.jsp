@@ -34,6 +34,12 @@
 			    	  movie_idx : movie_idx 
 			      }, 
 			      success: function(result) {
+			    	  if(result === "찜") { // 찜해제 버튼을 누르면 삭제 쿼리 실행 -> 찜해제되었으므로 찜버튼 반환
+			    		   alert("찜목록에서 삭제되었습니다.");
+			    	  } else if(result === "찜해제") { // 찜 버튼을 누르면 삽입 쿼리 실행 -> 찜되었으므로 찜해제 버튼 반환
+			    		   alert("찜목록에 추가되었습니다.");
+			    	  }
+			    	  
 			    	  $("#btn_like"+movie_idx).html(result);
 // 			    	  console.log(movie_idx);
 			      }
@@ -56,7 +62,7 @@
         <div class="d-flex justify-content-between align-items-center">
           <h2>전체 영화 </h2>
           <ol>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="./">Home</a></li>
             <li>전체 영화</li>
           </ol>
         </div>
@@ -85,11 +91,11 @@
       <div class="container">
         <p>
        	  <section class="py-5">
-       	   <!-- 검색창 -->
-       	   <form action="MovieList.mv">
+       	   <!-- 검색 -->
+       	   <form action="MovieList.mv" >
        	  	 <div style="margin-bottom: 10px;">
-				 <input type="text" name="keyword" class="input_box">
-				 <input type="submit" value="Search" class="btn">
+				<input type="text" class="cssinput" id="keywordInput" name="keyword">
+				<input type="submit" value="Search" class="btn">
 			 </div>
 		   </form>
 		  <!-- 영화 카드 -->
@@ -112,19 +118,18 @@
 			    	     	<!-- c:otherwise 로그인이 안되어있을 경우 찜버튼 클릭시 알림창 -->
    	     			     	<c:choose>
 		    	     	 		 <c:when test="${sessionScope.sId ne null}">
-					               			<c:choose>
-					               					<c:when test="${likeList.contains(movie.movie_idx)}">
-<%-- 													<c:when test="${likeList[status.index].movie_idx eq movie.movie_idx}"> --%>
-						               				<button class="btn btn-outline-dark mt-auto" id="btn_like${movie.movie_idx}" onclick="changeLike('${movie.movie_idx}')">찜해제</button>
-						               			</c:when>
-						               			<c:otherwise>
-						               				<button class="btn btn-outline-dark mt-auto" id="btn_like${movie.movie_idx}" onclick="changeLike('${movie.movie_idx}')">찜</button>
-						               			</c:otherwise>
-		              			 			</c:choose>
-	                   				 </c:when>
-		    	     	 			 <c:otherwise>
-		    	     	      				<button class="btn btn-outline-dark mt-auto" id="btn_like" onclick='javascript: login_need();'>찜</button>
-		    	     	 			 </c:otherwise>
+			               			<c:choose>
+			               					<c:when test="${likeList.contains(movie.movie_idx)}">
+				               				<button class="btn btn-outline-dark mt-auto" id="btn_like${movie.movie_idx}" onclick="changeLike('${movie.movie_idx}')">찜해제</button>
+				               			</c:when>
+				               			<c:otherwise>
+				               				<button class="btn btn-outline-dark mt-auto" id="btn_like${movie.movie_idx}" onclick="changeLike('${movie.movie_idx}')">찜</button>
+				               			</c:otherwise>
+              			 			</c:choose>
+                   				 </c:when>
+	    	     	 			 <c:otherwise>
+	    	     	      				<button class="btn btn-outline-dark mt-auto" id="btn_like" onclick='javascript: login_need();'>찜</button>
+	    	     	 			 </c:otherwise>
 		    	     		</c:choose>
                 			<a class="btn btn-outline-dark mt-auto" href="Reserve.mv?movie_title=${movie.movie_title }">예매하기</a></div>
                 		</div>
