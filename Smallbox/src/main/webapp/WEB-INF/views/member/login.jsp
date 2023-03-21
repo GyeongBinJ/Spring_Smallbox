@@ -26,6 +26,7 @@
 <style type="text/css">
 .btn_area {
    margin-top: 30px;
+   text-decoration: none;
 }
 .table {
    width: 350px;
@@ -55,6 +56,9 @@ th {
    background: #3B0B5F;
    color: #fff;
 }
+.btnLow {
+   text-decoration: none;
+}
 input {
    width: 200px;
    height: 30px;
@@ -77,7 +81,7 @@ input {
 	    <div class="d-flex justify-content-between align-items-center">
 	      <h2>로그인</h2>
 	      <ol>
-	        <li><a href="./">Home</a></li>
+	        <li><a href="./" class="btnLow">Home</a></li>
 	        <li>Login</li> 
 	      </ol>
 	    </div>
@@ -109,9 +113,9 @@ input {
 				</td>
 			</tr>
 		<div class="btn_area">
-       		<a href="FindIdForm.sm">아이디 찾기</a> | 
-       		<a href="FindPasswdForm.sm">비밀번호 찾기</a> | 
-       		<a href="MemberTermsForm.sm">회원가입</a>
+       		<a href="FindIdForm.sm" class="btnLow">아이디 찾기</a> | 
+       		<a href="FindPasswdForm.sm" class="btnLow">비밀번호 찾기</a> | 
+       		<a href="MemberTermsForm.sm" class="btnLow">회원가입</a>
        	</div>
 	</div>
 </form>

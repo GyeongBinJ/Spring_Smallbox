@@ -57,7 +57,11 @@ $(function(){
 	
 });
 </script>
-
+<style type="text/css">
+#btn {
+	transform: translateX(-48%);
+}
+</style>
 <!-- ------------------------------------------------------------------------------------------ -->
 <title>스몰박스 - 약관동의</title>
 </head>
@@ -94,7 +98,7 @@ $(function(){
 			<p>
 				<label><input type="checkbox" id="check_all" name="check_all" /> 위의 약관에 동의합니다.</label><br>
 			</p>
-			<p>
+			<p id="btn">
 				<input type="button" id="nextBtn" class="button_big" value="다음단계">
 			</p>
 		</div>
