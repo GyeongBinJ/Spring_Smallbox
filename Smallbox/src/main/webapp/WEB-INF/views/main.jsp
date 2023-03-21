@@ -154,7 +154,7 @@
 	</div>
        	<div class="wrap">
       		<div class="row row-cols-4 row-cols-md-4 g-4 boxOffice">
-	       	<form action="" class="movieListForm">
+	       	<form action="" class="movieListForm" style="justify-content: space-around;">
 			<c:forEach var="movie" items="${mainMovieList }">
 	       		<div>
 		           	<div class="card" style="object-fit:cover;">
