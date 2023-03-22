@@ -122,6 +122,18 @@ public class MemberController {
 				return "member/member_delete";
 		}
 	}
+	
+	// 조원 소개 페이지
+	@GetMapping("/team.sm")
+	public String team() {
+		return "about/project_team";
+	}
+
+	// 조원 소개 페이지
+	@GetMapping("/teatherList.sm")
+	public String teatherList() {
+		return "about/teather_list";
+	}
 
 // ================================= 폼 모음 끝 ================================================
 

@@ -99,7 +99,7 @@ $(function(){
 				<label><input type="checkbox" id="check_all" name="check_all" /> 위의 약관에 동의합니다.</label><br>
 			</p>
 			<p id="btn">
-				<input type="button" id="nextBtn" class="button_big" value="다음단계">
+				<input type="button" id="nextBtn" class="button_big" value="다음단계" style="border-radius: 10px;">
 			</p>
 		</div>
 	</form>

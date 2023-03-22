@@ -91,6 +91,11 @@ function fnSubmit() {
 	}
 }
 </script>
+<style type="text/css">
+.btnLow {
+   text-decoration: none;
+}
+</style>
 </head>
 <body>
 <!-- TOP -->
@@ -106,7 +111,7 @@ function fnSubmit() {
        <div class="d-flex justify-content-between align-items-center">
          <h2>아이디찾기</h2>
          <ol>
-           <li><a href="./">Home</a></li>
+           <li><a href="./" class="btnLow">Home</a></li>
            <li>아이디찾기</li> 
          </ol>
        </div>
@@ -116,7 +121,7 @@ function fnSubmit() {
 <!-- ======= Breadcrumbs ======= -->
 
 <!--=========== Login 본문 =================-->
-<form commandName="member" id="findIdForm" action="findIdPro.sm" method="post">
+<form commandName="member" id="findIdForm" action="findIdPro.sm" method="post" style="margin-top: 100px;">
    <div align="center">
       <div class="welcome">
          <img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
@@ -127,20 +132,20 @@ function fnSubmit() {
             <td><input type="text" name="member_name" id="member_name" required="required"></td>
          </tr>   
          <tr>
-            <th>핸드폰번호</th>
+            <th>전화번호</th>
             <td><input type="text" name="member_phone" id="member_phone" required="required"></td>
          </tr>   
       </table>
          <tr class="submit" style="text-align: center">
             <td class="btn_login">
-				<input type="button" value="아이디 찾기" class="btn-log" style="margin-bottom: 10px" onclick="fnSubmit(); return false;"> 
+				<input type="button" value="아이디 찾기" class="btn-log" style="margin-bottom: 10px; border-radius: 10px;" onclick="fnSubmit(); return false;"> 
 				<br>
             </td>
          </tr>
 </form>
 <!--=========== Login 본문 끝=================-->
 	<!-- ---------------footer------------- -->
-	<footer id="footer" style="margin-top: 120px;">
+	<footer id="footer" style="margin-top: 170px;">
 		<jsp:include page="../inc/bottom.jsp"></jsp:include>
 	</footer>
 	<!-- ---------------footer------------- -->

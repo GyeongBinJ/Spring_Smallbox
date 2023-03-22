@@ -59,6 +59,9 @@ input {
    width: 200px;
    height: 30px;
 }
+.btnLow {
+   text-decoration: none;
+}
 </style>
 <title>스몰박스 - 비밀번호 찾기</title>
 <script src="http://code.jquery.com/jquery-3.6.3.min.js"></script>
@@ -95,7 +98,7 @@ window.onload = function() {
        <div class="d-flex justify-content-between align-items-center">
          <h2>비밀번호 찾기</h2>
          <ol>
-           <li><a href="./">Home</a></li>
+           <li><a href="./" class="btnLow">Home</a></li>
            <li>비밀번호 찾기</li> 
          </ol>
        </div>
@@ -112,28 +115,28 @@ window.onload = function() {
 			<tr>
 				<th>아이디</th>
 				<td>
-					<input type="text" name="member_id" id="member_id" placeholder="아이디를 입력하세요." required="required">
+					<input type="text" name="member_id" id="member_id" required="required">
 				</td>
 			</tr>
 			<tr>
-				<th>이메일</th>
+				<th>이메일 </th>
 				<td>
-					<input type="text" name="member_email" id="member_email" placeholder="메일을 입력하세요." required="required">
+					<input type="text" name="member_email" id="member_email" required="required">
 				</td>
 			</tr>
 		</table>
 		<tr class="submit" style="text-align: center; ">
 			<td class="btn_login">
-				<button type="submit" id="submit" class="btn-log">비밀번호 찾기</button>
+				<button type="submit" id="submit" class="btn-log" style="border-radius: 10px;">비밀번호 찾기</button>
 				<br>
 			</td>
 		</tr>
 	</div>
 </form>
 <!-- BOTTOM -->
-<header>
+<footer id="footer" style="margin-top: 170px;">
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
-</header>
+</footer>
 <!-- BOTTOM -->
 </body>
 </html>

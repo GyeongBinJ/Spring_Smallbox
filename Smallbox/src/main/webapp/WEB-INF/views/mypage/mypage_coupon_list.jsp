@@ -52,13 +52,13 @@
   		<label class="animate">MENU<i class="fa fa-bars float-right"></i></label>
 	  		<ul class="animate">
 			    <li class="animate"><a href="MyPageMain.my">마이페이지</a></li>
-			    <li class="animate"><a href="MemberModifyForm.sm">회원정보수정</a></li>
+			    <li class="animate"><a href="MemberModifyForm.sm?member_id=${sessionScope.sId }">회원정보수정</a></li>
 			    <li class="animate"><a href="Reserved.my">예매내역</a></li>
 			    <li class="animate"><a href="CouponList.my">쿠폰함</a></li>
 			    <li class="animate"><a href="MovieLikeList.my">찜목록</a></li>
 			    <li class="animate"><a href="ReviewList.my">리뷰내역</a></li>
 			    <li class="animate"><a href="QnaList.my">문의내역</a></li>
-			    <li class="animate"><a href="MemberDeleteForm.sm">회원탈퇴</a></li>
+			    <li class="animate"><a href="MemberDelete.sm?member_id=${sessionScope.sId }">회원탈퇴</a></li>
 	  		</ul>
   		</dropdown>
   	<!-- 사이드바 -->

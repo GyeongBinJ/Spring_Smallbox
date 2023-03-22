@@ -7,10 +7,9 @@
 <meta charset="UTF-8">
 <!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- -->
 <!-- css -->
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/reset.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/style.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/swiper.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/style.css">
+<link href="${pageContext.request.contextPath }/resources/assets/css/couponlist.css" rel="stylesheet">
+
 
 <!-- Favicons -->
 <link href="${pageContext.request.contextPath }/resources/assets/img/favicon.png" rel="icon">
@@ -32,9 +31,6 @@ button {
 }
 input[type=password] {
    font-family: "굴림";
-}
-label {
-	text-align: right;
 }
 </style>
 <title>회원 탈퇴</title>
@@ -60,29 +56,29 @@ label {
             <li>회원탈퇴</li>
           </ol>
         </div>
-
       </div>
-    </section><!-- End Breadcrumbs -->
+    </section>
+    <!-- End Breadcrumbs -->
 	
-	<!-- 본문 -->
-    <div id="sd-in" style="width:1560px;margin: 0 auto;">
-    <aside class="side" style="display: inline-block;width:200px;vertical-align: top !important; margin-top: 8em;
-    border: 2px #3B0B5F solid;border-radius: 10px;">
-   		<ul class="side-list"> 
-   			<li class="side-li" style="font-size:20px;margin-top: 20px;">
-   				<p><a href="MyPageMain.my">마이페이지</a></p>
-   				<p><a href="#">회원정보수정</a></p>
-   				<p><a href="#">예매내역</a></p>
-   				<p><a href="CouponList.my">쿠폰함</a></p>
-   				<p><a href="MovieLikeList.my">찜목록</a></p>
-   				<p><a href="ReviewList.my">리뷰내역</a></p>
-   				<p><a href="#">문의내역</a></p>
-   				<p><a href="#">회원탈퇴</a></p>
-   			</li>
-   		</ul>
-   </aside>
+    <!-- 사이드바 -->
+    <div id="sd-in" style="width:1560px;margin: 0 auto;margin-bottom: 50px;">
+	<dropdown style="display: inline-block; width:200px; vertical-align:top !important; margin-top: 8em;">
+ 		<input id="toggle1" type="checkbox" checked>
+ 		<label class="animate">MENU<i class="fa fa-bars float-right"></i></label>
+  		<ul class="animate">
+		    <li class="animate"><a href="MyPageMain.my">마이페이지</a></li>
+		    <li class="animate"><a href="MemberModifyForm.sm?member_id=${sessionScope.sId }">회원정보수정</a></li>
+		    <li class="animate"><a href="Reserved.my">예매내역</a></li>
+		    <li class="animate"><a href="CouponList.my">쿠폰함</a></li>
+		    <li class="animate"><a href="MovieLikeList.my">찜목록</a></li>
+		    <li class="animate"><a href="ReviewList.my">리뷰내역</a></li>
+		    <li class="animate"><a href="QnaList.my">문의내역</a></li>
+		    <li class="animate"><a href="MemberDelete.sm?member_id=${sessionScope.sId }">회원탈퇴</a></li>
+  		</ul>
+  	</dropdown>
+  	<!-- 사이드바 -->
    
-   <section class="inner-page" style="display: inline-block;">
+   <section class="inner-page" style="display: inline-block; margin-left: 200px; padding-top: 150px;">
    
    <div class="ailgn" style="margin-left: 400px;margin-top: 150px;">
    <form name="checkPass" align="center" action="MemberDeletePro.sm" method="post">

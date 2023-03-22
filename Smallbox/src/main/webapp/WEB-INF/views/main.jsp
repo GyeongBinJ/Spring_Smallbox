@@ -295,8 +295,8 @@
                 </svg>
               <i class="fas fa-building"></i>
               </div>
-              <h4><a href="team.ad" style="text-decoration: none;">조원 소개</a></h4>
-              <p>This is the introduction space of the team members who worked on the project togethe</p>
+              <h4><a href="team.sm" style="text-decoration: none;">조원 소개</a></h4>
+              <p>This is the introduction space of the team members who worked on the project together</p>
             </div>
           </div>
 
@@ -308,7 +308,7 @@
                 </svg>
                 <i class="fas fa-camera-movie"></i>
               </div>
-              <h4><a href="teatherList.ad" style="text-decoration: none;">영화관 소개</a></h4>
+              <h4><a href="teatherList.sm" style="text-decoration: none;">영화관 소개</a></h4>
               <p>Let me introduce our movie theater facilities! It's gonna be awesome!</p>
             </div>
           </div>

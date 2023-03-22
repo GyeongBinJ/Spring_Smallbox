@@ -80,7 +80,7 @@
 					        <li><a style="color: white;" href="MovieLikeList.my"><span class="typicons-heart icon"></span>찜<br>${mypage.ml_count }개</a></li>
 					        <li><a style="color: white;" href="CouponList.my"><span class="typicons-star icon"></span>쿠폰<br>${mypage.cp_count }개</a></li>
 					        <li><a style="color: white;" href="ReviewList.my"><span class="typicons-edit icon"></span>리뷰<br>${mypage.cm_count }개</a></li>
-					        <li><a style="color: white;" href="MemberModifyForm.sm"><span class="typicons-cog icon"></span>회원정보수정</a></li>
+					        <li><a style="color: white;" href="MemberModifyForm.sm?member_id=${sessionScope.sId }"><span class="typicons-cog icon"></span>회원정보수정</a></li>
 			     	    </ul>
 			   		</div>
 		 	 	</div>
