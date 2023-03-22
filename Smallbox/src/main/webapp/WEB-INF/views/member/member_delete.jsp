@@ -26,11 +26,24 @@
 <link href="${pageContext.request.contextPath }/resources/assets/css/style.css" rel="stylesheet">
 <!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- --> 
 <style type="text/css">
-button {
-	border-radius: 10px;
-}
 input[type=password] {
    font-family: "굴림";
+}
+button {
+  background-color: #3B0B5F;
+  border: none;
+  color: white;
+  padding: 0px 80px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  margin-left: 100px;
+  font-family: 'ONE-Mobile-Regular';
+  border-radius: 5px;
+  transform: translateX(-15%);
 }
 </style>
 <title>회원 탈퇴</title>
@@ -89,7 +102,7 @@ input[type=password] {
 		<div>
 			<label>비밀번호&nbsp;&nbsp;&nbsp;</label><input id="member_passwd" type="password" name="member_passwd">
 	    </div>
-	    <button type="submit" class="btn" style="margin-top: 15px;border: 1px solid;" onclick="confirm('정말 탈퇴하시겠습니까?');">확인</button>
+	    <button type="submit" class="sub-btn" style="margin-top: 15px;border: 1px solid;" onclick="confirm('정말 탈퇴하시겠습니까?');">확인</button>
      </form>
      </div>
 	</section>

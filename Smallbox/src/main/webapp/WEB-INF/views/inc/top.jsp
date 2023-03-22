@@ -5,6 +5,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro@4cac1a6/css/all.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/in_top.css">
 <meta charset="UTF-8">
 <script type="text/javascript">
 function confirm_logout() {
@@ -61,9 +62,8 @@ function confirm_logout() {
     "pluginKey": "e7205392-7af0-48bf-a4f4-20c8962688b5"
   });
 </script>
-<!-- End Channel Plugin -->
+<!-- End Channel Plugin --> 
 
-</style>
 </head>
 <body>
 <c:choose>
@@ -74,17 +74,17 @@ function confirm_logout() {
 	    	<li class="dropdown" style="list-style: none;">
               	<div style="margin-right: 10px;"><i class="fas fa-bars fa-2x menu"></i></div> 
               		<ul>
-	          		<li class=""><h4>전체 메뉴</h4></li>
-          			<li class="dropdown"><a href="MovieList.mv"><span>영화</span> <i class="bi bi-chevron-right"></i></a>
+	          		<li><h4>전체 메뉴</h4></li>
+          			<li class="dropdown li"><a href="MovieList.mv"><span>영화</span> <i class="bi bi-chevron-right"></i></a>
 						<ul>
 							<li><a href="MovieList.mv">박스오피스</a></li>
 							<li><a href="ComingMovieList.mv">개봉 예정작</a></li>
 						</ul>
 					</li>
-	          		<li class="dropdown"><a href="Reserve.mv">예매<i class="bi bi-chevron-right"></i></a>
-                    <li class="dropdown"><a href="Notice_list.ad">공지사항<i class="bi bi-chevron-right"></i></a>
-                    <li class="dropdown"><a href="team.ad">조원소개<i class="bi bi-chevron-right"></i></a>
-                    <li class="dropdown"><a href="teatherList.ad">영화관 소개<i class="bi bi-chevron-right"></i></a>
+	          		<li class="li"><a href="Reserve.mv">예매</a>
+                    <li class="dropdown li"><a href="Notice_list.ad">공지사항</a>
+                    <li class="dropdown li"><a href="team.sm">조원소개</a>
+                    <li class="dropdown li"><a href="teatherList.sm">영화관 소개</a>
                     </li>
 	          	</ul>
               </li>
@@ -105,7 +105,7 @@ function confirm_logout() {
                     <li><a href="ComingMovieList.mv">상영 예정작</a></li>
 	          	</ul>
 	          </li>
-	          <li><a class="nav-link scrollto" href="teatherList.ad">극장</a></li>
+	          <li><a class="nav-link scrollto" href="teatherList.sm">극장</a></li>
 	          <li><a class="nav-link scrollto" href="Notice_list.ad">공지</a></li>
               <li><a class="nav-link scrollto" href="MemberLoginForm.sm">로그인</a></li>
 	          <li><a class="getstarted scrollto" href="Reserve.mv">빠른예매</a></li>
@@ -125,16 +125,16 @@ function confirm_logout() {
               	<div style="margin-right: 10px;"><i class="fas fa-bars fa-2x menu"></i></div> 
               		<ul>
 	          		<li class=""><h4>전체 메뉴</h4></li>
-          			<li class="dropdown"><a href="MovieList.mv" style="text-decoration: none;"><span>영화</span> <i class="bi bi-chevron-right"></i></a>
+          			<li class="dropdown"><a href="MovieList.mv" ><span>영화</span> <i class="bi bi-chevron-right"></i></a>
 						<ul>
-							<li><a href="MovieList.mv" style="text-decoration: none;">박스오피스</a></li>
-							<li><a href="ComingMovieList.mv" style="text-decoration: none;">개봉 예정작</a></li>
+							<li><a href="MovieList.mv" >박스오피스</a></li>
+							<li><a href="ComingMovieList.mv" >개봉 예정작</a></li>
 						</ul>
 					</li>
-	          		<li class="dropdown"><a href="Reserve.mv" style="text-decoration: none;">예매<i class="bi bi-chevron-right"></i></a>
-                    <li class="dropdown"><a href="Notice_list.ad" style="text-decoration: none;">공지사항<i class="bi bi-chevron-right"></i></a>
-                    <li class="dropdown"><a href="team.ad" style="text-decoration: none;">조원소개<i class="bi bi-chevron-right"></i></a>
-                    <li class="dropdown"><a href="teatherList.ad" style="text-decoration: none;">영화관 소개<i class="bi bi-chevron-right"></i></a>
+	          		<li class="dropdown"><a href="Reserve.mv" >예매</a>
+                    <li class="dropdown"><a href="Notice_list.ad">공지사항</a>
+                    <li class="dropdown"><a href="team.sm">조원소개</a>
+                    <li class="dropdown"><a href="teatherList.sm">영화관 소개</a>
                     </li>
 	          	</ul>
               </li>
@@ -148,37 +148,37 @@ function confirm_logout() {
 	      </h1>
 	      <nav id="navbar" class="navbar">
 	      <ul>
-	          <li class="dropdown"><a href="MovieList.mv" style="text-decoration: none;"><span>영화</span><i class="bi bi-chevron-down"></i></a>
+	          <li class="dropdown"><a href="MovieList.mv"><span>영화</span><i class="bi bi-chevron-down"></i></a>
 	          	 <ul>
-	          		<li><a href="MovieList.mv" style="text-decoration: none;">박스오피스</a></li>
-                    <li><a href="ComingMovieList.mv" style="text-decoration: none;">상영 예정작</a></li>
+	          		<li><a href="MovieList.mv">박스오피스</a></li>
+                    <li><a href="ComingMovieList.mv">상영 예정작</a></li>
 	             </ul>
 	          </li>
-	        <li><a class="nav-link scrollto" href="teatherList.ad">극장</a></li>
+	        <li><a class="nav-link scrollto" href="teatherList.sm">극장</a></li>
 	        <li><a class="nav-link scrollto" href="Notice_list.ad">공지사항</a></li>
-			<li class="dropdown"><a href="MyPageMain.my" style="text-decoration: none;">${sessionScope.sId } 님<i class="bi bi-chevron-down"></i></a>
+			<li class="dropdown"><a href="MyPageMain.my">${sessionScope.sId } 님<i class="bi bi-chevron-down"></i></a>
 		   	 <ul>
-					<li class="dropdown"><a href="#" style="text-decoration: none;"><span>회원정보</span> <i class="bi bi-chevron-right"></i></a>
+					<li class="dropdown"><a href="#"><span>회원정보</span> <i class="bi bi-chevron-right"></i></a>
 						<ul>
-							<li><a href="MemberModifyForm.sm?member_id=${sessionScope.sId }" style="text-decoration: none;">회원정보수정</a></li>
-							<li><a href="MemberDelete.sm?member_id=${sessionScope.sId }" style="text-decoration: none;">회원탈퇴</a></li>
+							<li><a href="MemberModifyForm.sm?member_id=${sessionScope.sId }">회원정보수정</a></li>
+							<li><a href="MemberDelete.sm?member_id=${sessionScope.sId }">회원탈퇴</a></li>
 						</ul>
 					</li>
 					<c:if test='${sessionScope.sId eq "admin"}'> 
-						<li  class="dropdown"><a class="nav-link scrollto" href="Admin.ad" style="text-decoration: none;">관리자페이지<i class="bi bi-chevron-right"></i></a>
+						<li  class="dropdown"><a class="nav-link scrollto" href="Admin.ad">관리자페이지<i class="bi bi-chevron-right"></i></a>
 							<ul>
-								<li><a href="MemberList.ad" style="text-decoration: none;">회원관리</a></li>
-								<li><a href="AdminMovieList.ad" style="text-decoration: none;">영화관리</a></li>
-								<li><a href="AdminTheaterList.ad" style="text-decoration: none;">극장관리</a></li>
-								<li><a href="Notice_list.ad" style="text-decoration: none;">공지관리</a></li>
+								<li><a href="MemberList.ad">회원관리</a></li>
+								<li><a href="AdminMovieList.ad">영화관리</a></li>
+								<li><a href="AdminTheaterList.ad">극장관리</a></li>
+								<li><a href="Notice_list.ad">공지관리</a></li>
 							</ul>
 						</li>
 					</c:if>		
-					<li><a href="Reserved.my" style="text-decoration: none;">예매내역</a></li>
-					<li><a href="CouponList.my" style="text-decoration: none;">쿠폰함</a></li>
-					<li><a href="MovieLikeList.my" style="text-decoration: none;">찜목록</a></li>
-					<li><a href="ReviewList.my" style="text-decoration: none;">리뷰내역</a></li>
-					<li><a href="QnaList.my" style="text-decoration: none;">문의내역</a></li>
+					<li><a href="Reserved.my">예매내역</a></li>
+					<li><a href="CouponList.my">쿠폰함</a></li>
+					<li><a href="MovieLikeList.my">찜목록</a></li>
+					<li><a href="ReviewList.my">리뷰내역</a></li>
+					<li><a href="QnaList.my">문의내역</a></li>
 				</ul>
 			</li>
 	          <li><a class="nav-link scrollto" href="MemberLogout.sm">로그아웃</a></li>
@@ -190,6 +190,8 @@ function confirm_logout() {
 	  </header><!-- End Header -->
 	</c:otherwise>
 </c:choose>
+
+ <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
 </body>
 </html>

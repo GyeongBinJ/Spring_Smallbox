@@ -211,8 +211,8 @@ label.light {
   	
   	<section class="inner-page" style="display: inline-block; margin-left: 200px; padding-top: 150px;">
   <!-- 로그인 화면 폼 -->
-    <div id ="sform" align="center">
-		<form action="MemberModifyPro.sm" method="post" onsubmit="return submitCheck();" >
+    <div id ="sform" align="center" st>
+		<form action="MemberModifyPro.sm" method="post" onsubmit="return submitCheck();" style="padding-top: 20px;">
 	    	<h4 align="center"><b>회원 정보</b></h4>
 			         <table style="text-align: center;">
 				         <tr>
@@ -260,7 +260,7 @@ label.light {
 			         		 <span id="checkPasswdConfirmResult"></span>
 			        	 </td>
 			     </table>
-         		 <button type="submit" id="sub-btn" onclick="confirm('회원정보를 변경하시겠습니까?');">변경하기</button>
+	         		 <button type="submit" id="sub-btn" onclick="confirm('회원정보를 변경하시겠습니까?');">변경하기</button>
         </form>
     </div>
 	</section>

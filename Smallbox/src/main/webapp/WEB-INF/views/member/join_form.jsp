@@ -30,9 +30,43 @@ button {
 }
 input[type=password] {
    font-family: "굴림";
+   width: 600px;
+   height: 50px;
+   border-radius: 5px;
+   margin-bottom: 8px;
+   font-size: 20px;
+   border: solid 1px #dadada;
+}
+input[type=text] {
+   width: 600px;
+   height: 50px;
+   border-radius: 5px;
+   margin-bottom: 8px;
+   font-size: 20px;
+   border: solid 1px #dadada;
+}
+input[type=button] {
+   width: 100px;
+   height: 50px;
+   border-radius: 5px;
+}
+input[type=date] {
+   width: 600px;
+   height: 50px;
+   border-radius: 5px;
+   text-align: center;
+   font-size: 20px;
+   border: solid 1px #dadada;
+}
+select {
+   width: 290px;
+   height: 50px;
+   border-radius: 5px;
+   border: solid 1px #dadada;
 }
 label {
 	text-align: right;
+	padding-top: 10px;
 }
 </style>
 </head>
@@ -59,34 +93,38 @@ label {
 <!-- End Breadcrumbs -->
 <div class="formDiv" style="margin-right: 180px;">
   <form action="MemberJoinPro.sm" method="post" class="joinForm" onsubmit="return submitCheck();">
-    <h2>회원정보 입력</h2>
+    <h2 style="padding-left: 50px; padding-top: 20px;">회원가입</h2><hr>
     
-    <fieldset>
+    <fieldset style="transform: translateX(5%);">
       <label for="name" align="right">이름</label><br>
       <input type="text" id="member_name" name="member_name" class="inputBox" style="text-align: center;">
-      <span id="checkNameResult"></span><br>
+      <br><span id="checkNameResult"></span><br>
       
       <label>아이디</label><br>
+<!--       <input type="text" name="member_id" id="member_id" class="inputBox" style="width: 500px;"> -->
       <input type="text" name="member_id" id="member_id" class="inputBox">
    	  <input type="button" value="중복확인" id="duplcheck" class="joinBtn" style="border-radius: 5px;">
-   	  <span id="checkIdResult"></span><br>
+   	  <br><span id="checkIdResult"></span><br>
       
       <label>패스워드</label><br>
    	  <input type="password" name="member_passwd" id="member_passwd" class="inputBox">
-   	  <span id="checkPasswdResult"></span><br>
+   	  <br><span id="checkPasswdResult"></span><br>
 	   
 	  <label>패스워드확인</label><br>
 	  <input type="password" id="member_passwd_check" name="member_passwd_check"  class="inputBox">
-	  <span id="checkPasswdConfirmResult"></span><br>
+	  <br><span id="checkPasswdConfirmResult"></span><br>
 	  
 	  <label>전화번호</label><br>
       <input type="text" name="member_phone" id="member_phone"  class="inputBox">
-      <span id="checkPhoneResult"></span><br>
+      <br><span id="checkPhoneResult"></span><br>
       
+	  <label for="birthdate">생년월일</label><br>
+  	  <input type="date" name="member_birth_date" required="required" class="inputBox"><br>
+  	  
        <label>email</label><br>
-       <input type="text" name="member_email1" id="member_email1"  class="inputBox">@
-       <input type="text" name="member_email2" id="member_email2"  class="inputBox">
-       <select name="selectDomain" id="selectDomain">
+       <input type="text" name="member_email1" id="member_email1"  class="inputBox" style="width: 290px;"> @ 
+<!--        <input type="text" name="member_email2" id="member_email2"  class="inputBox"> -->
+       <select name="member_email2" id="member_email2" style="font-size: 20px;">
 			<option value="">직접입력</option>	
 			<option value="naver.com">naver.com</option>
 			<option value="nate.com">nate.com</option>
@@ -94,20 +132,18 @@ label {
 			<option value="gmail.com">gmail.com</option>
 		</select><br>
 	
+  	  
 	  <label>이메일 인증번호</label><br>
+<!-- 	  <input type="text" id="authInputBox" size="15" placeholder="인증코드입력란"  class="inputBox" style="width: 500px;"> -->
 	  <input type="text" id="authInputBox" size="15" placeholder="인증코드입력란"  class="inputBox">
 	  <input style="border-radius: 5px;" type="button" id="authCheck" value="인증번호 전송" class="joinBtn">
-	  <span id= "authEmailCheck"></span><br>
-	  
-	  <label>생년월일</label><br>
-  	  <input type="date" name="member_birth_date" required="required" class="inputBox"><br>
+	  <br><span id= "authEmailCheck"></span><br>
       
     </fieldset>
     
     
-    </fieldset>
-    <div style="padding-left: 190px;">
-    	<button type="submit" class="sub-btn">가입하기</button>
+    <div style="padding-left: 190px; padding-top: 20px; padding-bottom: 20px;">
+    	<button type="submit" class="sub-btn" id="submitCheck" name="submitCheck">가입하기</button>
     </div>
   </form>
 </div>
@@ -187,7 +223,7 @@ $(function() {
 	// 이름 유효성 검사
 	$("#member_name").on("keyup", function() {
 		let name = $("#member_name").val();
-		let regex = /^[가-힣]{2,10}$/;
+		let regex = /^[가-힣A-Za-z]{2,20}$/;
 		
 		if(!regex.exec(name)) {
 			$("#checkNameResult").html("정확한 이름을 입력하세요.").css("color", "red");
@@ -273,60 +309,63 @@ $(function(){
 });
 
 $(function() {
-	
 	//회원가입 버튼 눌렀을 때, 빈칸 있으면 다시 유효성 검사진행    
-    $(".sub-btn").on("click",function(){
- 	   var name = $("#member_name").val();
- 	   var id = $("#member_id").val();
- 	   var pw = $("#member_passwd").val();
- 	   var phone = $("#member_phone").val();
- 	   var email = $("#member_email1").val();
- 	   var auth = $("#authInputBox").val();
- 	   
- 	   var nameRegex = /[가-힣]{2,}/;
- 	   var idRegex = /^[A-Z][a-z\d]{4,11}$/;
- 	   var emailRegex = /^[A-Z][a-z\d]{4,16}$/;
- 	   var pwRegex = /^[A-Za-z\d]{8,12}$/;
- 	   var phoneRegex = /^01\d\d{4}\d{4}$/;
- 	   
- 	   var nameRegex = nameregex.exec(name);
- 	   if(nameregex == null){
- 		   alert("이름양식을 다시 확인해주세요.");
- 		   return false;
- 	   }
- 	   var idRegex = idregex.exec(id);
- 	   if(idregex == null){
- 		   alert("아이디양식을 다시 확인해주세요.");
- 		  return false;
- 	   }
- 	   var pwRegex = pwregex.exec(pw);
- 	   if(pwregex == null){
- 		   alert("비밀번호양식을 다시 확인해주세요.");
- 		  return false;
- 	   }
- 	   var phoneRegex = phoneregex.exec(phone);
- 	   if(phoneregex == null){
- 		   alert("핸드폰번호양식을 다시 확인해주세요.");
- 		  return false;
- 	   }
- 	   var emailRegex = emailregex.exec(email);
- 	   if(phoneregex == null){
- 		   alert("이메일을 다시 확인해주세요.");
- 		  return false;
- 	   }
- 	   if(auth == null ){
- 		   alert("이메일인증을 완료하여 주세요.");
- 		  return false;
- 	   }
- 	   if(auth == false ){
- 		   alert("인증번호가 유효하지 않습니다.");
- 		  return false;
- 	   }
- 	   
-      //빈칸 없을 때 제출.
- 	  $("#joinForm").submit();
-    
-    });
+	$("#submitCheck").on("click",function(){
+	   var name = $("#member_name").val();
+	   var id = $("#member_id").val();
+	   var pw = $("#member_passwd").val();
+	   var phone = $("#member_phone").val();
+	   var email = $("#member_email1").val();
+	   var auth = $("#authInputBox").val();
+	   
+	   var nameRegex = /^[가-힣A-Za-z]{2,20}$/;
+	   var idRegex = /^[A-Za-z0-9]{4,16}$/;
+// 	   var emailRegex = /^[A-Z][a-z\d]{4,16}$/;
+	   var pwRegex = /^[A-Za-z0-9!@#$%]{8,16}$/;
+	   var phoneRegex = /^01\d\d{3,4}\d{4}$/;
+	   
+	   var nameRegexResult = nameRegex.exec(name);
+	   if(nameRegexResult == null){
+		   alert("이름양식을 다시 확인해주세요.");
+		   return false;
+	   }
+	   var idRegexResult = idRegex.exec(id);
+	   if(idRegexResult == null){
+		   alert("아이디양식을 다시 확인해주세요.");
+		  return false;
+	   }
+	   var pwRegexResult = pwRegex.exec(pw);
+	   if(pwRegexResult == null){
+		   alert("비밀번호양식을 다시 확인해주세요.");
+		  return false;
+	   }
+	   var phoneRegexResult = phoneRegex.exec(phone);
+	   if(phoneRegexResult == null){
+		   alert("핸드폰번호양식을 다시 확인해주세요.");
+		  return false;
+	   }
+// 	   var emailRegexResult = emailRegex.exec(email);
+	   if(emailRegex.exec(email) == null){
+		   alert("이메일을 다시 확인해주세요.");
+		  return false;
+	   }
+	   if(auth == null ){
+		   alert("이메일인증을 완료하여 주세요.");
+		  return false;
+	   }
+	   if(auth == false ){
+		   alert("인증번호가 유효하지 않습니다.");
+		  return false;
+	   }
+	   
+	  //빈칸 없을 때 제출.
+	  if(name && id && pw && phone && email && auth){
+	      $("#joinForm").submit();
+	  } else {
+	      alert("빈칸을 모두 입력해주세요.");
+	  }
+
+	});
 	
 });
 </script>

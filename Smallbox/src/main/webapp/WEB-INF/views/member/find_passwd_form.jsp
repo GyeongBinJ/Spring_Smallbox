@@ -62,6 +62,10 @@ input {
 .btnLow {
    text-decoration: none;
 }
+input[type=text] {
+   border-radius: 5px;
+   border: solid 1px #dadada;
+}
 </style>
 <title>스몰박스 - 비밀번호 찾기</title>
 <script src="http://code.jquery.com/jquery-3.6.3.min.js"></script>
@@ -71,16 +75,14 @@ window.onload = function() {
 		if ( document.pfrm.member_id.value.trim() == '' ) {
 			alert( 'ID를 입력해주세요' );
 			return false;
-		} else if (document.pfrm.member_mail.value.trim() == '') {
-			
 		}
-		if ( document.pfrm.member_mail.value.trim() == '' ) {
+		if ( document.pfrm.member_email.value.trim() == '' ) {
 			alert( '메일을 입력해주세요' );
 			return false;
 		}
-		alert("이메일 전송이 완료되었습니다.")
-		
+		alert("이메일 전송이 완료되었습니다.");
 		document.pfrm.submit();
+		return true;
 	}
 }
 </script>
@@ -109,7 +111,7 @@ window.onload = function() {
 <form action="FindPasswdPro.sm" method="post" style="margin-top: 100px;" name="pfrm">
 	<div align="center">
 		<div class="welcome">
-			<img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
+			<img src="${pageContext.request.contextPath }/resources/assets/img/welcomeLogo.png">
 		</div>
 		<table border="2" class="table">
 			<tr>

@@ -31,14 +31,14 @@
 <script type="text/javascript">
 $(function(){
 	// 다음단계버튼 활성화
-    $("#nextBtn").click(function(){    
-        if($(":checkbox").is(":checked") == false){
-            alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다.");
-            return false;
-        }else{
-            $("#terms_form").submit();
-        }
-    });    
+	$("#nextBtn").click(function(){    
+    if($("#check1").is(":checked") == false || $("#check2").is(":checked") == false){
+        alert("모든 약관에 동의 하셔야 다음 단계로 진행 가능합니다.");
+        return false;
+    } else {
+        $("#terms_form").submit();
+    }
+});
     
     // 전체 체크, 전체체크 해제
     $("#check_all").on("change", function() {
@@ -74,21 +74,23 @@ $(function(){
 	<!-- //header -->
 
 	<form id="terms_form" class="f" align="center" action="MemberJoinForm.sm">
-		<br><br><br><br>
+		<div class="welcome">
+	    	<img src="${pageContext.request.contextPath }/resources/assets/img/welcomeLogo.png" style="width: 1000px;">
+	    </div>
 		<p class="page-info-txt" align="center">
 			<strong>약관동의 및 정보활용동의</strong><br> 
 			<span>스몰박스 서비스 이용을 위한 약관에 동의해주세요.</span>
 		</p>
 		<div>
 			<h4 class="scheme-g">●개인정보 처리방침</h4>
-			<textarea style="font-size: 1em;" readonly="readonly">
+			<textarea style="font-size: 1em; width: 1000px; height: 200px;" readonly="readonly">
            		<jsp:include page="../terms/PersonInfo.jsp"></jsp:include>
             </textarea>
 			<p>
 				<label><input type="checkbox" id="check1" /> 약관에 동의 합니다.</label><br>
 			</p>
 			<h4 class="scheme-g">●서비스 이용약관 동의</h4>
-			<textarea style="font-size: 1em;" readonly="readonly">
+			<textarea style="font-size: 1em; width: 1000px; height: 200px;" readonly="readonly">
 				<jsp:include page="../terms/ServiceInfo.jsp"></jsp:include>
             </textarea>
 			<p>

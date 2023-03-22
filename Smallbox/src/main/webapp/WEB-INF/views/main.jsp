@@ -167,7 +167,7 @@
 				              <h5 class="card-date" style="text-align: center;font-size: 16px">개봉일 ${movie.movie_open_date }</h5>
 <!-- 				              <P class="card-star" style="text-align: center;">⭐⭐⭐</P> -->
 					  <div style="padding-top: 20px;  transform: translateX(-10%);">
-			              <a class="getstarted scrollto" href="Reserve.mv" >예매하기</a>
+			              <a class="getstarted scrollto" href="Reserve.mv?movie_title=${movie.movie_title}" >예매하기</a>
 					  </div>
 		              </div>
           		 </div>
@@ -187,7 +187,7 @@
 			<div class="col-lg-4 col-md-6">
 				<form action="MovieList.mv" style="width: 600px;">
 					<div>
-						<input type="text" name="keyword" class="input_box" placeholder="영화명을 입력하세요">
+						<input type="text" name="keyword" class="input_box" placeholder="영화명을 입력하세요" style="border: solid 1px #dadada;">
 						<button class="btn" id="btnSearch">
 							<i class="fa-solid fa-magnifying-glass " class="btn" id="btnSearch"></i>
 						</button>
@@ -216,53 +216,53 @@
 <!-- End Featured Services Section -->
 
     <!-- ======= Why Us Section ======= -->
-    <section id="why-us" class="why-us">
-      <div class="container">
+<!--     <section id="why-us" class="why-us"> -->
+<!--       <div class="container"> -->
 
-        <div class="row no-gutters">
+<!--         <div class="row no-gutters"> -->
 
-          <div class="col-lg-4 col-md-6 content-item">
-            <span>01</span>
-            <h4>DOLBY CINEMA</h4>
-            <p>보고, 듣는 영화에 만족할 수 없는 당신을 위해! 드라마틱한 이미지, 입체적인 사운드, 몰입에 최적화 된 공간까지!</p>
-          </div>
+<!--           <div class="col-lg-4 col-md-6 content-item"> -->
+<!--             <span>01</span> -->
+<!--             <h4>DOLBY CINEMA</h4> -->
+<!--             <p>보고, 듣는 영화에 만족할 수 없는 당신을 위해! 드라마틱한 이미지, 입체적인 사운드, 몰입에 최적화 된 공간까지!</p> -->
+<!--           </div> -->
 
-          <div class="col-lg-4 col-md-6 content-item">
-            <span>02</span>
-            <h4>PRIVATE ROOM</h4>
-            <p>전용 라운지와 총 8석의 상영관</p>
-			<p>전담 룸 서비스와 호텔급 어매니티 (코트 체크, 스타일러, 미니바)</p>
-          </div>
+<!--           <div class="col-lg-4 col-md-6 content-item"> -->
+<!--             <span>02</span> -->
+<!--             <h4>PRIVATE ROOM</h4> -->
+<!--             <p>전용 라운지와 총 8석의 상영관</p> -->
+<!-- 			<p>전담 룸 서비스와 호텔급 어매니티 (코트 체크, 스타일러, 미니바)</p> -->
+<!--           </div> -->
 
-          <div class="col-lg-4 col-md-6 content-item">
-            <span>03</span>
-            <h4>MX - THE TRUE SOUND</h4>
-            <p>DCI기준 17(ft-L)을 충족하는 스크린 밝기와 와이드 시트를 통해 최적의 영화 경험을 선사합니다.</p>
-          </div>
+<!--           <div class="col-lg-4 col-md-6 content-item"> -->
+<!--             <span>03</span> -->
+<!--             <h4>MX - THE TRUE SOUND</h4> -->
+<!--             <p>DCI기준 17(ft-L)을 충족하는 스크린 밝기와 와이드 시트를 통해 최적의 영화 경험을 선사합니다.</p> -->
+<!--           </div> -->
 
-          <div class="col-lg-4 col-md-6 content-item">
-            <span>04</span>
-            <h4>THE BOUTIQUE SUITE</h4>
-			<p>편안한 관람을 위해 제공되는 스위트 패키지</p>
-			<p>에스코트 서비스와 컨시어지 서비스</p>
-          </div>
+<!--           <div class="col-lg-4 col-md-6 content-item"> -->
+<!--             <span>04</span> -->
+<!--             <h4>THE BOUTIQUE SUITE</h4> -->
+<!-- 			<p>편안한 관람을 위해 제공되는 스위트 패키지</p> -->
+<!-- 			<p>에스코트 서비스와 컨시어지 서비스</p> -->
+<!--           </div> -->
 
-          <div class="col-lg-4 col-md-6 content-item">
-            <span>05</span>
-            <h4>COMFORT SEAT FOR YOU</h4>
-            <p>당신을 위해 특별히 준비한 다양한 타입의 여유 공간을 통해서 편안한 관람 환경을 제공합니다.</p>
-          </div>
+<!--           <div class="col-lg-4 col-md-6 content-item"> -->
+<!--             <span>05</span> -->
+<!--             <h4>COMFORT SEAT FOR YOU</h4> -->
+<!--             <p>당신을 위해 특별히 준비한 다양한 타입의 여유 공간을 통해서 편안한 관람 환경을 제공합니다.</p> -->
+<!--           </div> -->
 
-          <div class="col-lg-4 col-md-6 content-item">
-            <span>06</span>
-            <h4>PUPPY CINEMA</h4>
-            <p>강아지와 함께 앉도록 배려한 서비스를 담은 진정한 의미의 세계 최초 반려동물 동반 영화관</p>
-          </div>
+<!--           <div class="col-lg-4 col-md-6 content-item"> -->
+<!--             <span>06</span> -->
+<!--             <h4>PUPPY CINEMA</h4> -->
+<!--             <p>강아지와 함께 앉도록 배려한 서비스를 담은 진정한 의미의 세계 최초 반려동물 동반 영화관</p> -->
+<!--           </div> -->
 
-        </div>
+<!--         </div> -->
 
-      </div>
-    </section><!--End Why Us Section-->
+<!--       </div> -->
+<!--     </section>End Why Us Section -->
 
 
     <!-- ======= Services Section ======= -->
