@@ -102,9 +102,9 @@
 		        html += '      <h5 class="card-date" style="text-align: center;font-size: 16px">개봉일 ' + movie.movie_open_date + '</h5>';
 		        html += '      <div class="text-center">';
     	     	// 영화목록 페이지 로딩시 찜 여부 판별
-		        if (member_id != null) { // 로그인이 되어있을 경우
+		        if(member_id != null && member_id != "") { // 로그인이 되어있을 경우
 			          // likeList가 movie.movie_idx를 포함하면 찜해제 출력
-		        	  if (likeList.includes(movie.movie_idx.toString())) { // contains() 사용할 수 없으므로 includes() 사용
+		        	  if(likeList.includes(movie.movie_idx.toString())) { // contains() 사용할 수 없으므로 includes() 사용
 		        	    html += '      <button class="btn btn-outline-dark mt-auto" id="btn_like' + movie.movie_idx + '" onclick="changeLike(\'' + movie.movie_idx + '\')">찜해제</button>';
 		        	  } else { // likeList가 movie.movie_idx를 포함하지않으면 찜 출력
 		        	    html += '      <button class="btn btn-outline-dark mt-auto" id="btn_like' + movie.movie_idx + '" onclick="changeLike(\'' + movie.movie_idx + '\')">찜</button>';
