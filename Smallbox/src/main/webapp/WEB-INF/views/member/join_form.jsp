@@ -36,6 +36,7 @@ input[type=password] {
    margin-bottom: 8px;
    font-size: 20px;
    border: solid 1px #dadada;
+   text-align: center;
 }
 input[type=text] {
    width: 600px;
@@ -44,6 +45,7 @@ input[type=text] {
    margin-bottom: 8px;
    font-size: 20px;
    border: solid 1px #dadada;
+   text-align: center;
 }
 input[type=button] {
    width: 100px;
@@ -120,19 +122,19 @@ label {
       
 	  <label for="birthdate">생년월일</label><br>
   	  <input type="date" name="member_birth_date" required="required" class="inputBox"><br>
-  	  
-       <label>email</label><br>
-       <input type="text" name="member_email1" id="member_email1"  class="inputBox" style="width: 290px;"> @ 
-<!--        <input type="text" name="member_email2" id="member_email2"  class="inputBox"> -->
-       <select name="member_email2" id="member_email2" style="font-size: 20px;">
-			<option value="">직접입력</option>	
-			<option value="naver.com">naver.com</option>
-			<option value="nate.com">nate.com</option>
-			<option value="daum.net">daum.net</option>
-			<option value="gmail.com">gmail.com</option>
-		</select><br>
-	
-  	  
+
+	<label>email</label><br>
+	<input type="text" name="member_email1" id="member_email1" class="inputBox" style="width: 290px;">@
+	<input type="text" name="member_email2" id="member_email2" class="self" style="width:260px;" >
+    <select  style="font-size: 20px; width: 30px;" name="selectDomain" id="selectDomain" onchange="checkOption()">
+        <option value="">직접입력</option>    
+        <option value="naver.com">naver.com</option>
+        <option value="nate.com">nate.com</option>
+        <option value="daum.net">daum.net</option>
+        <option value="gmail.com">gmail.com</option>
+    </select>
+	<br>
+
 	  <label>이메일 인증번호</label><br>
 <!-- 	  <input type="text" id="authInputBox" size="15" placeholder="인증코드입력란"  class="inputBox" style="width: 500px;"> -->
 	  <input type="text" id="authInputBox" size="15" placeholder="인증코드입력란"  class="inputBox">
