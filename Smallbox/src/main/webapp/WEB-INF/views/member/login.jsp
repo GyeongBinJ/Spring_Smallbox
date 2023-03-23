@@ -63,6 +63,14 @@ input {
    width: 200px;
    height: 30px;
 }
+input[type=text] {
+   border-radius: 5px;
+   border: solid 1px #dadada;
+}
+input[type=password] {
+   border-radius: 5px;
+   border: solid 1px #dadada;
+}
 </style>  
 
 </style>  
@@ -95,7 +103,7 @@ input {
 <form action="MemberLoginPro.sm" method="post" style="margin-top: 100px;">   
    <div align="center">
       <div class="welcome">
-         <img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
+         <img src="${pageContext.request.contextPath }/resources/assets/img/welcomeLogo.png">
       </div>
       <table border="2"  class="table">
 			<tr>

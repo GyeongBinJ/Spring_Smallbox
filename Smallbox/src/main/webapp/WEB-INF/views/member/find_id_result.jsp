@@ -99,30 +99,35 @@ input {
          <img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
       </div>
        <div>                                                               
-        <h1>고객님의 아이디는</h1><br><br>                 
         <c:choose>                                                                          
             <c:when test="${empty member}">  
             	<table border="2">
-	                <p class="mb-4">조회결과가 없습니다.</p>                                        
-            	</table>                                               
+	                <h2><p class="mb-4">조회결과가 없습니다.</p></h2>                                        
+            	</table>
+   			        <td class="btn_login">
+						<input type="button" value="홈으로" class="btn-log" style="margin-bottom: 10px; border-radius: 10px;" onclick="location.href='./'"> 
+						<input type="button" value="아이디 찾기" class="btn-log" style="margin-bottom: 10px; border-radius: 10px;" onclick="location.href='FindIdForm.sm'"> 
+					<br>
+		         </td>                                               
             </c:when>                                                                         
             <c:otherwise> 
+		        <h4>고객님의 아이디는</h4><br><br>                 
         		<table border="2">
-                	<p>${member.member_id}</p> 
+                	<h2><p>${member.member_id}</p></h2> 
         		</table>                                                           
-                입니다.                                              
+                <h2 style="padding-bottom: 50px;">입니다.</h2>                                              
+		         <td class="btn_login">
+					<input type="button" value="로그인하기" class="btn-log" style="margin-bottom: 10px; border-radius: 10px;" onclick="location.href='MemberLoginForm.sm'"> 
+					<input type="button" value="비밀번호 찾기" class="btn-log" style="margin-bottom: 10px; border-radius: 10px;" onclick="location.href='FindPasswdForm.sm'"> 
+					<br>
+		         </td>
             </c:otherwise>                                                                    
         </c:choose>                                                                         
     </div>             
-         <td class="btn_login">
-			<input type="button" value="로그인하기" class="btn-log" style="margin-bottom: 10px" onclick="location.href='MemberLoginForm.sm'"> 
-			<input type="button" value="비밀번호 찾기" class="btn-log" style="margin-bottom: 10px" onclick="location.href='FindPasswdForm.sm'"> 
-			<br>
-         </td>
 </form>
 <!--=========== Login 본문 끝=================-->
 	<!-- ---------------footer------------- -->
-	<footer id="footer" style="margin-top: 120px;">
+	<footer id="footer" style="margin-top: 250px;">
 		<jsp:include page="../inc/bottom.jsp"></jsp:include>
 	</footer>
 	<!-- ---------------footer------------- -->

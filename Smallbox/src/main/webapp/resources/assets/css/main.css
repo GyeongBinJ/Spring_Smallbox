@@ -8,7 +8,9 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
-
+a{
+	text-decoration: none;	
+}
 .btn-get-started {
    font-family: 'ONE-Mobile-Regular';
     font-weight: 500;

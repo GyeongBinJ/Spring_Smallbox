@@ -59,7 +59,7 @@ public class MemberController {
 	public String join() {
 		return "member/join_form";
 	}
-	
+		
 	// 회원정보 수정 폼
 	@GetMapping("/MemberModifyForm.sm")
 	public String modifyForm(String member_id, HttpSession session, Model model) {
@@ -343,7 +343,7 @@ public class MemberController {
             model.addAttribute("msg", "일치하는 회원 정보가 없습니다.");
             return "fail_back";
         }
-		return "redirect:/";
+		return "member/login";
     }
     
     // 회원탈퇴 기능 구현

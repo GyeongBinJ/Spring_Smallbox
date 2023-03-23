@@ -80,7 +80,7 @@ function fnSubmit() {
 	}
 	 
 	if(!phone_regex.exec($("#member_phone").val())){
-	alert("전화번호 형식에 맞게 입력해주세요.");
+	alert("옳바르지 않은 전화번호입니다.");
 	return false;
 	}
 	 
@@ -94,6 +94,10 @@ function fnSubmit() {
 <style type="text/css">
 .btnLow {
    text-decoration: none;
+}
+input[type=text] {
+   border-radius: 5px;
+   border: solid 1px #dadada;
 }
 </style>
 </head>
@@ -124,7 +128,7 @@ function fnSubmit() {
 <form commandName="member" id="findIdForm" action="findIdPro.sm" method="post" style="margin-top: 100px;">
    <div align="center">
       <div class="welcome">
-         <img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
+         <img src="${pageContext.request.contextPath }/resources/assets/img/welcomeLogo.png">
       </div>
       <table border="2"  class="table">
          <tr>

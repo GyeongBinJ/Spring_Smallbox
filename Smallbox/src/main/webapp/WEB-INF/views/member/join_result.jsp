@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-</head>
 <!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- -->
 <!-- css -->
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/assets/css/reset.css">
@@ -24,13 +23,13 @@
 <link href="${pageContext.request.contextPath }/resources/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
 <!-- ----------------------------------------들고다니세요-------------------------------------------------------------------------- --> 
-
 <style type="text/css">
-
-form {
-	padding : 150px 150px
+.btn-log {
+    width: 350px;
+    height: 50px;
+    background: #3B0B5F;
+    color: #fff;
 }
- 
 </style>
 <title>회원가입 완료</title>
 </head>
@@ -55,19 +54,20 @@ form {
 	  </div>
 	</section>
 <!-- End Breadcrumbs -->
-    <div align="center">
-		<form action="">
-			<div class="welcome">
-		    	<img src="${pageContext.request.contextPath }/resources/assets/img/welcome.png">
+	<form action="">
+	    <div align="center">
+			<div class="welcome" style="padding-top: 50px;">
+		    	<img src="${pageContext.request.contextPath }/resources/assets/img/welcomeLogo.png" style="width: 1000px;">
 		    </div>
-		    <!-- //header -->
-			<h1>회원 가입 완료</h1>
-			<input type="button" value="홈으로" class="sub-btn" onclick="location.href='./'">
-			<input type="button" value="로그인" class="sub-btn" onclick="location.href='MemberLoginForm.sm'">
-		</form>
-	</div>
+			<div class="btn_area" style="padding-top: 50px; padding-bottom: 20px;">
+				<h2>회원가입이 완료되었습니다.</h2>
+				<input type="button" value="홈으로" class="btn-log" style="border-radius: 10px;" onclick="location.href='./'">
+				<input type="button" value="로그인" class="btn-log" style="border-radius: 10px;" onclick="location.href='MemberLoginForm.sm'">
+			</div>
+		</div>
+	</form>
 <!-- ---------------footer------------- -->
-<footer id="footer">
+<footer id="footer" style="margin-top: 120px;">
 	<jsp:include page="../inc/bottom.jsp"></jsp:include>
 </footer>
 <!-- ---------------footer------------- -->
