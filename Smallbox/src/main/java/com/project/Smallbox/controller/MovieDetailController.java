@@ -45,12 +45,21 @@ public class MovieDetailController {
 		model.addAttribute("movie", movie);
 	
 		//댓글 출력
-		List<CommentVO> commentList = cservice.getCommentList(movieIdx);
-		model.addAttribute("reviewList", commentList);
-		
-		//평균 평점 출력
-		double staravg = cservice.getStarAvg(movieIdx);
-		model.addAttribute("staravg", staravg);
+				List<CommentVO> commentList = cservice.getCommentList(movieIdx);
+//				System.out.println("commentList ?" + commentList);
+//				System.out.println("commentList size ?" + commentList.size());
+				model.addAttribute("reviewList", commentList);
+				if(commentList.size() == 0) {
+//					System.out.println("댓글이 없을 경우");
+					//평균 평점 출력
+					double staravg = 0;
+					model.addAttribute("staravg", staravg);
+				} else {
+//					System.out.println("댓글이 있을 경우");
+					//평균 평점 출력
+					double staravg = cservice.getStarAvg(movieIdx);
+					model.addAttribute("staravg", staravg);
+				}
 		
 		return "movie/movie_detail";
 	}
