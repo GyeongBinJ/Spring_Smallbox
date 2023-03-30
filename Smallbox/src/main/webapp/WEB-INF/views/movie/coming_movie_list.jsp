@@ -33,9 +33,15 @@
 			   data: { member_id : member_id, movie_idx : movie_idx }, 
 			   success: function(result) {
 		    	  if(result === "찜") { // 찜해제 버튼을 누르면 삭제 쿼리 실행 -> 찜해제되었으므로 찜버튼 반환
-		    		   alert("찜목록에서 삭제되었습니다.");
+		    		  let moveList = confirm("찜목록에서 삭제되었습니다.\n찜목록으로 이동하시겠습니까?");
+		    	  	  if(moveList) {
+		    	  		location="MovieLikeList.my";
+		    	  	  }
 		    	  } else if(result === "찜해제") { // 찜 버튼을 누르면 삽입 쿼리 실행 -> 찜되었으므로 찜해제 버튼 반환
-		    		   alert("찜목록에 추가되었습니다.");
+		    		  let moveList = confirm("찜목록에 추가되었습니다.\n찜목록으로 이동하시겠습니까?");
+  					  if(moveList) {
+  						location="MovieLikeList.my";
+		    	  	  }
 		    	  }
 		    	  
 		    	  $("#btn_like"+movie_idx).html(result);
