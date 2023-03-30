@@ -94,6 +94,7 @@
 	        html += '      <h5 class="card-title" style="text-align: center;">' + movie.movie_title + '</h5>';
 	        html += '      <div class="text-center">';
 	        html += '      	<button class="btn btn-outline-dark mt-auto" id="btn_like" onclick="cancleLike(\'' + movie.movie_idx + '\')">찜해제</button>';
+	        html += '       <a class="btn btn-outline-dark mt-auto" href="Reserve.mv?movie_title=' + movie.movie_title + '">예매하기</a>';
 	        html += '      </div>';
 	        html += '    </div>';
 	        html += '  </div>';
